@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terapush - Join the Waitlist</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #f0f4ff 0%, #e6f0ff 100%);
+        }
+
+        .gradient-text {
+            background: linear-gradient(90deg, #3b82f6 0%, #8b5cf6 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+
+        .success-checkmark {
+            animation: scale-up 0.5s ease-in-out;
+        }
+
+        @keyframes scale-up {
+            0% {
+                transform: scale(0);
+                opacity: 0;
+            }
+
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.7);
+            }
+
+            70% {
+                box-shadow: 0 0 0 10px rgba(59, 130, 246, 0);
+            }
+
+            100% {
+                box-shadow: 0 0 0 0 rgba(59, 130, 246, 0);
+            }
+        }
+    </style>
+</head>
+
+<body class="min-h-screen">
+    <div class="container mx-auto px-4 py-12">
+        <!-- Header -->
+        <header class="flex flex-col md:flex-row justify-between items-center mb-16">
+            <div class="flex items-center mb-6 md:mb-0">
+                <img src="https://i.postimg.cc/pV8SxXg2/Terapush-20250601-102830-0007.png" alt="Terapush Logo" class="h-12 mr-3 rounded-lg shadow-md">
+            </div>
+            <nav>
+                <ul class="flex space-x-8">
+                    <li><a href="#about" class="text-gray-600 hover:text-blue-600 transition">About</a></li>
+                    <li><a href="#features" class="text-gray-600 hover:text-blue-600 transition">Features</a></li>
+                    <li><a href="#contact" class="text-gray-600 hover:text-blue-600 transition">Contact</a></li>
+                </ul>
+            </nav>
+        </header>
+
+        <!-- Hero Section -->
+        <section class="flex flex-col md:flex-row items-center mb-24">
+            <div class="md:w-1/2 mb-10 md:mb-0 md:pr-10">
+                <h2 class="text-4xl md:text-5xl font-bold mb-6 leading-tight">
+                    The Ultimate <span class="gradient-text">Ecosystem</span> for Startups & Investors
+                </h2>
+                <p class="text-xl text-gray-600 mb-8">
+                    Connect with investors, find business services, and discover talent - all in one platform. Be the
+                    first to know when we launch.
+                </p>
+                <button id="joinWaitlistBtn" class="bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-8 rounded-lg shadow-lg transition pulse">
+                    Join the Waitlist
+                </button>
+            </div>
+            <div class="md:w-1/2">
+                <div class="relative">
+                    <div
+                        class="absolute -top-6 -left-6 w-64 h-64 bg-purple-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob">
+                    </div>
+                    <div
+                        class="absolute -bottom-8 -right-8 w-64 h-64 bg-blue-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-2000">
+                    </div>
+                    <div class="relative">
+                        <svg class="w-full h-auto" viewBox="0 0 500 400" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="50" y="50" width="400" height="300" rx="20" fill="#f0f4ff" stroke="#3b82f6"
+                                stroke-width="2" />
+                            <circle cx="250" cy="120" r="40" fill="#8b5cf6" opacity="0.8" />
+                            <rect x="100" y="180" width="300" height="20" rx="10" fill="#3b82f6" opacity="0.7" />
+                            <rect x="100" y="220" width="200" height="20" rx="10" fill="#3b82f6" opacity="0.5" />
+                            <rect x="100" y="260" width="250" height="20" rx="10" fill="#3b82f6" opacity="0.3" />
+                            <path d="M380,100 C430,150 430,250 380,300" stroke="#8b5cf6" stroke-width="3" fill="none" />
+                            <circle cx="380" cy="100" r="8" fill="#8b5cf6" />
+                            <circle cx="380" cy="300" r="8" fill="#8b5cf6" />
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Features Section -->
+        <section id="features" class="mb-24">
+            <h2 class="text-3xl font-bold text-center mb-16">Who Terapush Is For</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- Startups Card -->
+                <div class="bg-white rounded-xl shadow-md p-6 card-hover">
+                    <div class="bg-blue-100 rounded-full w-16 h-16 flex items-center justify-center mb-6">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-blue-600" fill="none"
+                            viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M13 10V3L4 14h7v7l9-11h-7z" />
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">Startups</h3>
+                    <p class="text-gray-600">Access funding, resources, and connections to grow your business faster.
+                    </p>
+                </div>
+
+                <!-- Investors Card -->
+                <div class="bg-white rounded-xl shadow-md p-6 card-hover">
+                    <div class="bg-purple-100 rounded-full w-16 h-16 flex items-center justify-center mb-6">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-purple-600" fill="none"
+                            viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">Investors</h3>
+                    <p class="text-gray-600">Discover promising startups and investment opportunities in one place.</p>
+                </div>
+
+                <!-- Service Providers Card -->
+                <div class="bg-white rounded-xl shadow-md p-6 card-hover">
+                    <div class="bg-green-100 rounded-full w-16 h-16 flex items-center justify-center mb-6">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-green-600" fill="none"
+                            viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">Service Providers</h3>
+                    <p class="text-gray-600">Connect with startups that need your expertise and services.</p>
+                </div>
+
+                <!-- Job Seekers Card -->
+                <div class="bg-white rounded-xl shadow-md p-6 card-hover">
+                    <div class="bg-yellow-100 rounded-full w-16 h-16 flex items-center justify-center mb-6">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-yellow-600" fill="none"
+                            viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">Job Seekers</h3>
+                    <p class="text-gray-600">Find exciting opportunities at innovative startups and growing companies.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about" class="mb-24">
+            <div class="bg-white rounded-2xl shadow-lg p-8 md:p-12">
+                <h2 class="text-3xl font-bold mb-8">About Terapush</h2>
+                <div class="flex flex-col md:flex-row">
+                    <div class="md:w-2/3 md:pr-8 mb-6 md:mb-0">
+                        <p class="text-gray-600 mb-4">
+                            Terapush is building the ultimate ecosystem where startups, investors, service providers,
+                            and job seekers can connect and thrive together.
+                        </p>
+                        <p class="text-gray-600 mb-4">
+                            Our platform streamlines the process of finding the right connections, resources, and
+                            opportunities that businesses need to succeed.
+                        </p>
+                        <p class="text-gray-600">
+                            We're currently in development and will be launching soon. Join our waitlist to be the first
+                            to know when we go live!
+                        </p>
+                    </div>
+                    <div class="md:w-1/3 flex justify-center">
+                        <div class="bg-blue-50 rounded-full w-48 h-48 flex items-center justify-center">
+                            <div class="relative">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-24 w-24 text-blue-500" fill="none"
+                                    viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                                        d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                                </svg>
+                                <div
+                                    class="absolute -top-2 -right-2 bg-blue-600 rounded-full w-8 h-8 flex items-center justify-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-white" fill="none"
+                                        viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="mb-16">
+            <div class="bg-gradient-to-r from-blue-500 to-purple-600 rounded-2xl shadow-lg p-8 md:p-12 text-white">
+                <h2 class="text-3xl font-bold mb-8 text-center">Get Early Access</h2>
+                <p class="text-xl text-center mb-10">Join our waitlist today and be the first to experience Terapush
+                    when we launch.</p>
+                <div class="flex justify-center">
+                    <button id="contactWaitlistBtn" class="bg-white text-blue-600 hover:bg-blue-50 font-medium py-3 px-8 rounded-lg shadow-lg transition">
+                        Join the Waitlist
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="text-center text-gray-500 py-8">
+            <p>© 2025 Terapush India Private Limited. All rights reserved.</p>
+        </footer>
+    </div>
+
+    <!-- Modal -->
+    <div id="waitlistModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+        <div class="bg-white rounded-2xl p-8 max-w-md w-full mx-4">
+            <div id="modalContent">
+                <h3 class="text-2xl font-bold mb-6">Join the Terapush Waitlist</h3>
+                <form id="waitlistForm" action="https://formspree.io/f/xgvykjgv" method="POST">
+                    <div class="mb-4">
+                        <label for="name" class="block text-gray-700 mb-2">Full Name</label>
+                        <input type="text" id="name" name="name" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+                    </div>
+                    <div class="mb-4">
+                        <label for="email" class="block text-gray-700 mb-2">Email Address</label>
+                        <input type="email" id="email" name="email" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+                    </div>
+                    <div class="mb-6">
+                        <label for="userType" class="block text-gray-700 mb-2">I am a:</label>
+                        <select id="userType" name="userType" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            <option value="startup">Startup Founder/Team</option>
+                            <option value="investor">Investor</option>
+                            <option value="service">Business Service Provider</option>
+                            <option value="jobseeker">Job Seeker</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    <div class="flex justify-between">
+                        <button type="button" id="cancelBtn" class="px-6 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition">Cancel</button>
+                        <button type="submit" class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition">Submit</button>
+                    </div>
+                </form>
+            </div>
+            <div id="successContent" class="text-center hidden">
+                <div class="success-checkmark mb-6">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 mx-auto text-green-500" fill="none"
+                        viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                </div>
+                <h3 class="text-2xl font-bold mb-4">You're on the list!</h3>
+                <p class="text-gray-600 mb-6">Thank you for joining the Terapush waitlist. We'll notify you when we
+                    launch!</p>
+                <button id="closeSuccessBtn" class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Modal functionality
+        const waitlistModal = document.getElementById('waitlistModal');
+        const joinWaitlistBtn = document.getElementById('joinWaitlistBtn');
+        const contactWaitlistBtn = document.getElementById('contactWaitlistBtn');
+        const cancelBtn = document.getElementById('cancelBtn');
+        const waitlistForm = document.getElementById('waitlistForm');
+        const modalContent = document.getElementById('modalContent');
+        const successContent = document.getElementById('successContent');
+        const closeSuccessBtn = document.getElementById('closeSuccessBtn');
+
+        function openModal() {
+            waitlistModal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            waitlistModal.classList.add('hidden');
+            document.body.style.overflow = 'auto';
+            // Reset form and view
+            waitlistForm.reset();
+            modalContent.classList.remove('hidden');
+            successContent.classList.add('hidden');
+        }
+
+        joinWaitlistBtn.addEventListener('click', openModal);
+        contactWaitlistBtn.addEventListener('click', openModal);
+        cancelBtn.addEventListener('click', closeModal);
+        closeSuccessBtn.addEventListener('click', closeModal);
+
+        // Close modal when clicking outside
+        waitlistModal.addEventListener('click', function(e) {
+            if (e.target === waitlistModal) {
+                closeModal();
+            }
+        });
+
+        // Form submission
+        
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    window.scrollTo({
+                        top: target.offsetTop - 100,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    </script>
+    <script>
+        (function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'94f37a64d3b7c7d4',t:'MTc0OTgzNzUyOC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();
+    </script>
+</body>
+
+</html>
