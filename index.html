@@ -3,410 +3,475 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Terapush – Connect. Collaborate. Grow.</title>
-<meta name="description" content="Terapush is a social media platform connecting startups, investors, service providers, and job seekers with tools for collaboration and growth.">
-<meta name="keywords" content="startups, investors, job seekers, service providers, networking, funding, opportunities">
-<meta name="author" content="Terapush">
-<link rel="icon" href="favicon.ico" type="image/x-icon">
+<title>Terapush - Bridge Startups, Investors & Talent</title>
 <link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@400;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet"/>
 <style>
-    :root {
-        --primary-color: #0070f3;
-        --secondary-color: #00bfff;
-        --background-light: #fafafa;
-        --background-dark: #121212;
-        --text-light: #111;
-        --text-dark: #eee;
-    }
-    body {
-        margin:0;
-        font-family:'Poppins', sans-serif;
-        line-height:1.6;
-        background: var(--background-light);
-        color: var(--text-light);
-        transition: background 0.3s, color 0.3s;
-        scroll-behavior:smooth;
-    }
+    /* Reset */
+    * {margin:0; padding:0; box-sizing:border-box;}
+    body {font-family:'Poppins', sans-serif; line-height:1.6; color:#111; background:#fafafa; scroll-behavior:smooth;}
     a {text-decoration:none; color:inherit;}
     ul {list-style:none;}
-    header, section, footer {opacity:0; transform:translateY(20px); animation: fadeInUp 0.8s forwards;}
-    @keyframes fadeInUp {
-        to {opacity:1; transform:translateY(0);}
-    }
-    nav {
-        display:flex; justify-content:space-between; align-items:center;
-        padding:1rem 2rem; background: #fff;
-        position:fixed; width:100%; top:0;
-        box-shadow:0 5px 15px rgba(0,0,0,0.05);
-        transition: background 0.3s;
-    }
-    .logo {font-family:'League Spartan', sans-serif; font-size:1.8rem; font-weight:700; color:var(--text-light);}
-    .nav-links {display:flex; gap:2rem;}
+
+    /* Navbar */
+    nav {display:flex; justify-content:space-between; align-items:center; padding:1rem 2rem; background:#fff; position:fixed; width:100%; z-index:1000; box-shadow:0 5px 15px rgba(0,0,0,0.05);}
+    .logo {font-family:'League Spartan', sans-serif; font-size:1.8rem; font-weight:700; color:#111; letter-spacing:1px;}
+    .nav-links {display:flex; gap:2rem; font-weight:500;}
     .nav-links a {position:relative; transition:0.3s;}
-    .nav-links a::after {
-        content:''; position:absolute; width:0%; height:2px; left:0; bottom:-3px;
-        background: var(--primary-color);
-        transition:0.3s;
-    }
+    .nav-links a::after {content:''; position:absolute; width:0%; height:2px; left:0; bottom:-3px; background:#0070f3; transition:0.3s;}
     .nav-links a:hover::after {width:100%;}
     .hamburger {display:none; cursor:pointer; flex-direction:column; gap:5px;}
-    .hamburger div {width:25px; height:3px; background:var(--text-light); transition:0.3s;}
-    .hamburger.open div:nth-child(1) { transform: rotate(45deg) translate(5px,5px);}
-    .hamburger.open div:nth-child(2) { opacity:0;}
-    .hamburger.open div:nth-child(3) { transform: rotate(-45deg) translate(5px,-5px);}
-    header {height:100vh; display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center; padding:0 1rem; background:linear-gradient(135deg,var(--primary-color),var(--secondary-color)); color:#fff;}
-    header h1 {font-family:'League Spartan', sans-serif; font-size:3rem; margin-bottom:1rem;}
-    header p {font-size:1.2rem; max-width:700px; margin-bottom:2rem;}
-    header .cta-buttons a {display:inline-block; margin:0 0.5rem; padding:0.75rem 1.8rem; border-radius:30px; background:#fff; color:var(--primary-color); font-weight:600; transition:0.3s;}
-    header .cta-buttons a:hover {background:var(--primary-color); color:#fff;}
+    .hamburger div {width:25px; height:3px; background:#111; transition:0.3s;}
+    .hamburger.open div:nth-child(1) { transform: rotate(45deg) translate(5px,5px); }
+    .hamburger.open div:nth-child(2) { opacity:0; }
+    .hamburger.open div:nth-child(3) { transform: rotate(-45deg) translate(5px,-5px); }
+
+    /* Hero */
+    header {height:100vh; display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center; padding:0 1rem; background:linear-gradient(135deg,#f0f4ff,#ffffff);}
+    header h1 {font-family:'League Spartan', sans-serif; font-size:3rem; margin-bottom:1rem; color:#111;}
+    header p {font-size:1.2rem; max-width:700px; margin-bottom:2rem; color:#444;}
+    header .cta-buttons a {display:inline-block; margin:0 0.5rem; padding:0.75rem 1.8rem; border-radius:30px; background:#0070f3; color:#fff; font-weight:600; transition:0.3s; box-shadow:0 5px 15px rgba(0,112,243,0.3);}
+    header .cta-buttons a:hover {background:#0051a3; transform:translateY(-2px); box-shadow:0 8px 20px rgba(0,81,163,0.4);}
+
+    /* Sections */
     section {padding:6rem 2rem;}
-    h2 {font-family:'League Spartan', sans-serif; font-size:2.5rem; margin-bottom:2rem; text-align:center;}
-    p {margin-bottom:1rem;}
+    h2 {font-family:'League Spartan', sans-serif; font-size:2.5rem; margin-bottom:2rem; text-align:center; color:#111;}
+    p {margin-bottom:1rem; color:#555;}
     .container {max-width:1200px; margin:0 auto;}
+
+    /* About */
     #about {background:linear-gradient(135deg,#e6f0ff,#ffffff);}
-    .founders {display:flex; flex-wrap:wrap; gap:2rem; justify-content:center;}
+    .founders {display:flex; flex-wrap:wrap; gap:2rem; justify-content:center; margin-top:2rem;}
     .founder {text-align:center; flex:1 1 200px; transition:0.3s;}
-    .founder-initials {width:150px; height:150px; border-radius:50%; display:flex; justify-content:center; align-items:center; font-family:'League Spartan', sans-serif; font-size:3rem; font-weight:700; color:#fff; background:linear-gradient(135deg,var(--primary-color),var(--secondary-color)); margin:0 auto 1rem auto; box-shadow:0 5px 15px rgba(0,112,243,0.3);}
+    .founder-initials {width:150px; height:150px; border-radius:50%; display:flex; justify-content:center; align-items:center; font-family:'League Spartan', sans-serif; font-size:3rem; font-weight:700; color:#fff; background:linear-gradient(135deg,#0070f3,#00bfff); margin:0 auto 1rem auto; box-shadow:0 5px 15px rgba(0,112,243,0.3);}
+    .founder h4 {font-weight:600; margin-bottom:0.5rem;}
+    .founder p {font-size:0.95rem; color:#666;}
+    .founder:hover {transform:translateY(-5px);}
+
+    /* Services */
     .services-grid {display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:2rem;}
     .service {background:#fff; padding:2rem; border-radius:20px; box-shadow:0 5px 20px rgba(0,0,0,0.05); transition:0.3s;}
     .service:hover {transform:translateY(-5px); box-shadow:0 10px 25px rgba(0,0,0,0.1);}
+    .service h4 {margin-bottom:1rem; color:#0070f3;}
+    .service p {color:#555;}
+
+    /* FAQ */
     .faq-container {max-width:800px; margin:0 auto;}
     .faq-item {margin-bottom:1.5rem; border-bottom:1px solid #ccc; padding-bottom:1rem;}
-    .faq-item h4 {cursor:pointer; margin-bottom:0.5rem; color:var(--primary-color);}
-    .faq-item p {display:none;}
+    .faq-item h4 {cursor:pointer; margin-bottom:0.5rem; color:#0070f3;}
+    .faq-item p {display:none; font-size:0.95rem; color:#555;}
+
+    /* Join Community */
     #waitlist {background:linear-gradient(135deg,#e0f7f1,#ffffff);}
     .cta-container {display:flex; flex-wrap:wrap; gap:1rem; justify-content:center;}
-    .cta-container a {padding:0.85rem 2rem; background:#25D366; color:#fff; border-radius:30px; font-weight:600; transition:0.3s;}
-    .cta-container a:hover {background:#128C7E;}
-    #waitlist-form {display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6); justify-content:center; align-items:center; z-index:2000;}
-    #waitlist-form .form-content {background:#fff; padding:2.5rem; border-radius:12px; width:90%; max-width:400px; position:relative; box-shadow:0 10px 25px rgba(0,0,0,0.1);}
-    #waitlist-form h3{text-align:center;font-family:'League Spartan', sans-serif;font-size:1.8rem;margin-bottom:1.5rem;color:#111;}
-    #waitlist-form input, #waitlist-form select {padding:0.85rem 1rem; border-radius:8px; border:1px solid #ccc; transition:0.3s;}
-    #waitlist-form input:focus, #waitlist-form select:focus {border-color:var(--primary-color); box-shadow:0 0 5px rgba(0,112,243,0.3);}
-    #waitlist-form button {padding:0.85rem; border-radius:30px; border:none; background:linear-gradient(135deg,var(--primary-color),var(--secondary-color)); color:#fff; font-weight:600; cursor:pointer;}
-    #waitlist-form button:hover {background:linear-gradient(135deg,#0051a3,#0099cc);}
-    #waitlist-form .close-btn {position:absolute; top:10px; right:15px; font-size:1.5rem; cursor:pointer;}
-    #contact .contact-info {text-align:center;}
-    #disclaimer {text-align:center;}
-    footer {background:#111; color:#fff; padding:3rem 2rem; text-align:center;}
-    footer a {color:#fff; margin:0 0.5rem;}
-    .footer-bottom {margin-top:2rem; font-size:0.85rem;}
-    #scroll-progress {position:fixed; bottom:0; left:0; width:100%; height:6px; background:rgba(0,0,0,0.1);}
-    #scroll-progress div {width:0%; height:100%; background:linear-gradient(135deg,var(--primary-color),var(--secondary-color)); transition:width 0.2s;}
-    #scroll-top-btn {position:fixed; bottom:20px; right:20px; background:linear-gradient(135deg,var(--primary-color),var(--secondary-color)); color:#fff; border:none; border-radius:50%; width:45px; height:45px; font-size:1.5rem; cursor:pointer; box-shadow:0 5px 15px rgba(0,112,243,0.3); display:none;}
-    #scroll-top-btn:hover {transform:translateY(-5px);}
-    #testimonials {background:#f9f9f9;}
-    .testimonials-container {display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:2rem;}
-    .testimonial {background:#fff; padding:1.5rem; border-radius:12px; box-shadow:0 5px 15px rgba(0,0,0,0.1);}
-    .testimonial p {font-style:italic;}
-    .testimonial h5 {margin-top:1rem; text-align:right; color:#0070f3;}
-    .dark-mode {background: var(--background-dark); color: var(--text-dark);}
+    .cta-container a {padding:0.85rem 2rem; background:#25D366; color:#fff; border-radius:30px; font-weight:600; transition:0.3s; box-shadow:0 5px 15px rgba(37,211,102,0.3);}
+    .cta-container a:hover {background:#128C7E; transform:translateY(-2px); box-shadow:0 8px 20px rgba(18,140,126,0.4);}
+    
+    /* Waitlist Form Modal */
+    #waitlist-form {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0,0,0,0.6);
+        justify-content: center;
+        align-items: center;
+        z-index: 2000;
+    }
+    #waitlist-form .form-content {
+        background: #fff;
+        padding: 2.5rem;
+        border-radius: 12px;
+        width: 90%;
+        max-width: 400px;
+        position: relative;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        animation: fadeIn 0.3s ease;
+    }
+    #waitlist-form h3 {
+        text-align: center;
+        font-family: 'League Spartan', sans-serif;
+        font-size: 1.8rem;
+        margin-bottom: 1.5rem;
+        color: #111;
+    }
+    #waitlist-form form {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+    }
+    #waitlist-form input,
+    #waitlist-form select {
+        padding: 0.85rem 1rem;
+        border-radius: 8px;
+        border: 1px solid #ccc;
+        font-size: 1rem;
+        transition: 0.3s;
+        outline: none;
+    }
+    #waitlist-form input:focus,
+    #waitlist-form select:focus {
+        border-color: #0070f3;
+        box-shadow: 0 0 5px rgba(0, 112, 243, 0.3);
+    }
+    #waitlist-form button {
+        padding: 0.85rem;
+        border-radius: 30px;
+        border: none;
+        background: linear-gradient(135deg,#0070f3,#00bfff);
+        color: #fff;
+        font-weight: 600;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+    #waitlist-form button:hover {
+        background: linear-gradient(135deg,#0051a3,#0099cc);
+        transform: translateY(-2px);
+    }
+    #waitlist-form .close-btn {
+        position: absolute;
+        top: 10px;
+        right: 15px;
+        font-size: 1.5rem;
+        cursor: pointer;
+        color: #666;
+        transition: 0.3s;
+    }
+    #waitlist-form .close-btn:hover {
+        color: #0070f3;
+    }
+    @keyframes fadeIn {
+        from {opacity: 0; transform: translateY(-10px);}
+        to {opacity: 1; transform: translateY(0);}
+    }
+
+    /* Contact */
+    #contact .contact-info {
+        display: flex;
+        flex-direction: column;
+        gap: 0.7rem;
+        text-align: center;
+        color: #555;
+    }
+    #contact .contact-info a {
+        color: #0070f3;
+        transition: 0.3s;
+    }
+    #contact .contact-info a:hover {
+        text-decoration: underline;
+    }
+
+    /* Disclaimer */
+    #disclaimer {
+        max-width: 800px;
+        margin: 0 auto;
+        text-align: center;
+    }
+
+    /* Footer */
+    footer {
+        background: #111;
+        color: #fff;
+        padding: 3rem 2rem;
+        text-align: center;
+    }
+    footer a {
+        color: #fff;
+        margin: 0 0.5rem;
+        transition: 0.3s;
+    }
+    footer a:hover {
+        color: #0070f3;
+    }
+    .footer-bottom {
+        margin-top: 2rem;
+        font-size: 0.85rem;
+    }
+
+    /* Scroll Progress Bar at Bottom */
+    #scroll-progress {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 6px;
+        background: rgba(0,0,0,0.1);
+        z-index: 1500;
+    }
+    #scroll-progress div {
+        width: 0%;
+        height: 100%;
+        background: linear-gradient(135deg,#0070f3,#00bfff);
+        transition: width 0.2s ease;
+    }
+
+    /* Scroll to Top Button */
+    #scroll-top-btn {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        background: linear-gradient(135deg,#0070f3,#00bfff);
+        color: #fff;
+        border: none;
+        border-radius: 50%;
+        width: 45px;
+        height: 45px;
+        font-size: 1.5rem;
+        cursor: pointer;
+        box-shadow: 0 5px 15px rgba(0,112,243,0.3);
+        display: none;
+        z-index: 1500;
+        transition: transform 0.3s;
+    }
+    #scroll-top-btn:hover {
+        transform: translateY(-5px);
+    }
+
     @media(max-width:768px){
-        .nav-links {position:fixed; top:0; right:-100%; height:100vh; width:70%; background:#fff; flex-direction:column; align-items:center; justify-content:center; gap:2rem; transition:0.3s;}
-        .nav-links.show {right:0;}
-        .hamburger {display:flex;}
+        .nav-links {
+            position: fixed;
+            top:0;
+            right: -100%;
+            height:100vh;
+            width:70%;
+            background:#fff;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap:2rem;
+            transition: 0.3s;
+        }
+        .nav-links.show {
+            right:0;
+        }
+        .hamburger {
+            display: flex;
+        }
     }
 </style>
 </head>
 <body>
 
-<nav>
-    <div class="logo">Terapush</div>
-    <div class="nav-links">
-        <a href="#home" onclick="closeMenu()">Home</a>
-        <a href="#about" onclick="closeMenu()">About</a>
-        <a href="#services" onclick="closeMenu()">Services</a>
-        <a href="#faq" onclick="closeMenu()">FAQ</a>
-        <a href="#testimonials" onclick="closeMenu()">Testimonials</a>
-        <a href="#waitlist" onclick="closeMenu()">Join</a>
-        <a href="#contact" onclick="closeMenu()">Contact</a>
-    </div>
-    <div style="display:flex;align-items:center;gap:1rem;">
-        <select onchange="changeLanguage(this.value)" aria-label="Select Language">
-            <option value="en">English</option>
-            <option value="hi">हिन्दी</option>
-            <option value="gu">ગુજરાતી</option>
-            <option value="mr">मराठी</option>
-            <option value="kn">ಕನ್ನಡ</option>
-        </select>
-        <button onclick="toggleDarkMode()" aria-label="Toggle Dark Mode">🌓</button>
+    <!-- Navbar -->
+    <nav>
+        <div class="logo">Terapush</div>
+        <div class="nav-links">
+            <a href="#home" onclick="closeMenu()">Home</a>
+            <a href="#about" onclick="closeMenu()">About</a>
+            <a href="#services" onclick="closeMenu()">Services</a>
+            <a href="#faq" onclick="closeMenu()">FAQ</a>
+            <a href="#waitlist" onclick="closeMenu()">Join</a>
+            <a href="#contact" onclick="closeMenu()">Contact</a>
+        </div>
         <div class="hamburger" onclick="toggleMenu(this)">
-            <div></div><div></div><div></div>
+            <div></div>
+            <div></div>
+            <div></div>
         </div>
-    </div>
-</nav>
+    </nav>
 
-<header id="home">
-    <h1 data-lang="heading">Bridge Startups, Investors & Talent</h1>
-    <p data-lang="subtext">Terapush is a social media platform connecting startups, investors, service providers, and job seekers for growth.</p>
-    <div class="cta-buttons">
-        <a href="#waitlist" data-lang="join">Join Waitlist</a>
-        <a href="#contact" data-lang="contact">Contact Us</a>
-    </div>
-</header>
+    <!-- Hero Section -->
+    <header id="home">
+        <h1>Bridge Startups, Investors & Talent</h1>
+        <p>Terapush is a social media platform connecting startups, investors, service providers, and job seekers, empowering collaboration and growth within the ecosystem.</p>
+        <div class="cta-buttons">
+            <a href="#waitlist">Join Waitlist</a>
+            <a href="#contact">Contact Us</a>
+        </div>
+    </header>
 
-<section id="about">
-    <h2 data-lang="about">About Terapush</h2>
-    <div class="container">
-        <p data-lang="abouttext">Founded in 2025 by Harsh Bafna, Jaivik Bilimoria, and Mansi Rajpurohit, Terapush empowers startups and investors by creating a seamless ecosystem.</p>
-        <div class="founders">
-            <div class="founder">
-                <div class="founder-initials">HB</div>
-                <h4>Harsh Bafna</h4>
-                <p>"Our mission is to simplify the path from idea to growth."</p>
+    <!-- About Section -->
+    <section id="about">
+        <h2>About Terapush</h2>
+        <div class="container">
+            <p>Founded in 2025 by Harsh Bafna, Jaivik Bilimoria, and Mansi Rajpurohit, Terapush India Private Limited empowers startups and investors by creating a seamless, collaborative ecosystem.</p>
+            <div class="founders">
+                <div class="founder">
+                    <div class="founder-initials">HB</div>
+                    <h4>Harsh Bafna</h4>
+                    <p>"Our mission is to simplify the path from idea to growth for every entrepreneur."</p>
+                </div>
+                <div class="founder">
+                    <div class="founder-initials">JB</div>
+                    <h4>Jaivik Bilimoria</h4>
+                    <p>"Connecting investors, startups, and talent in a single seamless platform."</p>
+                </div>
+                <div class="founder">
+                    <div class="founder-initials">MR</div>
+                    <h4>Mansi Rajpurohit</h4>
+                    <p>"Empowering businesses and individuals to collaborate and innovate effortlessly."</p>
+                </div>
             </div>
-            <div class="founder">
-                <div class="founder-initials">JB</div>
-                <h4>Jaivik Bilimoria</h4>
-                <p>"Connecting investors, startups, and talent seamlessly."</p>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services">
+        <h2>Our Services</h2>
+        <div class="container services-grid">
+            <div class="service">
+                <h4>For Startups</h4>
+                <p>Access investors, essential resources, networking opportunities, and HR support to scale your team effectively.</p>
             </div>
-            <div class="founder">
-                <div class="founder-initials">MR</div>
-                <h4>Mansi Rajpurohit</h4>
-                <p>"Empowering collaboration and innovation effortlessly."</p>
+            <div class="service">
+                <h4>For Investors</h4>
+                <p>Discover promising startups, access due diligence support, and connect with entrepreneurs and industry experts.</p>
+            </div>
+            <div class="service">
+                <h4>For Service Providers</h4>
+                <p>Engage in projects with startups, showcase your expertise, and collaborate on innovative initiatives.</p>
+            </div>
+            <div class="service">
+                <h4>For Job Seekers</h4>
+                <p>Find diverse opportunities within the startup ecosystem and build valuable skills through our professional network.</p>
             </div>
         </div>
-    </div>
-</section>
+    </section>
 
-<section id="services">
-    <h2 data-lang="services">Our Services</h2>
-    <div class="container services-grid">
-        <div class="service"><h4 data-lang="forstartups">For Startups</h4><p data-lang="startups">Access investors, resources, and support to scale your team effectively.</p></div>
-        <div class="service"><h4 data-lang="forinvestors">For Investors</h4><p data-lang="investors">Discover startups, due diligence, and connect with entrepreneurs and experts.</p></div>
-        <div class="service"><h4 data-lang="forproviders">For Service Providers</h4><p data-lang="providers">Engage in projects and showcase expertise in the startup ecosystem.</p></div>
-        <div class="service"><h4 data-lang="forjobseekers">For Job Seekers</h4><p data-lang="jobseekers">Access opportunities, build skills, and network within startups.</p></div>
-    </div>
-</section>
-
-<section id="faq">
-    <h2 data-lang="faq">FAQs</h2>
-    <div class="faq-container">
-        <div class="faq-item" onclick="toggleFAQ(this)">
-            <h4 data-lang="q1">How can startups connect with investors?</h4>
-            <p data-lang="a1">Startups can create profiles and reach out to investors through our platform.</p>
+    <!-- FAQ Section -->
+    <section id="faq">
+        <h2>FAQs</h2>
+        <div class="faq-container">
+            <div class="faq-item" onclick="toggleFAQ(this)">
+                <h4>How can startups connect with investors?</h4>
+                <p>Startups can create a profile, showcase their business, and reach out to interested investors through our platform.</p>
+            </div>
+            <div class="faq-item" onclick="toggleFAQ(this)">
+                <h4>Can investors access due diligence support?</h4>
+                <p>Yes, investors can request due diligence reports and insights on startups before making funding decisions.</p>
+            </div>
+            <div class="faq-item" onclick="toggleFAQ(this)">
+                <h4>How do service providers find projects?</h4>
+                <p>Service providers can browse startup listings, submit proposals, and collaborate on initiatives directly on Terapush.</p>
+            </div>
+            <div class="faq-item" onclick="toggleFAQ(this)">
+                <h4>Are there opportunities for job seekers?</h4>
+                <p>Job seekers can apply for full-time or freelance positions, connect with startups, and enhance their professional network.</p>
+            </div>
         </div>
-        <div class="faq-item" onclick="toggleFAQ(this)">
-            <h4 data-lang="q2">Can investors access due diligence support?</h4>
-            <p data-lang="a2">Yes, investors can request reports before funding decisions.</p>
+    </section>
+
+    <!-- Join Community Section -->
+    <section id="waitlist">
+        <h2>Join Our Community</h2>
+        <div class="cta-container">
+            <a href="javascript:void(0);" onclick="openForm()">Join Waitlist</a>
+            <a href="https://whatsapp.com/channel/0029VajAWwSJuyAB0Ywz6m0k" target="_blank">Join WhatsApp</a>
         </div>
-        <div class="faq-item" onclick="toggleFAQ(this)">
-            <h4 data-lang="q3">How do service providers find projects?</h4>
-            <p data-lang="a3">They can browse listings, submit proposals, and collaborate with startups.</p>
+    </section>
+
+    <!-- Waitlist Form Modal -->
+    <div id="waitlist-form">
+        <div class="form-content">
+            <span class="close-btn" onclick="closeForm()">&times;</span>
+            <h3>Join Waitlist</h3>
+            <form action="https://formspree.io/f/xgvykjgv" method="POST">
+                <input type="text" name="name" placeholder="Your Name" required>
+                <input type="email" name="email" placeholder="Your Email" required>
+                <select name="usertype" required>
+                    <option value="">Select User Type</option>
+                    <option value="Startup">Startup</option>
+                    <option value="Investor">Investor</option>
+                    <option value="Jobseeker">Jobseeker</option>
+                    <option value="Service Provider">Service Provider</option>
+                </select>
+                <button type="submit">Submit</button>
+            </form>
         </div>
-        <div class="faq-item" onclick="toggleFAQ(this)">
-            <h4 data-lang="q4">Are there opportunities for job seekers?</h4>
-            <p data-lang="a4">Yes, they can apply for positions and network with startups.</p>
+    </div>
+
+    <!-- Contact Section -->
+    <section id="contact">
+        <h2>Contact Us</h2>
+        <div class="container contact-info">
+            <p>Support: +918317353649</p>
+            <p>Address: Terapush India Private Limited, 1st Floor, SPD Plaza, KHB Colony, Koramangala 4-B Block, 5th Block, Koramangala, Bengaluru, Karnataka 560095</p>
+            <p>Email: <a href="mailto:contact@terapush.in">contact@terapush.in</a></p>
+            <p>Follow us: 
+                <a href="https://linkedin.com/terapush" target="_blank">LinkedIn</a> | 
+                <a href="https://instagram.com/terapush" target="_blank">Instagram</a> | 
+                <a href="https://youtube.com/@terapushindia?si=QpYZDfgSdGwIgre_" target="_blank">YouTube</a>
+            </p>
         </div>
-    </div>
-</section>
+    </section>
 
-<section id="testimonials">
-    <h2 data-lang="testimonials">Testimonials</h2>
-    <div class="container testimonials-container">
-        <div class="testimonial"><p>"Terapush helped our startup connect with the right investors."</p><h5>- Priya S.</h5></div>
-        <div class="testimonial"><p>"A seamless platform to explore opportunities."</p><h5>- Ramesh K.</h5></div>
-        <div class="testimonial"><p>"Highly recommended for networking in the startup ecosystem."</p><h5>- Fatima B.</h5></div>
-    </div>
-</section>
+    <!-- Disclaimer Section -->
+    <section id="disclaimer">
+        <h2>Disclaimer</h2>
+        <p>Investments in startups involve risk. Terapush is a platform to connect stakeholders and does not guarantee returns. Users should conduct independent due diligence before making investment decisions.</p>
+    </section>
 
-<section id="waitlist">
-    <h2 data-lang="joincommunity">Join Our Community</h2>
-    <div class="cta-container">
-        <a href="javascript:void(0);" onclick="openForm()" data-lang="joinwaitlist">Join Waitlist</a>
-        <a href="https://whatsapp.com/channel/0029VajAWwSJuyAB0Ywz6m0k" target="_blank" data-lang="joinwhatsapp">Join WhatsApp</a>
-    </div>
-</section>
+    <!-- Footer -->
+    <footer>
+        <p><a href="#">Data Protection</a> | <a href="#">Privacy Policy</a></p>
+        <div class="footer-bottom">
+            &copy; 2025 Terapush India Private Limited. All rights reserved.
+        </div>
+    </footer>
 
-<div id="waitlist-form">
-    <div class="form-content">
-        <span class="close-btn" onclick="closeForm()" aria-label="Close form">&times;</span>
-        <h3 data-lang="joinform">Join Waitlist</h3>
-        <form action="https://formspree.io/f/xgvykjgv" method="POST">
-            <input type="text" name="name" placeholder="Your Name" required>
-            <input type="email" name="email" placeholder="Your Email" required>
-            <select name="usertype" required>
-                <option value="" data-lang="selecttype">Select User Type</option>
-                <option value="Startup" data-lang="startup">Startup</option>
-                <option value="Investor" data-lang="investor">Investor</option>
-                <option value="Jobseeker" data-lang="jobseeker">Jobseeker</option>
-                <option value="Service Provider" data-lang="provider">Service Provider</option>
-            </select>
-            <button type="submit" data-lang="submit">Submit</button>
-        </form>
-    </div>
-</div>
+    <!-- Scroll Progress Bar at Bottom -->
+    <div id="scroll-progress"><div></div></div>
 
-<section id="contact">
-    <h2 data-lang="contactus">Contact Us</h2>
-    <div class="container contact-info">
-        <p data-lang="support">Support: +918317353649</p>
-        <p data-lang="address">Address: Terapush India Private Limited, 1st Floor, SPD Plaza, KHB Colony, Koramangala 4-B Block, 5th Block, Koramangala, Bengaluru, Karnataka 560095</p>
-        <p>Email: <a href="mailto:contact@terapush.in">contact@terapush.in</a></p>
-        <p data-lang="follow">Follow us: 
-            <a href="https://linkedin.com/terapush" target="_blank">LinkedIn</a> | 
-            <a href="https://instagram.com/terapush" target="_blank">Instagram</a> | 
-            <a href="https://youtube.com/@terapushindia?si=QpYZDfgSdGwIgre_" target="_blank">YouTube</a>
-        </p>
-    </div>
-</section>
+    <!-- Scroll to Top Button -->
+    <button id="scroll-top-btn" onclick="scrollToTop()">↑</button>
 
-<section id="disclaimer">
-    <h2 data-lang="disclaimer">Disclaimer</h2>
-    <p data-lang="disclaimertext">Investments involve risk. Terapush connects stakeholders but does not guarantee returns. Conduct independent research before investing.</p>
-</section>
-
-<footer>
-    <p><a href="#">Data Protection</a> | <a href="#">Privacy Policy</a></p>
-    <div class="footer-bottom">&copy; 2025 Terapush India Private Limited. All rights reserved.</div>
-</footer>
-
-<div id="scroll-progress"><div></div></div>
-<button id="scroll-top-btn" onclick="scrollToTop()" aria-label="Scroll to top">↑</button>
-
-<script>
-    // Menu toggling
-    function toggleMenu(hamburger) {
-        const nav = document.querySelector('.nav-links');
-        nav.classList.toggle('show');
-        hamburger.classList.toggle('open');
-    }
-    function closeMenu() {
-        document.querySelector('.nav-links').classList.remove('show');
-        document.querySelector('.hamburger').classList.remove('open');
-    }
-
-    // FAQ toggle
-    function toggleFAQ(item) {
-        const p = item.querySelector('p');
-        p.style.display = p.style.display === 'block' ? 'none' : 'block';
-    }
-
-    // Waitlist modal open/close
-    function openForm() {
-        document.getElementById('waitlist-form').style.display = 'flex';
-    }
-    function closeForm() {
-        document.getElementById('waitlist-form').style.display = 'none';
-    }
-
-    // Scroll progress and top button
-    window.addEventListener('scroll', function() {
-        const scrollTop = window.scrollY;
-        const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-        const percent = (scrollTop / docHeight) * 100;
-        document.querySelector('#scroll-progress div').style.width = percent + '%';
-
-        const btn = document.getElementById('scroll-top-btn');
-        btn.style.display = scrollTop > 200 ? 'block' : 'none';
-    });
-    function scrollToTop() {
-        window.scrollTo({top:0, behavior:'smooth'});
-    }
-
-    // Dark mode toggle
-    function toggleDarkMode() {
-        document.body.classList.toggle('dark-mode');
-    }
-
-    // Localization dictionary
-    const translations = {
-        en: {
-            heading: "Bridge Startups, Investors & Talent",
-            subtext: "Terapush is a social media platform connecting startups, investors, service providers, and job seekers for growth.",
-            join: "Join Waitlist",
-            contact: "Contact Us",
-            about: "About Terapush",
-            abouttext: "Founded in 2025 by Harsh Bafna, Jaivik Bilimoria, and Mansi Rajpurohit, Terapush empowers startups and investors by creating a seamless ecosystem.",
-            services: "Our Services",
-            forstartups: "For Startups",
-            startups: "Access investors, resources, and support to scale your team effectively.",
-            forinvestors: "For Investors",
-            investors: "Discover startups, due diligence, and connect with entrepreneurs and experts.",
-            forproviders: "For Service Providers",
-            providers: "Engage in projects and showcase expertise in the startup ecosystem.",
-            forjobseekers: "For Job Seekers",
-            jobseekers: "Access opportunities, build skills, and network within startups.",
-            faq: "FAQs",
-            q1: "How can startups connect with investors?",
-            a1: "Startups can create profiles and reach out to investors through our platform.",
-            q2: "Can investors access due diligence support?",
-            a2: "Yes, investors can request reports before funding decisions.",
-            q3: "How do service providers find projects?",
-            a3: "They can browse listings, submit proposals, and collaborate with startups.",
-            q4: "Are there opportunities for job seekers?",
-            a4: "Yes, they can apply for positions and network with startups.",
-            testimonials: "Testimonials",
-            joincommunity: "Join Our Community",
-            joinwaitlist: "Join Waitlist",
-            joinwhatsapp: "Join WhatsApp",
-            joinform: "Join Waitlist",
-            selecttype: "Select User Type",
-            startup: "Startup",
-            investor: "Investor",
-            jobseeker: "Jobseeker",
-            provider: "Service Provider",
-            submit: "Submit",
-            contactus: "Contact Us",
-            support: "Support: +918317353649",
-            address: "Address: Terapush India Private Limited, 1st Floor, SPD Plaza, KHB Colony, Koramangala 4-B Block, 5th Block, Koramangala, Bengaluru, Karnataka 560095",
-            follow: "Follow us:",
-            disclaimer: "Disclaimer",
-            disclaimertext: "Investments involve risk. Terapush connects stakeholders but does not guarantee returns. Conduct independent research before investing."
-        },
-        hi: {
-            heading: "स्टार्टअप, निवेशक और प्रतिभा को जोड़ें",
-            subtext: "Terapush स्टार्टअप, निवेशकों, सेवा प्रदाताओं और नौकरी चाहने वालों को जोड़ने वाला प्लेटफ़ॉर्म है।",
-            join: "वेटलिस्ट में शामिल हों",
-            contact: "संपर्क करें",
-            about: "Terapush के बारे में",
-            abouttext: "2025 में स्थापित, Terapush स्टार्टअप और निवेशकों को सहयोग का एक मंच प्रदान करता है।",
-            services: "हमारी सेवाएँ",
-            forstartups: "स्टार्टअप के लिए",
-            startups: "निवेशकों और संसाधनों तक पहुँचें और अपनी टीम को बढ़ाएँ।",
-            forinvestors: "निवेशकों के लिए",
-            investors: "स्टार्टअप खोजें और विशेषज्ञों से जुड़ें।",
-            forproviders: "सेवा प्रदाताओं के लिए",
-            providers: "प्रोजेक्ट्स में भाग लें और विशेषज्ञता दिखाएँ।",
-            forjobseekers: "नौकरी चाहने वालों के लिए",
-            jobseekers: "अवसरों तक पहुँचें और नेटवर्क बनाएँ।",
-            faq: "सामान्य प्रश्न",
-            q1: "स्टार्टअप निवेशकों से कैसे जुड़ सकते हैं?",
-            a1: "वे प्रोफ़ाइल बनाकर निवेशकों से संपर्क कर सकते हैं।",
-            q2: "क्या निवेशकों को रिपोर्ट मिल सकती है?",
-            a2: "हाँ, वे निवेश से पहले रिपोर्ट प्राप्त कर सकते हैं।",
-            q3: "सेवा प्रदाता परियोजनाएँ कैसे खोजें?",
-            a3: "लिस्टिंग ब्राउज़ करें और प्रस्ताव भेजें।",
-            q4: "क्या नौकरी के अवसर हैं?",
-            a4: "हाँ, आवेदन करें और नेटवर्क बनाएँ।",
-            testimonials: "प्रशंसापत्र",
-            joincommunity: "हमारे समुदाय में शामिल हों",
-            joinwaitlist: "वेटलिस्ट में शामिल हों",
-            joinwhatsapp: "व्हाट्सऐप से जुड़ें",
-            joinform: "वेटलिस्ट फॉर्म",
-            selecttype: "उपयोगकर्ता प्रकार चुनें",
-            startup: "स्टार्टअप",
-            investor: "निवेशक",
-            jobseeker: "नौकरी चाहने वाला",
-            provider: "सेवा प्रदाता",
-            submit: "सबमिट करें",
-            contactus: "संपर्क करें",
-            support: "सहायता: +918317353649",
-            address: "पता: Terapush इंडिया प्राइवेट लिमिटेड, 1st फ़्लोर, SPD प्लाज़ा, KHB कॉलोनी, कोरमंगला, बेंगलुरु, कर्नाटक 560095",
-            follow: "हमें फॉलो करें:",
-            disclaimer: "अस्वीकरण",
-            disclaimertext: "निवेश जोखिमपूर्ण है। Terapush केवल प्लेटफ़ॉर्म प्रदान करता है, लाभ की गारंटी नहीं।"
+    <script>
+        // Mobile menu toggle
+        function toggleMenu(hamburger) {
+            const nav = document.querySelector('.nav-links');
+            nav.classList.toggle('show');
+            hamburger.classList.toggle('open');
         }
-    };
+        function closeMenu() {
+            document.querySelector('.nav-links').classList.remove('show');
+            document.querySelector('.hamburger').classList.remove('open');
+        }
 
-    function changeLanguage(lang) {
-        document.querySelectorAll('[data-lang]').forEach(el => {
-            const key = el.getAttribute('data-lang');
-            if(translations[lang] && translations[lang][key]) {
-                el.innerText = translations[lang][key];
-            }
+        // FAQ toggle
+        function toggleFAQ(item) {
+            const p = item.querySelector('p');
+            p.style.display = p.style.display === 'block' ? 'none' : 'block';
+        }
+
+        // Waitlist form open/close
+        function openForm() {
+            document.getElementById('waitlist-form').style.display = 'flex';
+        }
+        function closeForm() {
+            document.getElementById('waitlist-form').style.display = 'none';
+        }
+
+        // Scroll Progress & Scroll to Top
+        window.addEventListener('scroll', function() {
+            updateScroll();
         });
-    }
-</script>
+
+        function updateScroll() {
+            const scrollTop = window.scrollY;
+            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const scrollPercent = (scrollTop / docHeight) * 100;
+
+            // Progress bar
+            const progress = document.getElementById('scroll-progress').querySelector('div');
+            progress.style.width = scrollPercent + '%';
+
+            // Scroll to top button
+            const btn = document.getElementById('scroll-top-btn');
+            if (scrollTop > 200) {
+                btn.style.display = 'block';
+            } else {
+                btn.style.display = 'none';
+            }
+        }
+
+        function scrollToTop() {
+            window.scrollTo({top:0, behavior:'smooth'});
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            updateScroll();
+        });
+    </script>
 </body>
 </html>
