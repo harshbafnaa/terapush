@@ -3,813 +3,230 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Terapush - Bridging the Gap</title>
-    <link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <title>Terapush - Bridge Startups, Investors & Talent</title>
+    <link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@400;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --primary-color: #4CAF50; /* A nice green, customizable */
-            --secondary-color: #333;
-            --text-color: #555;
-            --light-bg: #f8f8f8;
-            --white: #fff;
-            --dark-gray: #777;
-        }
+        /* Reset */
+        * {margin:0; padding:0; box-sizing:border-box;}
+        body {font-family:'Poppins', sans-serif; line-height:1.6; color:#111; background:#fafafa; scroll-behavior:smooth;}
+        a {text-decoration:none; color:inherit;}
+        ul {list-style:none;}
+        img {max-width:100%; height:auto; display:block;}
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+        /* Navbar */
+        nav {display:flex; justify-content:space-between; align-items:center; padding:1rem 2rem; background:#fff; position:fixed; width:100%; z-index:1000; box-shadow:0 5px 15px rgba(0,0,0,0.05);}
+        .logo {font-family:'League Spartan', sans-serif; font-size:1.8rem; font-weight:700; color:#111; letter-spacing:1px;}
+        .nav-links {display:flex; gap:2rem; font-weight:500;}
+        .nav-links a {position:relative; transition:0.3s;}
+        .nav-links a::after {content:''; position:absolute; width:0%; height:2px; left:0; bottom:-3px; background:#0070f3; transition:0.3s;}
+        .nav-links a:hover::after {width:100%;}
+        .hamburger {display:none; cursor:pointer; flex-direction:column; gap:5px;}
+        .hamburger div {width:25px; height:3px; background:#111; transition:0.3s;}
 
-        body {
-            font-family: 'Poppins', sans-serif;
-            line-height: 1.6;
-            color: var(--text-color);
-            background-color: var(--white);
-            scroll-behavior: smooth;
-        }
+        /* Hero */
+        header {height:100vh; display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center; padding:0 1rem; background:linear-gradient(135deg,#f0f4ff,#ffffff);}
+        header h1 {font-family:'League Spartan', sans-serif; font-size:3rem; margin-bottom:1rem; color:#111;}
+        header p {font-size:1.2rem; max-width:700px; margin-bottom:2rem; color:#444;}
+        header .cta-buttons a {display:inline-block; margin:0 0.5rem; padding:0.75rem 1.8rem; border-radius:30px; background:#0070f3; color:#fff; font-weight:600; transition:0.3s; box-shadow:0 5px 15px rgba(0,112,243,0.3);}
+        header .cta-buttons a:hover {background:#0051a3; transform:translateY(-2px); box-shadow:0 8px 20px rgba(0,81,163,0.4);}
 
-        h1, h2, h3, h4, h5, h6 {
-            color: var(--secondary-color);
-            font-weight: 600;
-        }
+        /* Sections */
+        section {padding:6rem 2rem;}
+        h2 {font-family:'League Spartan', sans-serif; font-size:2.5rem; margin-bottom:2rem; text-align:center; color:#111;}
+        p {margin-bottom:1rem; color:#555;}
+        .container {max-width:1200px; margin:0 auto;}
 
-        a {
-            text-decoration: none;
-            color: var(--primary-color);
-        }
+        /* About */
+        .founders {display:flex; flex-wrap:wrap; gap:2rem; justify-content:center; margin-top:2rem;}
+        .founder {text-align:center; flex:1 1 200px; transition:0.3s;}
+        .founder img {border-radius:50%; width:150px; height:150px; object-fit:cover; margin-bottom:1rem; border:4px solid #0070f3;}
+        .founder h4 {font-weight:600; margin-bottom:0.5rem;}
+        .founder p {font-size:0.95rem; color:#666;}
+        .founder:hover {transform:translateY(-5px);}
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-        }
+        /* Services */
+        .services-grid {display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:2rem;}
+        .service {background:#fff; padding:2rem; border-radius:20px; box-shadow:0 5px 20px rgba(0,0,0,0.05); transition:0.3s;}
+        .service:hover {transform:translateY(-5px); box-shadow:0 10px 25px rgba(0,0,0,0.1);}
+        .service h4 {margin-bottom:1rem; color:#0070f3;}
+        .service p {color:#555;}
 
-        /* Header & Navigation */
-        .header {
-            background-color: var(--white);
-            padding: 15px 0;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-        }
+        /* FAQ */
+        .faq-container {max-width:800px; margin:0 auto;}
+        .faq-item {margin-bottom:1.5rem; border-bottom:1px solid #ccc; padding-bottom:1rem;}
+        .faq-item h4 {cursor:pointer; margin-bottom:0.5rem; color:#0070f3;}
+        .faq-item p {display:none; font-size:0.95rem; color:#555;}
 
-        .navbar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
+        /* Waitlist & WhatsApp */
+        .cta-container {display:flex; flex-wrap:wrap; gap:1rem; justify-content:center;}
+        .cta-container a {padding:0.85rem 2rem; background:#25D366; color:#fff; border-radius:30px; font-weight:600; transition:0.3s; box-shadow:0 5px 15px rgba(37,211,102,0.3);}
+        .cta-container a:hover {background:#128C7E; transform:translateY(-2px); box-shadow:0 8px 20px rgba(18,140,126,0.4);}
 
-        .logo {
-            font-family: 'League Spartan', sans-serif;
-            font-size: 2.2em;
-            font-weight: 700;
-            color: var(--primary-color);
-            letter-spacing: -1px;
-        }
-
-        .nav-links {
-            list-style: none;
-            display: flex;
-        }
-
-        .nav-links li {
-            margin-left: 30px;
-        }
-
-        .nav-links a {
-            color: var(--secondary-color);
-            font-weight: 500;
-            transition: color 0.3s ease;
-        }
-
-        .nav-links a:hover {
-            color: var(--primary-color);
-        }
-
-        .hamburger {
-            display: none;
-            cursor: pointer;
-            flex-direction: column;
-            justify-content: space-around;
-            width: 30px;
-            height: 25px;
-        }
-
-        .hamburger .bar {
-            width: 100%;
-            height: 3px;
-            background-color: var(--secondary-color);
-            transition: all 0.3s ease;
-        }
-
-        /* Mobile Nav Menu */
-        .mobile-nav-menu {
-            display: none; /* Hidden by default */
-            background-color: var(--secondary-color);
-            position: fixed;
-            top: 0;
-            right: -300px; /* Off-screen */
-            width: 300px;
-            height: 100%;
-            padding-top: 60px;
-            box-shadow: -2px 0 10px rgba(0,0,0,0.2);
-            transition: right 0.3s ease-in-out;
-            z-index: 999;
-            overflow-y: auto;
-        }
-
-        .mobile-nav-menu.active {
-            right: 0; /* Slide in */
-        }
-
-        .mobile-nav-menu .close-btn {
-            color: var(--white);
-            font-size: 2.5em;
-            position: absolute;
-            top: 10px;
-            right: 20px;
-            cursor: pointer;
-        }
-
-        .mobile-nav-menu ul {
-            list-style: none;
-            padding: 20px;
-        }
-
-        .mobile-nav-menu ul li {
-            margin-bottom: 20px;
-        }
-
-        .mobile-nav-menu ul li a {
-            color: var(--white);
-            font-size: 1.2em;
-            display: block;
-            padding: 10px 0;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
-        }
-
-        .mobile-nav-menu ul li:last-child a {
-            border-bottom: none;
-        }
-
-        .mobile-nav-menu ul li a:hover {
-            color: var(--primary-color);
-        }
-
-        /* Sections Styling */
-        section {
-            padding: 80px 0;
-            text-align: center;
-        }
-
-        section:nth-of-type(even) {
-            background-color: var(--light-bg);
-        }
-
-        .section-title {
-            font-size: 2.5em;
-            margin-bottom: 40px;
-            color: var(--secondary-color);
-            position: relative;
-            padding-bottom: 15px;
-        }
-
-        .section-title::after {
-            content: '';
-            position: absolute;
-            left: 50%;
-            bottom: 0;
-            transform: translateX(-50%);
-            width: 60px;
-            height: 4px;
-            background-color: var(--primary-color);
-            border-radius: 2px;
-        }
-
-        /* Home Section */
-        #home {
-            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://via.placeholder.com/1500x800/222222/FFFFFF?text=Terapush+Hero+Image') no-repeat center center/cover; /* Placeholder, replace with actual image */
-            color: var(--white);
-            height: 80vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-direction: column;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
-        }
-
-        #home .tagline {
-            font-family: 'League Spartan', sans-serif;
-            font-size: 3.5em;
-            margin-bottom: 20px;
-            line-height: 1.1;
-        }
-
-        #home .sub-text {
-            font-size: 1.5em;
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        /* About Section */
-        #about .content {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 40px;
-            text-align: left;
-            margin-top: 40px;
-        }
-
-        #about .founder-info,
-        #about .about-text {
-            flex: 1;
-            min-width: 300px;
-        }
-
-        #about .founder-image {
-            width: 150px;
-            height: 150px;
-            border-radius: 50%;
-            object-fit: cover;
-            margin-bottom: 15px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-        }
-
-        #about h3 {
-            color: var(--primary-color);
-            margin-bottom: 10px;
-        }
-
-        #about p {
-            margin-bottom: 15px;
-            color: var(--dark-gray);
-        }
-
-        /* Services Section */
-        #services .service-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-            margin-top: 40px;
-            text-align: left;
-        }
-
-        #services .service-item {
-            background-color: var(--white);
-            padding: 30px;
-            border-radius: 8px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        #services .service-item:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 6px 20px rgba(0,0,0,0.12);
-        }
-
-        #services .service-item h3 {
-            color: var(--primary-color);
-            margin-bottom: 15px;
-        }
-
-        #services .service-item p {
-            color: var(--dark-gray);
-        }
-
-        /* FAQ Section */
-        #faq .faq-item {
-            background-color: var(--white);
-            border: 1px solid #eee;
-            margin-bottom: 15px;
-            border-radius: 8px;
-            text-align: left;
-        }
-
-        #faq .faq-question {
-            padding: 20px;
-            cursor: pointer;
-            font-weight: 600;
-            color: var(--secondary-color);
-            position: relative;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        #faq .faq-question::after {
-            content: '+';
-            font-size: 1.5em;
-            transition: transform 0.3s ease;
-        }
-
-        #faq .faq-question.active::after {
-            transform: rotate(45deg);
-        }
-
-        #faq .faq-answer {
-            padding: 0 20px 20px;
-            color: var(--dark-gray);
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.3s ease-out, padding 0.3s ease-out;
-        }
-
-        #faq .faq-answer.active {
-            max-height: 200px; /* Adjust as needed */
-            padding-top: 10px;
-            transition: max-height 0.3s ease-in, padding 0.3s ease-in;
-        }
-
-        /* Waitlist & Community */
-        #join {
-            background-color: var(--primary-color);
-            color: var(--white);
-            padding: 60px 0;
-        }
-
-        #join .section-title {
-            color: var(--white);
-        }
-
-        #join .section-title::after {
-            background-color: var(--white);
-        }
-
-        #join .button-group {
-            margin-top: 40px;
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 20px;
-        }
-
-        #join .btn {
-            background-color: var(--white);
-            color: var(--primary-color);
-            padding: 15px 30px;
-            border-radius: 5px;
-            font-weight: 600;
-            font-size: 1.1em;
-            transition: background-color 0.3s ease, color 0.3s ease;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        #join .btn:hover {
-            background-color: var(--secondary-color);
-            color: var(--white);
-        }
-
-        /* Contact Section */
-        #contact .contact-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 30px;
-            margin-top: 40px;
-        }
-
-        #contact .contact-item {
-            background-color: var(--white);
-            padding: 30px;
-            border-radius: 8px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-            text-align: left;
-        }
-
-        #contact .contact-item h3 {
-            color: var(--primary-color);
-            margin-bottom: 10px;
-        }
-
-        #contact .contact-item p {
-            margin-bottom: 5px;
-        }
-
-        #contact .social-links {
-            margin-top: 20px;
-            display: flex;
-            gap: 15px;
-            justify-content: center;
-        }
-
-        #contact .social-links a {
-            font-size: 1.8em;
-            color: var(--secondary-color);
-            transition: color 0.3s ease;
-        }
-
-        #contact .social-links a:hover {
-            color: var(--primary-color);
-        }
-
-        /* Disclaimer */
-        #disclaimer {
-            background-color: var(--light-bg);
-            padding: 60px 0;
-        }
-        #disclaimer .disclaimer-content {
-            max-width: 800px;
-            margin: 0 auto;
-            text-align: left;
-            color: var(--dark-gray);
-        }
-        #disclaimer .disclaimer-content h3 {
-            color: var(--secondary-color);
-            margin-bottom: 20px;
-        }
+        /* Contact */
+        .contact-info {display:flex; flex-direction:column; gap:0.7rem; text-align:center; color:#555;}
+        .contact-info a {color:#0070f3; transition:0.3s;}
+        .contact-info a:hover {text-decoration:underline;}
 
         /* Footer */
-        .footer {
-            background-color: var(--secondary-color);
-            color: var(--white);
-            padding: 40px 0;
-            font-size: 0.9em;
+        footer {background:#111; color:#fff; padding:3rem 2rem; text-align:center;}
+        footer a {color:#fff; margin:0 0.5rem; transition:0.3s;}
+        footer a:hover {color:#0070f3;}
+        .footer-bottom {margin-top:2rem; font-size:0.85rem;}
+
+        /* Responsive */
+        @media(max-width:768px){
+            .nav-links {position:fixed; top:0; right:-100%; height:100vh; width:70%; background:#fff; flex-direction:column; align-items:center; justify-content:center; gap:2rem; transition:0.3s;}
+            .nav-links.show {right:0;}
+            .hamburger {display:flex;}
         }
 
-        .footer .container {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
-            align-items: center;
-            text-align: center;
-        }
-
-        .footer .footer-links {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 20px;
-            list-style: none;
-        }
-
-        .footer .footer-links a {
-            color: var(--white);
-            transition: color 0.3s ease;
-        }
-
-        .footer .footer-links a:hover {
-            color: var(--primary-color);
-        }
-
-        .footer .copyright {
-            margin-top: 20px;
-            flex-basis: 100%;
-        }
-
-        /* Responsive Design */
-        @media (max-width: 992px) {
-            .nav-links {
-                display: none;
-            }
-
-            .hamburger {
-                display: flex;
-            }
-
-            #home .tagline {
-                font-size: 2.8em;
-            }
-
-            #home .sub-text {
-                font-size: 1.2em;
-            }
-
-            .section-title {
-                font-size: 2em;
-            }
-
-            .footer .container {
-                flex-direction: column;
-                gap: 20px;
-            }
-
-            .footer .footer-links {
-                justify-content: center;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .navbar {
-                padding: 0 15px;
-            }
-
-            #home {
-                height: 70vh;
-            }
-
-            #home .tagline {
-                font-size: 2.2em;
-            }
-
-            #home .sub-text {
-                font-size: 1em;
-                padding: 0 15px;
-            }
-
-            section {
-                padding: 60px 0;
-            }
-
-            .section-title {
-                font-size: 1.8em;
-            }
-
-            #about .content {
-                flex-direction: column;
-                gap: 30px;
-                text-align: center;
-            }
-
-            #about .founder-image {
-                margin: 0 auto 15px auto;
-            }
-
-            #services .service-item,
-            #contact .contact-item {
-                padding: 25px;
-            }
-
-            #faq .faq-question {
-                font-size: 0.95em;
-            }
-
-            #join .button-group {
-                flex-direction: column;
-                align-items: center;
-            }
-
-            .footer .footer-links {
-                flex-direction: column;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .logo {
-                font-size: 1.8em;
-            }
-
-            #home .tagline {
-                font-size: 1.8em;
-            }
-
-            #home .sub-text {
-                font-size: 0.9em;
-            }
-
-            .section-title {
-                font-size: 1.6em;
-            }
-
-            .btn {
-                width: 90%;
-            }
-        }
     </style>
-    <!-- Font Awesome for icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
+    <!-- Navbar -->
+    <nav>
+        <div class="logo">Terapush</div>
+        <div class="nav-links">
+            <a href="#home">Home</a>
+            <a href="#about">About</a>
+            <a href="#services">Services</a>
+            <a href="#faq">FAQ</a>
+            <a href="#waitlist">Join</a>
+            <a href="#contact">Contact</a>
+        </div>
+        <div class="hamburger" onclick="toggleMenu()">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </nav>
 
-    <header class="header">
-        <nav class="navbar">
-            <a href="#" class="logo">Terapush</a>
-            <ul class="nav-links">
-                <li><a href="#home">Home</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#services">Services</a></li>
-                <li><a href="#faq">FAQ's</a></li>
-                <li><a href="#join">Join Us</a></li>
-                <li><a href="#contact">Contact</a></li>
-            </ul>
-            <div class="hamburger">
-                <div class="bar"></div>
-                <div class="bar"></div>
-                <div class="bar"></div>
-            </div>
-        </nav>
+    <!-- Hero Section -->
+    <header id="home">
+        <h1>Bridge Startups, Investors & Talent</h1>
+        <p>Terapush is a social media platform connecting startups, investors, service providers, and job seekers, empowering collaboration and growth within the ecosystem.</p>
+        <div class="cta-buttons">
+            <a href="#waitlist">Join Waitlist</a>
+            <a href="#contact">Contact Us</a>
+        </div>
     </header>
 
-    <!-- Mobile Navigation Menu (Hidden by default) -->
-    <div class="mobile-nav-menu" id="mobileNavMenu">
-        <span class="close-btn" onclick="toggleMobileMenu()">&times;</span>
-        <ul>
-            <li><a href="#home" onclick="toggleMobileMenu()">Home</a></li>
-            <li><a href="#about" onclick="toggleMobileMenu()">About</a></li>
-            <li><a href="#services" onclick="toggleMobileMenu()">Services</a></li>
-            <li><a href="#faq" onclick="toggleMobileMenu()">FAQ's</a></li>
-            <li><a href="#join" onclick="toggleMobileMenu()">Join Us</a></li>
-            <li><a href="#contact" onclick="toggleMobileMenu()">Contact</a></li>
-            <li><a href="#disclaimer" onclick="toggleMobileMenu()">Disclaimer</a></li>
-            <li><a href="#privacy-policy" onclick="toggleMobileMenu()">Privacy Policy</a></li>
-            <li><a href="#data-protection" onclick="toggleMobileMenu()">Data Protection</a></li>
-        </ul>
-    </div>
-
-    <!-- 1: Home Section -->
-    <section id="home">
-        <div class="container">
-            <h1 class="tagline">Innovate. Invest. Grow.<br>Your Ecosystem for Success.</h1>
-            <p class="sub-text">Terapush is the premier social media platform connecting ambitious startups with visionary investors, skilled job seekers, and essential business service providers to foster growth and innovation.</p>
-        </div>
-    </section>
-
-    <!-- 2: About and Founder Message -->
+    <!-- About Section -->
     <section id="about">
+        <h2>About Terapush</h2>
         <div class="container">
-            <h2 class="section-title">About Terapush</h2>
-            <div class="content">
-                <div class="about-text">
-                    <p>Terapush was founded in 2025 with a clear vision: to create a dynamic, interconnected ecosystem where innovation thrives. We observed a significant gap in the market where promising startups struggled to find the right funding, talent, and support, while investors sought vetted opportunities, and skilled professionals desired meaningful roles within the vibrant startup world. Our platform is designed to bridge these gaps, offering a comprehensive suite of tools and networking capabilities that empower every participant to achieve their goals.</p>
-                    <p>We believe in the power of connection and collaboration. By bringing together diverse stakeholders, Terapush cultivates an environment where ideas transform into successful ventures, careers are launched, and service providers become integral partners in the journey of growth. We are committed to fostering transparency, efficiency, and mutual success across the entire startup landscape.</p>
+            <p>Founded in 2025 by Harsh Bafna, Jaivik Bilimoria, and Mansi Rajpurohit, Terapush India Private Limited empowers startups and investors by creating a seamless, collaborative ecosystem.</p>
+            <div class="founders">
+                <div class="founder">
+                    <img src="https://via.placeholder.com/150" alt="Harsh Bafna">
+                    <h4>Harsh Bafna</h4>
+                    <p>"Our mission is to simplify the path from idea to growth for every entrepreneur."</p>
                 </div>
-                <div class="founder-info">
-                    <img src="https://via.placeholder.com/150/4CAF50/FFFFFF?text=Harsh" alt="Harsh Bafna" class="founder-image">
-                    <h3>A Message from the Founders</h3>
-                    <p>"As founders of Terapush, we, Harsh Bafna, Jaivik Bilimoria, and Mansi Rajpurohit, are incredibly passionate about fueling the startup revolution. We've seen firsthand the challenges and triumphs of this dynamic sector. Terapush is our answer to creating a more accessible, efficient, and supportive environment for everyone involved. We're building more than just a platform; we're cultivating a community where potential is unlocked, partnerships are forged, and dreams are realized. Join us in shaping the future of innovation."</p>
-                    <p>— Harsh Bafna, Jaivik Bilimoria, Mansi Rajpurohit (Founded in 2025)</p>
+                <div class="founder">
+                    <img src="https://via.placeholder.com/150" alt="Jaivik Bilimoria">
+                    <h4>Jaivik Bilimoria</h4>
+                    <p>"Connecting investors, startups, and talent in a single seamless platform."</p>
+                </div>
+                <div class="founder">
+                    <img src="https://via.placeholder.com/150" alt="Mansi Rajpurohit">
+                    <h4>Mansi Rajpurohit</h4>
+                    <p>"Empowering businesses and individuals to collaborate and innovate effortlessly."</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- 3: Services Section -->
+    <!-- Services Section -->
     <section id="services">
-        <div class="container">
-            <h2 class="section-title">Our Comprehensive Services</h2>
-            <div class="service-grid">
-                <div class="service-item">
-                    <h3>For Startups</h3>
-                    <p>Access visionary investors, essential resources, networking opportunities, and crucial HR support to build and scale your team efficiently. Find the funding and talent you need to grow.</p>
-                </div>
-                <div class="service-item">
-                    <h3>For Investors</h3>
-                    <p>Discover promising, vetted startups, access due diligence support, and connect with a robust network of entrepreneurs and industry experts. Make informed investment decisions with confidence.</p>
-                </div>
-                <div class="service-item">
-                    <h3>For Service Providers</h3>
-                    <p>Engage in exciting projects with innovative startups, showcase your expertise, and collaborate on groundbreaking initiatives. Expand your client base and professional network.</p>
-                </div>
-                <div class="service-item">
-                    <h3>For Job Seekers</h3>
-                    <p>Gain access to diverse opportunities within the thriving startup ecosystem, including full-time positions and freelance projects. Build valuable connections and skills through our professional network.</p>
-                </div>
+        <h2>Our Services</h2>
+        <div class="container services-grid">
+            <div class="service">
+                <h4>For Startups</h4>
+                <p>Access investors, essential resources, networking opportunities, and HR support to scale your team effectively.</p>
+            </div>
+            <div class="service">
+                <h4>For Investors</h4>
+                <p>Discover promising startups, access due diligence support, and connect with entrepreneurs and industry experts.</p>
+            </div>
+            <div class="service">
+                <h4>For Service Providers</h4>
+                <p>Engage in projects with startups, showcase your expertise, and collaborate on innovative initiatives.</p>
+            </div>
+            <div class="service">
+                <h4>For Job Seekers</h4>
+                <p>Find diverse opportunities within the startup ecosystem and build valuable skills through our professional network.</p>
             </div>
         </div>
     </section>
 
-    <!-- 4: FAQ's Section -->
+    <!-- FAQ Section -->
     <section id="faq">
-        <div class="container">
-            <h2 class="section-title">Frequently Asked Questions</h2>
-            <div class="faq-list">
-                <div class="faq-item">
-                    <div class="faq-question">What kind of startups can join Terapush?</div>
-                    <div class="faq-answer">Terapush welcomes startups from all industries and stages, from early-seed to Series A and beyond. Our platform is designed to cater to a diverse range of innovative ventures.</div>
-                </div>
-                <div class="faq-item">
-                    <div class="faq-question">How does Terapush help investors find suitable startups?</div>
-                    <div class="faq-answer">Investors can utilize advanced filters to discover startups based on industry, funding stage, traction, and more. We also provide curated introductions and due diligence support to facilitate informed decisions.</div>
-                </div>
-                <div class="faq-item">
-                    <div class="faq-question">Is there a cost associated with using Terapush?</div>
-                    <div class="faq-answer">Terapush offers various membership tiers, including free access for basic features and premium subscriptions with enhanced benefits for startups, investors, and service providers. Specific pricing details are available upon joining.</div>
-                </div>
-                <div class="faq-item">
-                    <div class="faq-question">How does Terapush ensure the quality of service providers?</div>
-                    <div class="faq-answer">Service providers on Terapush undergo a vetting process and are encouraged to showcase their portfolios and client testimonials. Our platform also allows for ratings and reviews from startups they've worked with.</div>
-                </div>
-                <div class="faq-item">
-                    <div class="faq-question">What kind of job opportunities are available for job seekers?</div>
-                    <div class="faq-answer">Job seekers can find a wide array of roles, including full-time, part-time, internship, and freelance positions across various departments like tech, marketing, operations, and design within our network of startups.</div>
-                </div>
+        <h2>FAQs</h2>
+        <div class="faq-container">
+            <div class="faq-item" onclick="toggleFAQ(this)">
+                <h4>How can startups connect with investors?</h4>
+                <p>Startups can create a profile, showcase their business, and reach out to interested investors through our platform.</p>
+            </div>
+            <div class="faq-item" onclick="toggleFAQ(this)">
+                <h4>Can investors access due diligence support?</h4>
+                <p>Yes, investors can request due diligence reports and insights on startups before making funding decisions.</p>
+            </div>
+            <div class="faq-item" onclick="toggleFAQ(this)">
+                <h4>How do service providers find projects?</h4>
+                <p>Service providers can browse startup listings, submit proposals, and collaborate on initiatives directly on Terapush.</p>
+            </div>
+            <div class="faq-item" onclick="toggleFAQ(this)">
+                <h4>Are there opportunities for job seekers?</h4>
+                <p>Job seekers can apply for full-time or freelance positions, connect with startups, and enhance their professional network.</p>
             </div>
         </div>
     </section>
 
-    <!-- 5: Waitlist Join & WhatsApp Community Join -->
-    <section id="join">
-        <div class="container">
-            <h2 class="section-title">Join Our Growing Community!</h2>
-            <p>Be part of the Terapush ecosystem. Connect, collaborate, and thrive.</p>
-            <div class="button-group">
-                <a href="#contact" class="btn"><i class="fas fa-list-alt"></i> Join the Waitlist</a>
-                <a href="https://chat.whatsapp.com/your_whatsapp_community_link" target="_blank" class="btn"><i class="fab fa-whatsapp"></i> Join WhatsApp Community</a>
-            </div>
+    <!-- Waitlist & WhatsApp Section -->
+    <section id="waitlist">
+        <h2>Join Our Community</h2>
+        <div class="cta-container">
+            <a href="#">Join Waitlist</a>
+            <a href="https://wa.me/918317353649" target="_blank">Join WhatsApp</a>
         </div>
     </section>
 
-    <!-- 6: Contact Section -->
+    <!-- Contact Section -->
     <section id="contact">
-        <div class="container">
-            <h2 class="section-title">Get in Touch</h2>
-            <div class="contact-grid">
-                <div class="contact-item">
-                    <h3><i class="fas fa-phone-alt"></i> Call Us</h3>
-                    <p>+91 8317353649</p>
-                </div>
-                <div class="contact-item">
-                    <h3><i class="fas fa-envelope"></i> Email Us</h3>
-                    <p><a href="mailto:contact@terapush.in">contact@terapush.in</a></p>
-                </div>
-                <div class="contact-item">
-                    <h3><i class="fas fa-map-marker-alt"></i> Visit Us</h3>
-                    <p>Terapush India Private Limited</p>
-                    <p>1st Floor, SPD Plaza, KHB Colony, Koramangala 4-B Block, 5th Block, Koramangala, Bengaluru, Karnataka 560095</p>
-                </div>
-            </div>
-            <div class="social-links">
-                <a href="https://linkedin.com/company/terapush" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
-                <a href="https://instagram.com/terapush" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-                <a href="https://youtube.com/terapushindia" target="_blank" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
-            </div>
+        <h2>Contact Us</h2>
+        <div class="container contact-info">
+            <p>Phone: +91 83173 53649</p>
+            <p>Email: <a href="mailto:contact@terapush.in">contact@terapush.in</a></p>
+            <p>Address: Terapush India Private Limited, 1st Floor, SPD Plaza, KHB Colony, Koramangala 4-B Block, 5th Block, Koramangala, Bengaluru, Karnataka 560095</p>
+            <p>Social: <a href="https://linkedin.com/terapush" target="_blank">LinkedIn</a> | <a href="https://instagram.com/terapush" target="_blank">Instagram</a> | <a href="https://youtube.com/terapushindia" target="_blank">YouTube</a></p>
         </div>
     </section>
 
-    <!-- 7: Disclaimer on Investments and Risks -->
+    <!-- Disclaimer Section -->
     <section id="disclaimer">
-        <div class="container">
-            <h2 class="section-title">Investment Disclaimer</h2>
-            <div class="disclaimer-content">
-                <p><strong>Please Read Carefully:</strong> The information provided on Terapush is for general informational purposes only and does not constitute financial, investment, legal, or other professional advice. Terapush is a platform for connecting various stakeholders in the startup ecosystem; we do not provide investment advice or guarantee any returns on investments.</p>
-                <p>Investing in startups and early-stage companies involves a high degree of risk, including the potential loss of your entire investment. Such investments are highly speculative and illiquid. You should be aware that past performance is not indicative of future results.</p>
-                <p>It is crucial for investors to conduct their own thorough due diligence and seek independent financial and legal advice before making any investment decisions. Terapush does not endorse or recommend any specific investment opportunities, startups, or individuals. Users are solely responsible for evaluating the merits and risks associated with the use of any information or services provided on this platform.</p>
-                <p>By using Terapush, you acknowledge and agree that Terapush India Private Limited shall not be liable for any direct, indirect, incidental, special, consequential, or exemplary damages, including but not limited to, damages for loss of profits, goodwill, use, data, or other intangible losses resulting from the use or inability to use the platform or any investment decisions made.</p>
-            </div>
-        </div>
+        <h2>Disclaimer</h2>
+        <p>Investments in startups involve risk. Terapush is a platform to connect stakeholders and does not guarantee returns. Users should conduct independent due diligence before making investment decisions.</p>
     </section>
 
-    <!-- 8 & 9: Footer with Data Protection, Privacy Policy, and Copyright -->
-    <footer class="footer">
-        <div class="container">
-            <div class="copyright">
-                <p>&copy; 2025 Terapush India Private Limited. All rights reserved.</p>
-            </div>
-            <ul class="footer-links">
-                <li><a href="#privacy-policy">Privacy Policy</a></li>
-                <li><a href="#data-protection">Data Protection</a></li>
-                <li><a href="#disclaimer">Disclaimer</a></li>
-            </ul>
+    <!-- Footer -->
+    <footer>
+        <p><a href="#">Data Protection</a> | <a href="#">Privacy Policy</a></p>
+        <div class="footer-bottom">
+            &copy; 2025 Terapush India Private Limited. All rights reserved.
         </div>
     </footer>
 
     <script>
-        // Smooth scrolling for navigation links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
-                    behavior: 'smooth'
-                });
-            });
-        });
-
-        // Hamburger menu functionality
-        const hamburger = document.querySelector('.hamburger');
-        const mobileNavMenu = document.getElementById('mobileNavMenu');
-        const body = document.body;
-
-        function toggleMobileMenu() {
-            mobileNavMenu.classList.toggle('active');
-            body.classList.toggle('no-scroll'); // Optional: prevent scrolling when menu is open
+        // Mobile menu toggle
+        function toggleMenu() {
+            document.querySelector('.nav-links').classList.toggle('show');
         }
 
-        hamburger.addEventListener('click', toggleMobileMenu);
-
-        // Close mobile menu when a link is clicked
-        document.querySelectorAll('.mobile-nav-menu a').forEach(link => {
-            link.addEventListener('click', () => {
-                mobileNavMenu.classList.remove('active');
-                body.classList.remove('no-scroll');
-            });
-        });
-
-
-        // FAQ Accordion
-        document.querySelectorAll('.faq-question').forEach(item => {
-            item.addEventListener('click', event => {
-                const faqItem = event.target.closest('.faq-item');
-                const answer = faqItem.querySelector('.faq-answer');
-                const question = faqItem.querySelector('.faq-question');
-
-                // Close other open FAQs
-                document.querySelectorAll('.faq-item').forEach(otherItem => {
-                    if (otherItem !== faqItem) {
-                        otherItem.querySelector('.faq-answer').classList.remove('active');
-                        otherItem.querySelector('.faq-question').classList.remove('active');
-                    }
-                });
-
-                answer.classList.toggle('active');
-                question.classList.toggle('active');
-            });
-        });
+        // FAQ toggle
+        function toggleFAQ(item) {
+            const p = item.querySelector('p');
+            p.style.display = p.style.display === 'block' ? 'none' : 'block';
+        }
     </script>
 </body>
 </html>
