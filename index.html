@@ -63,16 +63,23 @@
     /* Join Community */
     #waitlist {background:linear-gradient(135deg,#e0f7f1,#ffffff);}
     .cta-container {display:flex; flex-wrap:wrap; gap:1rem; justify-content:center;}
-    .cta-container a, .cta-container button {padding:0.85rem 2rem; background:#25D366; color:#fff; border:none; border-radius:30px; font-weight:600; transition:0.3s; box-shadow:0 5px 15px rgba(37,211,102,0.3); cursor:pointer;}
-    .cta-container a:hover, .cta-container button:hover {background:#128C7E; transform:translateY(-2px); box-shadow:0 8px 20px rgba(18,140,126,0.4);}
-    .cta-container form {display:flex; gap:1rem; flex-wrap:wrap; justify-content:center; align-items:center;}
-    .cta-container input[type="email"] {padding:0.75rem 1rem; border-radius:30px; border:1px solid #ccc; width:250px; font-size:1rem;}
-    .cta-container input[type="email"]:focus {outline:none; border-color:#0070f3; box-shadow:0 0 5px rgba(0,112,243,0.3);}
+    .cta-container a {padding:0.85rem 2rem; background:#25D366; color:#fff; border-radius:30px; font-weight:600; transition:0.3s; box-shadow:0 5px 15px rgba(37,211,102,0.3);}
+    .cta-container a:hover {background:#128C7E; transform:translateY(-2px); box-shadow:0 8px 20px rgba(18,140,126,0.4);}
+    /* Form Modal */
+    #waitlist-form {display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); justify-content:center; align-items:center; z-index:2000;}
+    #waitlist-form .form-content {background:#fff; padding:2rem; border-radius:10px; width:90%; max-width:400px; position:relative;}
+    #waitlist-form h3 {text-align:center; margin-bottom:1rem;}
+    #waitlist-form form {display:flex; flex-direction:column; gap:1rem;}
+    #waitlist-form input, #waitlist-form select {padding:0.75rem; border-radius:5px; border:1px solid #ccc; font-size:1rem;}
+    #waitlist-form button {padding:0.85rem; border-radius:30px; border:none; background:#0070f3; color:#fff; font-weight:600; cursor:pointer; transition:0.3s;}
+    #waitlist-form button:hover {background:#0051a3;}
+    #waitlist-form .close-btn {position:absolute; top:10px; right:15px; font-size:1.5rem; cursor:pointer; color:#333; transition:0.3s;}
+    #waitlist-form .close-btn:hover {color:#0070f3;}
 
     /* Contact */
-    .contact-info {display:flex; flex-direction:column; gap:0.7rem; text-align:center; color:#555;}
-    .contact-info a {color:#0070f3; transition:0.3s;}
-    .contact-info a:hover {text-decoration:underline;}
+    #contact .contact-info {display:flex; flex-direction:column; gap:0.7rem; text-align:center; color:#555;}
+    #contact .contact-info a {color:#0070f3; transition:0.3s;}
+    #contact .contact-info a:hover {text-decoration:underline;}
 
     /* Footer */
     footer {background:#111; color:#fff; padding:3rem 2rem; text-align:center;}
@@ -192,13 +199,30 @@
     <section id="waitlist">
         <h2>Join Our Community</h2>
         <div class="cta-container">
-            <form method="POST" action="https://formspree.io/f/xgvykjgv" target="_blank">
-                <input type="email" name="email" placeholder="Enter your email" required />
-                <button type="submit">Join Waitlist</button>
-            </form>
+            <a href="javascript:void(0);" onclick="openForm()">Join Waitlist</a>
             <a href="https://whatsapp.com/channel/0029VajAWwSJuyAB0Ywz6m0k" target="_blank">Join WhatsApp</a>
         </div>
     </section>
+
+    <!-- Waitlist Form Modal -->
+    <div id="waitlist-form">
+        <div class="form-content">
+            <span class="close-btn" onclick="closeForm()">&times;</span>
+            <h3>Join Waitlist</h3>
+            <form action="https://formspree.io/f/xgvykjgv" method="POST">
+                <input type="text" name="name" placeholder="Your Name" required>
+                <input type="email" name="email" placeholder="Your Email" required>
+                <select name="usertype" required>
+                    <option value="">Select User Type</option>
+                    <option value="Startup">Startup</option>
+                    <option value="Investor">Investor</option>
+                    <option value="Jobseeker">Jobseeker</option>
+                    <option value="Service Provider">Service Provider</option>
+                </select>
+                <button type="submit">Submit</button>
+            </form>
+        </div>
+    </div>
 
     <!-- Contact Section -->
     <section id="contact">
@@ -232,7 +256,6 @@
             nav.classList.toggle('show');
             hamburger.classList.toggle('open');
         }
-        // Close menu when link clicked
         function closeMenu() {
             document.querySelector('.nav-links').classList.remove('show');
             document.querySelector('.hamburger').classList.remove('open');
@@ -241,6 +264,13 @@
         function toggleFAQ(item) {
             const p = item.querySelector('p');
             p.style.display = p.style.display === 'block' ? 'none' : 'block';
+        }
+        // Open/Close Waitlist Form
+        function openForm() {
+            document.getElementById('waitlist-form').style.display = 'flex';
+        }
+        function closeForm() {
+            document.getElementById('waitlist-form').style.display = 'none';
         }
     </script>
 </body>
