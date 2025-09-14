@@ -1,100 +1,101 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Terapush - Bridge Startups, Investors & Talent</title>
-    <link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@400;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-    <style>
-        /* Reset */
-        * {margin:0; padding:0; box-sizing:border-box;}
-        body {font-family:'Poppins', sans-serif; line-height:1.6; color:#111; background:#fafafa; scroll-behavior:smooth;}
-        a {text-decoration:none; color:inherit;}
-        ul {list-style:none;}
-        img {max-width:100%; height:auto; display:block;}
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Terapush - Bridge Startups, Investors & Talent</title>
+<link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@400;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+    /* Reset */
+    * {margin:0; padding:0; box-sizing:border-box;}
+    body {font-family:'Poppins', sans-serif; line-height:1.6; color:#111; background:#fafafa; scroll-behavior:smooth;}
+    a {text-decoration:none; color:inherit;}
+    ul {list-style:none;}
+    
+    /* Navbar */
+    nav {display:flex; justify-content:space-between; align-items:center; padding:1rem 2rem; background:#fff; position:fixed; width:100%; z-index:1000; box-shadow:0 5px 15px rgba(0,0,0,0.05);}
+    .logo {font-family:'League Spartan', sans-serif; font-size:1.8rem; font-weight:700; color:#111; letter-spacing:1px;}
+    .nav-links {display:flex; gap:2rem; font-weight:500;}
+    .nav-links a {position:relative; transition:0.3s;}
+    .nav-links a::after {content:''; position:absolute; width:0%; height:2px; left:0; bottom:-3px; background:#0070f3; transition:0.3s;}
+    .nav-links a:hover::after {width:100%;}
+    .hamburger {display:none; cursor:pointer; flex-direction:column; gap:5px;}
+    .hamburger div {width:25px; height:3px; background:#111; transition:0.3s;}
+    .hamburger.open div:nth-child(1) { transform: rotate(45deg) translate(5px,5px); }
+    .hamburger.open div:nth-child(2) { opacity:0; }
+    .hamburger.open div:nth-child(3) { transform: rotate(-45deg) translate(5px,-5px); }
 
-        /* Navbar */
-        nav {display:flex; justify-content:space-between; align-items:center; padding:1rem 2rem; background:#fff; position:fixed; width:100%; z-index:1000; box-shadow:0 5px 15px rgba(0,0,0,0.05);}
-        .logo {font-family:'League Spartan', sans-serif; font-size:1.8rem; font-weight:700; color:#111; letter-spacing:1px;}
-        .nav-links {display:flex; gap:2rem; font-weight:500;}
-        .nav-links a {position:relative; transition:0.3s;}
-        .nav-links a::after {content:''; position:absolute; width:0%; height:2px; left:0; bottom:-3px; background:#0070f3; transition:0.3s;}
-        .nav-links a:hover::after {width:100%;}
-        .hamburger {display:none; cursor:pointer; flex-direction:column; gap:5px;}
-        .hamburger div {width:25px; height:3px; background:#111; transition:0.3s;}
+    /* Hero */
+    header {height:100vh; display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center; padding:0 1rem; background:linear-gradient(135deg,#f0f4ff,#ffffff);}
+    header h1 {font-family:'League Spartan', sans-serif; font-size:3rem; margin-bottom:1rem; color:#111;}
+    header p {font-size:1.2rem; max-width:700px; margin-bottom:2rem; color:#444;}
+    header .cta-buttons a {display:inline-block; margin:0 0.5rem; padding:0.75rem 1.8rem; border-radius:30px; background:#0070f3; color:#fff; font-weight:600; transition:0.3s; box-shadow:0 5px 15px rgba(0,112,243,0.3);}
+    header .cta-buttons a:hover {background:#0051a3; transform:translateY(-2px); box-shadow:0 8px 20px rgba(0,81,163,0.4);}
 
-        /* Hero */
-        header {height:100vh; display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center; padding:0 1rem; background:linear-gradient(135deg,#f0f4ff,#ffffff);}
-        header h1 {font-family:'League Spartan', sans-serif; font-size:3rem; margin-bottom:1rem; color:#111;}
-        header p {font-size:1.2rem; max-width:700px; margin-bottom:2rem; color:#444;}
-        header .cta-buttons a {display:inline-block; margin:0 0.5rem; padding:0.75rem 1.8rem; border-radius:30px; background:#0070f3; color:#fff; font-weight:600; transition:0.3s; box-shadow:0 5px 15px rgba(0,112,243,0.3);}
-        header .cta-buttons a:hover {background:#0051a3; transform:translateY(-2px); box-shadow:0 8px 20px rgba(0,81,163,0.4);}
+    /* Sections */
+    section {padding:6rem 2rem;}
+    h2 {font-family:'League Spartan', sans-serif; font-size:2.5rem; margin-bottom:2rem; text-align:center; color:#111;}
+    p {margin-bottom:1rem; color:#555;}
+    .container {max-width:1200px; margin:0 auto;}
 
-        /* Sections */
-        section {padding:6rem 2rem;}
-        h2 {font-family:'League Spartan', sans-serif; font-size:2.5rem; margin-bottom:2rem; text-align:center; color:#111;}
-        p {margin-bottom:1rem; color:#555;}
-        .container {max-width:1200px; margin:0 auto;}
+    /* About */
+    .founders {display:flex; flex-wrap:wrap; gap:2rem; justify-content:center; margin-top:2rem;}
+    .founder {text-align:center; flex:1 1 200px; transition:0.3s;}
+    .founder-initials {width:150px; height:150px; border-radius:50%; display:flex; justify-content:center; align-items:center; font-family:'League Spartan', sans-serif; font-size:3rem; font-weight:700; color:#fff; background:linear-gradient(135deg,#0070f3,#00bfff); margin:0 auto 1rem auto; box-shadow:0 5px 15px rgba(0,112,243,0.3);}
+    .founder h4 {font-weight:600; margin-bottom:0.5rem;}
+    .founder p {font-size:0.95rem; color:#666;}
+    .founder:hover {transform:translateY(-5px);}
 
-        /* About */
-        .founders {display:flex; flex-wrap:wrap; gap:2rem; justify-content:center; margin-top:2rem;}
-        .founder {text-align:center; flex:1 1 200px; transition:0.3s;}
-        .founder img {border-radius:50%; width:150px; height:150px; object-fit:cover; margin-bottom:1rem; border:4px solid #0070f3;}
-        .founder h4 {font-weight:600; margin-bottom:0.5rem;}
-        .founder p {font-size:0.95rem; color:#666;}
-        .founder:hover {transform:translateY(-5px);}
+    /* Services */
+    .services-grid {display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:2rem;}
+    .service {background:#fff; padding:2rem; border-radius:20px; box-shadow:0 5px 20px rgba(0,0,0,0.05); transition:0.3s;}
+    .service:hover {transform:translateY(-5px); box-shadow:0 10px 25px rgba(0,0,0,0.1);}
+    .service h4 {margin-bottom:1rem; color:#0070f3;}
+    .service p {color:#555;}
 
-        /* Services */
-        .services-grid {display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:2rem;}
-        .service {background:#fff; padding:2rem; border-radius:20px; box-shadow:0 5px 20px rgba(0,0,0,0.05); transition:0.3s;}
-        .service:hover {transform:translateY(-5px); box-shadow:0 10px 25px rgba(0,0,0,0.1);}
-        .service h4 {margin-bottom:1rem; color:#0070f3;}
-        .service p {color:#555;}
+    /* FAQ */
+    .faq-container {max-width:800px; margin:0 auto;}
+    .faq-item {margin-bottom:1.5rem; border-bottom:1px solid #ccc; padding-bottom:1rem;}
+    .faq-item h4 {cursor:pointer; margin-bottom:0.5rem; color:#0070f3;}
+    .faq-item p {display:none; font-size:0.95rem; color:#555;}
 
-        /* FAQ */
-        .faq-container {max-width:800px; margin:0 auto;}
-        .faq-item {margin-bottom:1.5rem; border-bottom:1px solid #ccc; padding-bottom:1rem;}
-        .faq-item h4 {cursor:pointer; margin-bottom:0.5rem; color:#0070f3;}
-        .faq-item p {display:none; font-size:0.95rem; color:#555;}
+    /* Waitlist & WhatsApp */
+    .cta-container {display:flex; flex-wrap:wrap; gap:1rem; justify-content:center;}
+    .cta-container a {padding:0.85rem 2rem; background:#25D366; color:#fff; border-radius:30px; font-weight:600; transition:0.3s; box-shadow:0 5px 15px rgba(37,211,102,0.3);}
+    .cta-container a:hover {background:#128C7E; transform:translateY(-2px); box-shadow:0 8px 20px rgba(18,140,126,0.4);}
 
-        /* Waitlist & WhatsApp */
-        .cta-container {display:flex; flex-wrap:wrap; gap:1rem; justify-content:center;}
-        .cta-container a {padding:0.85rem 2rem; background:#25D366; color:#fff; border-radius:30px; font-weight:600; transition:0.3s; box-shadow:0 5px 15px rgba(37,211,102,0.3);}
-        .cta-container a:hover {background:#128C7E; transform:translateY(-2px); box-shadow:0 8px 20px rgba(18,140,126,0.4);}
+    /* Contact */
+    .contact-info {display:flex; flex-direction:column; gap:0.7rem; text-align:center; color:#555;}
+    .contact-info a {color:#0070f3; transition:0.3s;}
+    .contact-info a:hover {text-decoration:underline;}
 
-        /* Contact */
-        .contact-info {display:flex; flex-direction:column; gap:0.7rem; text-align:center; color:#555;}
-        .contact-info a {color:#0070f3; transition:0.3s;}
-        .contact-info a:hover {text-decoration:underline;}
+    /* Footer */
+    footer {background:#111; color:#fff; padding:3rem 2rem; text-align:center;}
+    footer a {color:#fff; margin:0 0.5rem; transition:0.3s;}
+    footer a:hover {color:#0070f3;}
+    .footer-bottom {margin-top:2rem; font-size:0.85rem;}
 
-        /* Footer */
-        footer {background:#111; color:#fff; padding:3rem 2rem; text-align:center;}
-        footer a {color:#fff; margin:0 0.5rem; transition:0.3s;}
-        footer a:hover {color:#0070f3;}
-        .footer-bottom {margin-top:2rem; font-size:0.85rem;}
-
-        /* Responsive */
-        @media(max-width:768px){
-            .nav-links {position:fixed; top:0; right:-100%; height:100vh; width:70%; background:#fff; flex-direction:column; align-items:center; justify-content:center; gap:2rem; transition:0.3s;}
-            .nav-links.show {right:0;}
-            .hamburger {display:flex;}
-        }
-
-    </style>
+    /* Responsive */
+    @media(max-width:768px){
+        .nav-links {position:fixed; top:0; right:-100%; height:100vh; width:70%; background:#fff; flex-direction:column; align-items:center; justify-content:center; gap:2rem; transition:0.3s;}
+        .nav-links.show {right:0;}
+        .hamburger {display:flex;}
+    }
+</style>
 </head>
 <body>
     <!-- Navbar -->
     <nav>
         <div class="logo">Terapush</div>
         <div class="nav-links">
-            <a href="#home">Home</a>
-            <a href="#about">About</a>
-            <a href="#services">Services</a>
-            <a href="#faq">FAQ</a>
-            <a href="#waitlist">Join</a>
-            <a href="#contact">Contact</a>
+            <a href="#home" onclick="closeMenu()">Home</a>
+            <a href="#about" onclick="closeMenu()">About</a>
+            <a href="#services" onclick="closeMenu()">Services</a>
+            <a href="#faq" onclick="closeMenu()">FAQ</a>
+            <a href="#waitlist" onclick="closeMenu()">Join</a>
+            <a href="#contact" onclick="closeMenu()">Contact</a>
         </div>
-        <div class="hamburger" onclick="toggleMenu()">
+        <div class="hamburger" onclick="toggleMenu(this)">
             <div></div>
             <div></div>
             <div></div>
@@ -118,17 +119,17 @@
             <p>Founded in 2025 by Harsh Bafna, Jaivik Bilimoria, and Mansi Rajpurohit, Terapush India Private Limited empowers startups and investors by creating a seamless, collaborative ecosystem.</p>
             <div class="founders">
                 <div class="founder">
-                    <img src="https://via.placeholder.com/150" alt="Harsh Bafna">
+                    <div class="founder-initials">HB</div>
                     <h4>Harsh Bafna</h4>
                     <p>"Our mission is to simplify the path from idea to growth for every entrepreneur."</p>
                 </div>
                 <div class="founder">
-                    <img src="https://via.placeholder.com/150" alt="Jaivik Bilimoria">
+                    <div class="founder-initials">JB</div>
                     <h4>Jaivik Bilimoria</h4>
                     <p>"Connecting investors, startups, and talent in a single seamless platform."</p>
                 </div>
                 <div class="founder">
-                    <img src="https://via.placeholder.com/150" alt="Mansi Rajpurohit">
+                    <div class="founder-initials">MR</div>
                     <h4>Mansi Rajpurohit</h4>
                     <p>"Empowering businesses and individuals to collaborate and innovate effortlessly."</p>
                 </div>
@@ -218,10 +219,16 @@
 
     <script>
         // Mobile menu toggle
-        function toggleMenu() {
-            document.querySelector('.nav-links').classList.toggle('show');
+        function toggleMenu(hamburger) {
+            const nav = document.querySelector('.nav-links');
+            nav.classList.toggle('show');
+            hamburger.classList.toggle('open'); // Toggle X animation
         }
-
+        // Close menu when a link is clicked
+        function closeMenu() {
+            document.querySelector('.nav-links').classList.remove('show');
+            document.querySelector('.hamburger').classList.remove('open');
+        }
         // FAQ toggle
         function toggleFAQ(item) {
             const p = item.querySelector('p');
