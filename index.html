@@ -34,11 +34,10 @@
             padding: 0 20px;
         }
 
-        /* --- Global Button Styles --- */
         .btn {
             display: inline-block;
             padding: 14px 28px;
-            border-radius: 9999px; /* Pill shape */
+            border-radius: 9999px;
             font-weight: 600;
             text-decoration: none;
             transition: all 0.3s ease;
@@ -74,7 +73,6 @@
             transform: translateY(-2px);
         }
 
-        /* --- Section Styling --- */
         section {
             padding: 80px 0;
             text-align: center;
@@ -98,7 +96,6 @@
             margin-bottom: 20px;
         }
 
-        /* --- Header / Navigation (Simple for now) --- */
         header {
             padding: 20px 0;
             position: sticky;
@@ -138,13 +135,10 @@
             transition: color 0.3s ease;
         }
 
-        nav a:hover {
-            color: var(--dark-blue);
-        }
+        nav a:hover { color: var(--dark-blue); }
 
-        /* --- Hero Section --- */
         #home {
-            background: linear-gradient(180deg, #ffffff 0%, #e0efff 100%); /* Light blue gradient */
+            background: linear-gradient(180deg, #ffffff 0%, #e0efff 100%);
             padding: 150px 0;
             min-height: 80vh;
             display: flex;
@@ -168,13 +162,8 @@
             margin-bottom: 40px;
         }
 
-        .hero-actions {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-        }
+        .hero-actions { display: flex; justify-content: center; gap: 20px; }
 
-        /* --- Services Section --- */
         #services .grid-4 {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -202,17 +191,6 @@
             margin-bottom: 20px;
         }
 
-        .service-card h3 {
-            font-size: 1.5rem;
-            margin-bottom: 15px;
-        }
-
-        .service-card p {
-            font-size: 1rem;
-            color: var(--text-color-light);
-        }
-
-        /* --- About Section --- */
         #about {
             text-align: left;
             background-color: var(--off-white);
@@ -224,10 +202,7 @@
             gap: 60px;
         }
 
-        #about h2 {
-            text-align: center;
-            margin-bottom: 60px;
-        }
+        #about h2 { text-align: center; margin-bottom: 60px; }
 
         .about-content-wrapper {
             display: flex;
@@ -235,20 +210,12 @@
             align-items: flex-start;
         }
 
-        .about-text {
-            flex: 2; /* Takes more space */
-            padding-right: 30px;
-        }
-
-        .about-text p {
-            margin-bottom: 25px;
-        }
-        .about-text p:last-of-type {
-            margin-bottom: 40px;
-        }
+        .about-text { flex: 2; padding-right: 30px; }
+        .about-text p { margin-bottom: 25px; }
+        .about-text p:last-of-type { margin-bottom: 40px; }
 
         .founder-dialog {
-            flex: 1; /* Takes less space */
+            flex: 1;
             background: white;
             border-radius: 15px;
             padding: 40px;
@@ -257,34 +224,31 @@
             overflow: hidden;
         }
 
-        .founder-dialog::before { /* Subtle glow effect */
+        .founder-dialog::before {
             content: '';
             position: absolute;
             top: -50px;
             right: -50px;
             width: 150px;
             height: 150px;
-            background: radial-gradient(circle, rgba(252,211,77,0.3) 0%, transparent 70%); /* Yellow glow */
+            background: radial-gradient(circle, rgba(252,211,77,0.3) 0%, transparent 70%);
             border-radius: 50%;
             z-index: 0;
         }
-        .founder-dialog::after { /* Subtle glow effect */
+
+        .founder-dialog::after {
             content: '';
             position: absolute;
             bottom: -50px;
             left: -50px;
             width: 150px;
             height: 150px;
-            background: radial-gradient(circle, rgba(44,89,163,0.15) 0%, transparent 70%); /* Blue glow */
+            background: radial-gradient(circle, rgba(44,89,163,0.15) 0%, transparent 70%);
             border-radius: 50%;
             z-index: 0;
         }
 
-
-        .founder-dialog-content {
-            position: relative;
-            z-index: 1;
-        }
+        .founder-dialog-content { position: relative; z-index: 1; }
 
         .founder-avatar {
             width: 60px;
@@ -298,69 +262,21 @@
             font-size: 1.8rem;
             font-weight: 700;
             margin-bottom: 15px;
-            margin-left: auto; /* Center avatar in its column */
-            margin-right: auto; /* Center avatar in its column */
+            margin-left: auto;
+            margin-right: auto;
         }
 
-        .founder-dialog h4 {
-            font-size: 1.25rem;
-            color: var(--dark-blue);
-            margin-bottom: 5px;
-            text-align: center;
-        }
+        .founder-dialog h4 { font-size: 1.25rem; color: var(--dark-blue); margin-bottom: 5px; text-align: center; }
+        .founder-dialog p.role { font-size: 0.95rem; color: var(--light-gray); margin-bottom: 20px; text-align: center; }
+        .founder-dialog .quote { font-style: italic; font-size: 1.05rem; color: var(--text-color-light); margin-bottom: 25px; line-height: 1.5; }
 
-        .founder-dialog p.role {
-            font-size: 0.95rem;
-            color: var(--light-gray);
-            margin-bottom: 20px;
-            text-align: center;
-        }
+        .founder-stats { display: flex; justify-content: space-around; margin-top: 25px; border-top: 1px solid #eee; padding-top: 20px; }
+        .founder-stats div { text-align: center; }
+        .founder-stats strong { display: block; font-size: 1.1rem; color: var(--dark-blue); font-weight: 600; }
+        .founder-stats span { font-size: 0.85rem; color: var(--light-gray); white-space: nowrap; }
 
-        .founder-dialog .quote {
-            font-style: italic;
-            font-size: 1.05rem;
-            color: var(--text-color-light);
-            margin-bottom: 25px;
-            line-height: 1.5;
-        }
-
-        .founder-stats {
-            display: flex;
-            justify-content: space-around;
-            margin-top: 25px;
-            border-top: 1px solid #eee;
-            padding-top: 20px;
-        }
-
-        .founder-stats div {
-            text-align: center;
-        }
-
-        .founder-stats strong {
-            display: block;
-            font-size: 1.1rem;
-            color: var(--dark-blue);
-            font-weight: 600;
-        }
-
-        .founder-stats span {
-            font-size: 0.85rem;
-            color: var(--light-gray);
-            white-space: nowrap;
-        }
-
-
-        /* --- Testimonials Section --- */
-        #testimonials {
-            background-color: white;
-            padding-bottom: 100px; /* More space for carousel */
-        }
-
-        .testimonial-carousel {
-            margin-top: 60px;
-            position: relative;
-        }
-
+        #testimonials { background-color: white; padding-bottom: 100px; }
+        .testimonial-carousel { margin-top: 60px; position: relative; }
         .testimonial-card {
             max-width: 800px;
             margin: 0 auto;
@@ -372,21 +288,8 @@
             position: relative;
         }
 
-        .stars {
-            color: var(--yellow-accent);
-            font-size: 1.8rem;
-            margin-bottom: 25px;
-        }
-
-        .testimonial-card .quote {
-            font-size: 1.7rem;
-            font-style: italic;
-            color: var(--text-color-dark);
-            margin-bottom: 30px;
-            line-height: 1.4;
-            font-weight: 400;
-        }
-
+        .stars { color: var(--yellow-accent); font-size: 1.8rem; margin-bottom: 25px; }
+        .testimonial-card .quote { font-size: 1.7rem; font-style: italic; color: var(--text-color-dark); margin-bottom: 30px; line-height: 1.4; font-weight: 400; }
         .testimonial-author-avatar {
             width: 70px;
             height: 70px;
@@ -401,17 +304,8 @@
             margin: 0 auto 15px auto;
         }
 
-        .testimonial-author-info strong {
-            display: block;
-            font-size: 1.3rem;
-            color: var(--dark-blue);
-            margin-bottom: 5px;
-        }
-
-        .testimonial-author-info span {
-            font-size: 1rem;
-            color: var(--light-gray);
-        }
+        .testimonial-author-info strong { display: block; font-size: 1.3rem; color: var(--dark-blue); margin-bottom: 5px; }
+        .testimonial-author-info span { font-size: 1rem; color: var(--light-gray); }
 
         .carousel-nav-btn {
             position: absolute;
@@ -430,37 +324,23 @@
             cursor: pointer;
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
             transition: all 0.2s ease;
+            z-index: 2;
         }
 
-        .carousel-nav-btn:hover {
-            background-color: var(--off-white);
-            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
-        }
+        .carousel-nav-btn:hover { background-color: var(--off-white); box-shadow: 0 4px 15px rgba(0,0,0,0.15); }
+        .carousel-nav-btn.left { left: -70px; }
+        .carousel-nav-btn.right { right: -70px; }
 
-        .carousel-nav-btn.left { left: -70px; } /* Adjust position based on design */
-        .carousel-nav-btn.right { right: -70px; } /* Adjust position based on design */
-
-        .carousel-dots {
-            display: flex;
-            justify-content: center;
-            margin-top: 40px;
-            gap: 10px;
-        }
-
+        .carousel-dots { display: flex; justify-content: center; margin-top: 40px; gap: 10px; }
         .carousel-dot {
-            width: 12px;
-            height: 12px;
+            width: 12px; height: 12px;
             background-color: #ccc;
             border-radius: 50%;
             cursor: pointer;
             transition: background-color 0.3s ease;
         }
+        .carousel-dot.active { background-color: var(--dark-blue); }
 
-        .carousel-dot.active {
-            background-color: var(--dark-blue);
-        }
-
-        /* --- Waitlist Section --- */
         #waitlist {
             background-color: var(--dark-blue);
             padding: 100px 0;
@@ -477,30 +357,11 @@
             position: relative;
         }
 
-        .waitlist-card .icon {
-            font-size: 3.5rem;
-            color: var(--dark-blue);
-            margin-bottom: 25px;
-        }
+        .waitlist-card .icon { font-size: 3.5rem; color: var(--dark-blue); margin-bottom: 25px; }
+        #waitlist h2 { font-size: 2.5rem; color: var(--dark-blue); margin-bottom: 15px; }
+        #waitlist p { font-size: 1.15rem; color: var(--text-color-light); margin-bottom: 40px; }
 
-        #waitlist h2 {
-            font-size: 2.5rem;
-            color: var(--dark-blue);
-            margin-bottom: 15px;
-        }
-
-        #waitlist p {
-            font-size: 1.15rem;
-            color: var(--text-color-light);
-            margin-bottom: 40px;
-        }
-
-        .waitlist-form {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-
+        .waitlist-form { display: flex; flex-direction: column; gap: 20px; }
         .waitlist-form input[type="text"],
         .waitlist-form input[type="email"] {
             padding: 15px 20px;
@@ -511,7 +372,6 @@
             outline: none;
             transition: border-color 0.3s ease, box-shadow 0.3s ease;
         }
-
         .waitlist-form input[type="text"]:focus,
         .waitlist-form input[type="email"]:focus {
             border-color: var(--medium-blue);
@@ -530,13 +390,11 @@
             transition: background-color 0.3s ease, transform 0.3s ease;
             box-shadow: 0 5px 20px rgba(252,211,77,0.4);
         }
-
         .btn-accent:hover {
             background-color: #fcd963;
             transform: translateY(-2px);
             box-shadow: 0 7px 25px rgba(252,211,77,0.5);
         }
-
         .waitlist-card small {
             display: block;
             margin-top: 30px;
@@ -544,7 +402,6 @@
             color: var(--light-gray);
         }
 
-        /* --- Footer --- */
         footer {
             background-color: var(--slate-blue-footer);
             color: white;
@@ -554,87 +411,32 @@
 
         .footer-grid {
             display: grid;
-            grid-template-columns: 2.5fr 1fr 1fr; /* Terapush text takes more space */
+            grid-template-columns: 2.5fr 1fr 1fr;
             gap: 50px;
             margin-bottom: 50px;
         }
 
-        .footer-logo {
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 700;
-            font-size: 1.8rem;
-            color: white;
-            text-decoration: none;
-            display: block;
-            margin-bottom: 20px;
-        }
-
-        .footer-description {
-            font-size: 1rem;
-            color: #ccc;
-            line-height: 1.7;
-        }
-
-        .footer-column h4 {
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 600;
-            font-size: 1.1rem;
-            margin-bottom: 25px;
-            color: white;
-        }
-
-        .footer-column ul {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-
-        .footer-column ul li {
-            margin-bottom: 15px;
-        }
-
-        .footer-column a {
-            color: #ccc;
-            text-decoration: none;
-            font-size: 0.95rem;
-            transition: color 0.3s ease;
-        }
-
-        .footer-column a:hover {
-            color: white;
-        }
-
+        .footer-logo { font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 1.8rem; color: white; text-decoration: none; display: block; margin-bottom: 20px; }
+        .footer-description { font-size: 1rem; color: #ccc; line-height: 1.7; }
+        .footer-column h4 { font-family: 'Montserrat', sans-serif; font-weight: 600; font-size: 1.1rem; margin-bottom: 25px; color: white; }
+        .footer-column ul { list-style: none; padding: 0; margin: 0; }
+        .footer-column ul li { margin-bottom: 15px; }
+        .footer-column a { color: #ccc; text-decoration: none; font-size: 0.95rem; transition: color 0.3s ease; }
+        .footer-column a:hover { color: white; }
         .footer-bottom {
             border-top: 1px solid rgba(255,255,255,0.1);
             padding-top: 30px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            flex-wrap: wrap; /* For smaller screens */
+            flex-wrap: wrap;
             gap: 20px;
         }
+        .footer-bottom .copyright { font-size: 0.9rem; color: #aaa; }
+        .social-icons { display: flex; gap: 20px; }
+        .social-icons a { color: #ccc; font-size: 1.3rem; transition: color 0.3s ease; }
+        .social-icons a:hover { color: white; }
 
-        .footer-bottom .copyright {
-            font-size: 0.9rem;
-            color: #aaa;
-        }
-
-        .social-icons {
-            display: flex;
-            gap: 20px;
-        }
-
-        .social-icons a {
-            color: #ccc;
-            font-size: 1.3rem;
-            transition: color 0.3s ease;
-        }
-
-        .social-icons a:hover {
-            color: white;
-        }
-
-        /* --- Media Queries for Responsiveness --- */
         @media (max-width: 1024px) {
             #home h1 { font-size: 3.5rem; }
             #home p { font-size: 1.2rem; }
@@ -647,46 +449,25 @@
             h2 { font-size: 2rem; }
             h3 { font-size: 1.5rem; }
             section { padding: 60px 0; }
-
             .hero-actions { flex-direction: column; gap: 15px; }
             .btn { width: 80%; max-width: 300px; margin: 0 auto; }
-
             .about-content-wrapper { flex-direction: column; }
             .about-text { padding-right: 0; text-align: center; }
             .founder-dialog { margin-top: 40px; width: 100%; }
-
             .testimonial-card { padding: 40px 25px; }
             .testimonial-card .quote { font-size: 1.4rem; }
-            .carousel-nav-btn { display: none; /* Hide buttons on small screens, rely on touch */ }
-
+            .carousel-nav-btn { display: none; }
             .waitlist-card { padding: 40px 25px; }
-
-            .footer-grid { grid-template-columns: 1fr; text-align: center; }
-            .footer-logo { text-align: center; }
-            .footer-description { margin-bottom: 30px; }
-            .footer-column ul { margin-bottom: 30px; }
-            .footer-column h4 { margin-top: 30px; }
-            .footer-bottom { flex-direction: column; }
-            .social-icons { margin-top: 20px; }
-        }
-
-        @media (max-width: 480px) {
-            h1 { font-size: 2.2rem; }
-            h2 { font-size: 1.8rem; }
-            p { font-size: 1rem; }
-            .hero-actions .btn { font-size: 0.95rem; padding: 12px 20px; }
-            .testimonial-card .quote { font-size: 1.2rem; }
-            .testimonial-author-avatar { width: 50px; height: 50px; font-size: 1.5rem; }
-            .testimonial-author-info strong { font-size: 1.1rem; }
-            .testimonial-author-info span { font-size: 0.85rem; }
+            .footer-grid { grid-template-columns: 1fr; text-align: center; gap: 40px; }
+            .footer-bottom { flex-direction: column; text-align: center; }
         }
     </style>
 </head>
 <body>
-
+    <!-- Header -->
     <header>
         <div class="container nav-content">
-            <a href="#" class="logo">Terapush</a>
+            <a href="#home" class="logo">Terapush</a>
             <nav>
                 <ul>
                     <li><a href="#home">Home</a></li>
@@ -699,180 +480,223 @@
         </div>
     </header>
 
-    <main>
-        <!-- 1. Home Section -->
-        <section id="home">
-            <div class="container">
-                <h1>Empowering the Next Generation of Innovators</h1>
-                <p>A seamless platform for startups to grow, connect, and thrive in today's competitive ecosystem. Join thousands of entrepreneurs building the future.</p>
-                <div class="hero-actions">
-                    <a href="#" class="btn btn-primary">Get Started</a>
-                    <a href="#" class="btn btn-secondary">Learn More</a>
+    <!-- Home Section -->
+    <section id="home">
+        <div class="container">
+            <h1>Empowering Innovators to Build the Future</h1>
+            <p>At Terapush, we connect visionary founders with resources, mentorship, and a network that transforms ideas into impactful realities.</p>
+            <div class="hero-actions">
+                <a href="#waitlist" class="btn btn-primary">Join the Waitlist</a>
+                <a href="#services" class="btn btn-secondary">Our Services</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services">
+        <div class="container">
+            <h2>What We Offer</h2>
+            <div class="grid-4">
+                <div class="service-card">
+                    <div class="icon"><i class="fas fa-lightbulb"></i></div>
+                    <h3>Innovation Hub</h3>
+                    <p>Access resources, mentorship, and workshops to bring your startup ideas to life.</p>
+                </div>
+                <div class="service-card">
+                    <div class="icon"><i class="fas fa-network-wired"></i></div>
+                    <h3>Networking</h3>
+                    <p>Connect with investors, experts, and fellow entrepreneurs to grow your business.</p>
+                </div>
+                <div class="service-card">
+                    <div class="icon"><i class="fas fa-rocket"></i></div>
+                    <h3>Accelerator Programs</h3>
+                    <p>Get into tailored acceleration tracks that speed up your product-market fit journey.</p>
+                </div>
+                <div class="service-card">
+                    <div class="icon"><i class="fas fa-chart-line"></i></div>
+                    <h3>Growth Support</h3>
+                    <p>We guide startups in scaling operations, funding rounds, and business strategy.</p>
                 </div>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <!-- 2. Services Section -->
-        <section id="services">
-            <div class="container">
-                <h2>Everything You Need to Scale</h2>
-                <p>From funding to talent, resources to community – we've built the complete ecosystem for startup success.</p>
-
-                <div class="grid-4">
-                    <div class="service-card">
-                        <div class="icon"><i class="fas fa-chart-line"></i></div>
-                        <h3>Access to Investors</h3>
-                        <p>Connect with curated funding opportunities from angel investors, VCs, and institutional backers actively seeking innovative startups.</p>
-                    </div>
-                    <div class="service-card">
-                        <div class="icon"><i class="fas fa-users"></i></div>
-                        <h3>Find Talent</h3>
-                        <p>Discover freelancers, experts, and co-founders with the exact skills your startup needs to scale and succeed.</p>
-                    </div>
-                    <div class="service-card">
-                        <div class="icon"><i class="fas fa-lightbulb"></i></div>
-                        <h3>Resources for Growth</h3>
-                        <p>Access comprehensive tools, guides, and networks designed to accelerate your startup's journey from ideation to scale.</p>
-                    </div>
-                    <div class="service-card">
-                        <div class="icon"><i class="fas fa-handshake"></i></div>
-                        <h3>Collaborate with Ease</h3>
-                        <p>Join a thriving community where entrepreneurs connect, share insights, and build the future together.</p>
-                    </div>
+    <!-- About Section -->
+    <section id="about">
+        <div class="container">
+            <h2>About Terapush</h2>
+            <div class="about-content-wrapper">
+                <div class="about-text">
+                    <p>Terapush is a forward-thinking innovation hub designed to help early-stage startups grow and succeed. Our mission is to empower founders with the tools, mentorship, and connections they need to thrive in today’s competitive landscape.</p>
+                    <p>Through our programs, startups gain access to industry experts, potential investors, and collaborative community networks that accelerate growth and impact.</p>
                 </div>
-            </div>
-        </section>
-
-        <!-- 3. About & Founders Section -->
-        <section id="about">
-            <div class="container">
-                <h2>Building Tomorrow's Success Stories</h2>
-                <div class="about-content-wrapper">
-                    <div class="about-text">
-                        <p>At Terapush, we believe that every great idea deserves the opportunity to flourish. Our platform bridges the gap between ambitious entrepreneurs and the resources they need to transform their visions into reality.</p>
-                        <p>Founded by entrepreneurs for entrepreneurs, we understand the challenges of building a startup from the ground up. That’s why we’ve created more than just a platform – we’ve built a comprehensive ecosystem designed to nurture innovation and accelerate growth.</p>
-                        <p>Join thousands of visionaries who are already using Terapush to connect with investors, find exceptional talent, and access the tools that matter most in today’s competitive startup landscape.</p>
-                        <a href="#" class="btn btn-primary">Join Our Community</a>
-                    </div>
-                    <div class="founder-dialog">
-                        <div class="founder-dialog-content">
-                            <div class="founder-avatar">T</div>
-                            <h4>Terapush Founders</h4>
-                            <p class="role">Visionaries in Tech</p>
-                            <p class="quote">"We built Terapush because we experienced firsthand how challenging it can be to find the right connections, funding, and talent. Our mission is to democratize access to the startup ecosystem and empower every entrepreneur to succeed."</p>
-                            <div class="founder-stats">
-                                <div><strong>Founded</strong><span>2024</span></div>
-                                <div><strong>Members</strong><span>10,000+</span></div>
-                                <div><strong>Funded</strong><span>500+</span></div>
-                            </div>
+                <div class="founder-dialog">
+                    <div class="founder-dialog-content">
+                        <div class="founder-avatar">A</div>
+                        <h4>Ashwin Bafna</h4>
+                        <p class="role">Founder & CEO</p>
+                        <p class="quote">"We believe that innovation is for everyone, and our goal is to make entrepreneurial resources accessible to visionary minds across the globe."</p>
+                        <div class="founder-stats">
+                            <div><strong>500+</strong><span>Startups Supported</span></div>
+                            <div><strong>200+</strong><span>Mentors</span></div>
+                            <div><strong>50+</strong><span>Investor Partnerships</span></div>
                         </div>
                     </div>
                 </div>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <!-- 4. Testimonials Section -->
-        <section id="testimonials">
-            <div class="container">
-                <h2>Stories of Success</h2>
-                <p>Join thousands of entrepreneurs and investors who have transformed their businesses through our platform.</p>
-
-                <div class="testimonial-carousel">
-                    <div class="testimonial-card">
-                        <div class="stars">
-                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
-                        </div>
-                        <p class="quote">"The resources and mentorship available through Terapush accelerated our growth by months. We went from idea to product launch in record time with their guidance."</p>
-                        <div class="testimonial-author-avatar">E</div>
-                        <div class="testimonial-author-info">
-                            <strong>Elena Rodriguez</strong>
-                            <span>Co-founder, HealthLink - $1.2M</span>
-                        </div>
-                    </div>
-                    <!-- Example of more testimonials (hide/show with JS for carousel) -->
-                    <!-- <div class="testimonial-card" style="display:none;">
-                        <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
-                        <p class="quote">"Finding quality talent was our biggest hurdle until Terapush. Their network is unparalleled, and we secured key hires that propelled our development forward."</p>
-                        <div class="testimonial-author-avatar">M</div>
-                        <div class="testimonial-author-info">
-                            <strong>Mark Chen</strong>
-                            <span>CEO, Quantum Innovations - $500K</span>
-                        </div>
-                    </div>
-                    <div class="testimonial-card" style="display:none;">
-                        <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
-                        <p class="quote">"Terapush connected us with an investor that truly believed in our vision. It wasn't just funding; it was a partnership that has been invaluable."</p>
-                        <div class="testimonial-author-avatar">S</div>
-                        <div class="testimonial-author-info">
-                            <strong>Sarah Lee</strong>
-                            <span>Founder, EcoSolutions - $750K</span>
-                        </div>
-                    </div> -->
-
-                    <div class="carousel-nav-btn left"><i class="fas fa-chevron-left"></i></div>
-                    <div class="carousel-nav-btn right"><i class="fas fa-chevron-right"></i></div>
-                    <div class="carousel-dots">
-                        <div class="carousel-dot active"></div>
-                        <div class="carousel-dot"></div>
-                        <div class="carousel-dot"></div>
+    <!-- Testimonials Section -->
+    <section id="testimonials">
+        <div class="container">
+            <h2>What Our Community Says</h2>
+            <div class="testimonial-carousel">
+                <div class="testimonial-card">
+                    <div class="stars">★★★★★</div>
+                    <p class="quote">"Terapush has transformed our startup journey with unparalleled support and mentorship."</p>
+                    <div class="testimonial-author-avatar">S</div>
+                    <div class="testimonial-author-info">
+                        <strong>Samira Roy</strong>
+                        <span>Co-founder, TechNova</span>
                     </div>
                 </div>
-            </div>
-        </section>
+                <div class="testimonial-card">
+                    <div class="stars">★★★★★</div>
+                    <p class="quote">"The network and resources we accessed through Terapush helped us secure our first funding round."</p>
+                    <div class="testimonial-author-avatar">A</div>
+                    <div class="testimonial-author-info">
+                        <strong>Aditya Singh</strong>
+                        <span>Founder, GreenLeaf</span>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="stars">★★★★★</div>
+                    <p class="quote">"A one-stop hub for innovative startups seeking growth and mentorship."</p>
+                    <div class="testimonial-author-avatar">L</div>
+                    <div class="testimonial-author-info">
+                        <strong>Lina Patel</strong>
+                        <span>CEO, SmartSolutions</span>
+                    </div>
+                </div>
 
-        <!-- 5. Waitlist Invite Section -->
-        <section id="waitlist">
+                <div class="carousel-nav-btn left"><i class="fas fa-chevron-left"></i></div>
+                <div class="carousel-nav-btn right"><i class="fas fa-chevron-right"></i></div>
+                <div class="carousel-dots">
+                    <div class="carousel-dot"></div>
+                    <div class="carousel-dot"></div>
+                    <div class="carousel-dot"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Waitlist Section -->
+    <section id="waitlist">
+        <div class="container">
             <div class="waitlist-card">
-                <div class="icon"><i class="fas fa-envelope"></i></div>
-                <h2>Join the Innovation Movement</h2>
-                <p>Get early access to Terapush and receive exclusive insights, funding opportunities, and startup resources delivered to your inbox.</p>
+                <div class="icon"><i class="fas fa-envelope-open-text"></i></div>
+                <h2>Join Our Waitlist</h2>
+                <p>Be the first to get access to our startup programs and mentorship opportunities. Sign up today!</p>
                 <form class="waitlist-form">
-                    <input type="text" placeholder="Your name" required>
-                    <input type="email" placeholder="Enter your email" required>
-                    <button type="submit" class="btn-accent">Get Early Access</button>
+                    <input type="text" placeholder="Full Name" required>
+                    <input type="email" placeholder="Email Address" required>
+                    <button class="btn-accent" type="submit">Join Now</button>
+                    <small>We respect your privacy. No spam, only updates.</small>
                 </form>
-                <small>Join 10,000+ entrepreneurs already in our community. Unsubscribe at any time.</small>
             </div>
-        </section>
-    </main>
+        </div>
+    </section>
 
-    <!-- 6. Footer -->
+    <!-- Footer -->
     <footer>
         <div class="container">
             <div class="footer-grid">
-                <div class="footer-column">
-                    <a href="#" class="footer-logo">Terapush</a>
-                    <p class="footer-description">Empowering entrepreneurs to build, connect, and scale in the modern startup ecosystem. Join the next generation of innovators.</p>
-                </div>
-                <div class="footer-column">
-                    <h4>Platform</h4>
-                    <ul>
-                        <li><a href="#">For Startups</a></li>
-                        <li><a href="#">For Investors</a></li>
-                        <li><a href="#">For Talent</a></li>
-                        <li><a href="#">Resources</a></li>
-                    </ul>
+                <div>
+                    <a href="#home" class="footer-logo">Terapush</a>
+                    <p class="footer-description">Empowering startups and innovators with the tools, mentorship, and connections to grow and succeed globally.</p>
                 </div>
                 <div class="footer-column">
                     <h4>Company</h4>
                     <ul>
-                        <li><a href="#">About</a></li>
-                        <li><a href="#">Contact</a></li>
-                        <li><a href="#">Privacy Policy</a></li>
-                        <li><a href="#">Terms of Service</a></li>
-                     </ul>
+                        <li><a href="#about">About Us</a></li>
+                        <li><a href="#services">Services</a></li>
+                        <li><a href="#waitlist">Waitlist</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Connect</h4>
+                    <ul>
+                        <li><a href="#">LinkedIn</a></li>
+                        <li><a href="#">Twitter</a></li>
+                        <li><a href="#">Instagram</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <div class="copyright">&copy; 2025 Terapush. All rights reserved.</div>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                </div>
             </div>
         </div>
-        <div class="footer-bottom">
-            <div class="copyright">&copy; 2025 Terapush. All rights reserved.</div>
-            <div class="social-icons">
-                <a href="#"><i class="fab fa-facebook-f"></i></a>
-                <a href="#"><i class="fab fa-twitter"></i></a>
-                <a href="#"><i class="fab fa-linkedin-in"></i></a>
-                <a href="#"><i class="fab fa-instagram"></i></a>
-            </div>
-        </div>
-    </div>
-</footer>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const testimonials = document.querySelectorAll(".testimonial-card");
+            const dots = document.querySelectorAll(".carousel-dot");
+            const prevBtn = document.querySelector(".carousel-nav-btn.left");
+            const nextBtn = document.querySelector(".carousel-nav-btn.right");
+            let currentIndex = 0;
+            let autoplayInterval;
+
+            function showTestimonial(index) {
+                testimonials.forEach((card, i) => {
+                    card.style.display = i === index ? "block" : "none";
+                });
+                dots.forEach((dot, i) => {
+                    dot.classList.toggle("active", i === index);
+                });
+            }
+
+            function showNext() {
+                currentIndex = (currentIndex + 1) % testimonials.length;
+                showTestimonial(currentIndex);
+            }
+
+            function showPrev() {
+                currentIndex = (currentIndex - 1 + testimonials.length) % testimonials.length;
+                showTestimonial(currentIndex);
+            }
+
+            function startAutoplay() {
+                autoplayInterval = setInterval(showNext, 5000);
+            }
+
+            function stopAutoplay() {
+                clearInterval(autoplayInterval);
+            }
+
+            // Event listeners
+            nextBtn.addEventListener("click", () => { showNext(); stopAutoplay(); startAutoplay(); });
+            prevBtn.addEventListener("click", () => { showPrev(); stopAutoplay(); startAutoplay(); });
+            dots.forEach((dot, i) => {
+                dot.addEventListener("click", () => {
+                    currentIndex = i;
+                    showTestimonial(currentIndex);
+                    stopAutoplay();
+                    startAutoplay();
+                });
+            });
+
+            // Initialize
+            showTestimonial(currentIndex);
+            startAutoplay();
+        });
+    </script>
 </body>
 </html>
