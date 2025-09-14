@@ -1,548 +1,758 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Terapush - Empowering Innovators</title>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <style>
-        :root {
-            --dark-blue: #1a3b7d;
-            --medium-blue: #2c59a3;
-            --light-gray: #6b7280;
-            --off-white: #f8f8f8;
-            --yellow-accent: #fcd34d;
-            --slate-blue-footer: #2d3748;
-            --text-color-dark: #374151;
-            --text-color-light: #4b5563;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Terapush - Empowering Innovators</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<style>
+:root {
+    --dark-blue: #1a3b7d;
+    --medium-blue: #2c59a3;
+    --light-gray: #6b7280;
+    --off-white: #f8f8f8;
+    --yellow-accent: #fcd34d;
+    --slate-blue-footer: #2d3748;
+    --text-color-dark: #374151;
+    --text-color-light: #4b5563;
+}
 
-        body {
-            font-family: 'Poppins', sans-serif;
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            color: var(--text-color-dark);
-            background-color: white;
-            line-height: 1.6;
-        }
+body {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    color: var(--text-color-dark);
+    background-color: white;
+    line-height: 1.6;
+}
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
 
-        .btn {
-            display: inline-block;
-            padding: 14px 28px;
-            border-radius: 9999px;
-            font-weight: 600;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            cursor: pointer;
-            font-size: 1rem;
-            text-align: center;
-        }
+/* --- Buttons --- */
+.btn {
+    display: inline-block;
+    padding: 14px 28px;
+    border-radius: 9999px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    font-size: 1rem;
+    text-align: center;
+}
 
-        .btn-primary {
-            background: var(--dark-blue);
-            color: white;
-            border: 2px solid var(--dark-blue);
-            box-shadow: 0 4px 15px rgba(26, 59, 125, 0.3);
-        }
+.btn-primary {
+    background: var(--dark-blue);
+    color: white;
+    border: 2px solid var(--dark-blue);
+    box-shadow: 0 4px 15px rgba(26, 59, 125, 0.3);
+}
 
-        .btn-primary:hover {
-            background: var(--medium-blue);
-            border-color: var(--medium-blue);
-            box-shadow: 0 6px 20px rgba(26, 59, 125, 0.4);
-            transform: translateY(-2px);
-        }
+.btn-primary:hover {
+    background: var(--medium-blue);
+    border-color: var(--medium-blue);
+    box-shadow: 0 6px 20px rgba(26, 59, 125, 0.4);
+    transform: translateY(-2px);
+}
 
-        .btn-secondary {
-            background: transparent;
-            color: var(--dark-blue);
-            border: 2px solid var(--dark-blue);
-        }
+.btn-secondary {
+    background: transparent;
+    color: var(--dark-blue);
+    border: 2px solid var(--dark-blue);
+}
 
-        .btn-secondary:hover {
-            background: var(--off-white);
-            color: var(--medium-blue);
-            border-color: var(--medium-blue);
-            transform: translateY(-2px);
-        }
+.btn-secondary:hover {
+    background: var(--off-white);
+    color: var(--medium-blue);
+    border-color: var(--medium-blue);
+    transform: translateY(-2px);
+}
 
-        section {
-            padding: 80px 0;
-            text-align: center;
-        }
+/* --- Sections --- */
+section {
+    padding: 80px 0;
+    text-align: center;
+}
 
-        h1, h2, h3 {
-            font-family: 'Montserrat', sans-serif;
-            color: var(--dark-blue);
-            font-weight: 700;
-            line-height: 1.2;
-            margin-bottom: 20px;
-        }
+h1, h2, h3 {
+    font-family: 'Montserrat', sans-serif;
+    color: var(--dark-blue);
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 20px;
+}
 
-        h1 { font-size: 3.5rem; }
-        h2 { font-size: 2.5rem; }
-        h3 { font-size: 1.75rem; }
+h1 { font-size: 3.5rem; }
+h2 { font-size: 2.5rem; }
+h3 { font-size: 1.75rem; }
 
-        p {
-            font-size: 1.1rem;
-            color: var(--text-color-light);
-            margin-bottom: 20px;
-        }
+p {
+    font-size: 1.1rem;
+    color: var(--text-color-light);
+    margin-bottom: 20px;
+}
 
-        header {
-            padding: 20px 0;
-            position: sticky;
-            top: 0;
-            background-color: white;
-            z-index: 1000;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-        }
+/* --- Header --- */
+header {
+    padding: 20px 0;
+    position: sticky;
+    top: 0;
+    background-color: white;
+    z-index: 1000;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
 
-        .nav-content {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
+.nav-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
 
-        .logo {
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 700;
-            font-size: 1.8rem;
-            color: var(--dark-blue);
-            text-decoration: none;
-        }
+.logo {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    font-size: 1.8rem;
+    color: var(--dark-blue);
+    text-decoration: none;
+}
 
-        nav ul {
-            list-style: none;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            gap: 30px;
-        }
+nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    gap: 30px;
+}
 
-        nav a {
-            text-decoration: none;
-            color: var(--text-color-light);
-            font-weight: 600;
-            font-size: 1rem;
-            transition: color 0.3s ease;
-        }
+nav a {
+    text-decoration: none;
+    color: var(--text-color-light);
+    font-weight: 600;
+    font-size: 1rem;
+    transition: color 0.3s ease;
+}
 
-        nav a:hover { color: var(--dark-blue); }
+nav a:hover {
+    color: var(--dark-blue);
+}
 
-        #home {
-            background: linear-gradient(180deg, #ffffff 0%, #e0efff 100%);
-            min-height: 100vh; /* Full screen height */
-            display: flex;
-            flex-direction: column; /* Stack content vertically */
-            justify-content: center; /* Center content vertically */
-            align-items: center; /* Center content horizontally */
-            text-align: center; /* Center text */
-            padding: 0 20px; /* Optional horizontal padding */
-        }
+/* --- Home Section --- */
+#home {
+    background: linear-gradient(180deg, #ffffff 0%, #e0efff 100%);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 0 20px;
+}
 
-        #home h1 {
-            font-size: 4.5rem;
-            margin-bottom: 25px;
-            max-width: 900px;
-            margin-left: auto;
-            margin-right: auto;
-        }
+#home h1 {
+    font-size: 4rem;
+    margin-bottom: 20px;
+    max-width: 900px;
+}
 
-        #home p {
-            font-size: 1.35rem;
-            color: var(--light-gray);
-            max-width: 700px;
-            margin-left: auto;
-            margin-right: auto;
-            margin-bottom: 40px;
-        }
+#home p {
+    font-size: 1.25rem;
+    color: var(--light-gray);
+    max-width: 700px;
+    margin-bottom: 40px;
+}
 
-        .hero-actions { display: flex; justify-content: center; gap: 20px; }
+.hero-actions {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
 
-        #services .grid-4 {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 30px;
-            margin-top: 50px;
-        }
+/* --- Services Section --- */
+#services .grid-4 {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 30px;
+    margin-top: 50px;
+}
 
-        .service-card {
-            background-color: white;
-            padding: 40px;
-            border-radius: 15px;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
-            text-align: center;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
+.service-card {
+    background-color: white;
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
 
-        .service-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 12px 30px rgba(0,0,0,0.12);
-        }
+.service-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 30px rgba(0,0,0,0.12);
+}
 
-        .service-card .icon {
-            font-size: 3rem;
-            color: var(--dark-blue);
-            margin-bottom: 20px;
-        }
+.service-card .icon {
+    font-size: 3rem;
+    color: var(--dark-blue);
+    margin-bottom: 20px;
+}
 
-        #about {
-            text-align: left;
-            background-color: var(--off-white);
-        }
+.service-card h3 {
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+}
 
-        #about .container {
-            display: flex;
-            flex-direction: column;
-            gap: 60px;
-        }
+.service-card p {
+    font-size: 1rem;
+    color: var(--text-color-light);
+}
 
-        #about h2 { text-align: center; margin-bottom: 60px; }
+/* --- About & Founders Section --- */
+#about {
+    text-align: left;
+    background-color: var(--off-white);
+}
 
-        .about-content-wrapper {
-            display: flex;
-            gap: 50px;
-            align-items: flex-start;
-        }
+#about .container {
+    display: flex;
+    flex-direction: column;
+    gap: 60px;
+}
 
-        .about-text { flex: 2; padding-right: 30px; }
-        .about-text p { margin-bottom: 25px; }
-        .about-text p:last-of-type { margin-bottom: 40px; }
+#about h2 {
+    text-align: center;
+    margin-bottom: 60px;
+}
 
-        .founder-dialog {
-            flex: 1;
-            background: white;
-            border-radius: 15px;
-            padding: 40px;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
-            position: relative;
-            overflow: hidden;
-        }
+.about-content-wrapper {
+    display: flex;
+    gap: 50px;
+    align-items: flex-start;
+}
 
-        .founder-dialog::before {
-            content: '';
-            position: absolute;
-            top: -50px;
-            right: -50px;
-            width: 150px;
-            height: 150px;
-            background: radial-gradient(circle, rgba(252,211,77,0.3) 0%, transparent 70%);
-            border-radius: 50%;
-            z-index: 0;
-        }
+.about-text {
+    flex: 2;
+    padding-right: 30px;
+}
 
-        .founder-dialog::after {
-            content: '';
-            position: absolute;
-            bottom: -50px;
-            left: -50px;
-            width: 150px;
-            height: 150px;
-            background: radial-gradient(circle, rgba(44,89,163,0.15) 0%, transparent 70%);
-            border-radius: 50%;
-            z-index: 0;
-        }
+.about-text p {
+    margin-bottom: 25px;
+}
+.about-text p:last-of-type {
+    margin-bottom: 40px;
+}
 
-        .founder-dialog-content { position: relative; z-index: 1; }
+.founder-dialog {
+    flex: 1;
+    background: white;
+    border-radius: 15px;
+    padding: 40px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+    position: relative;
+    overflow: hidden;
+}
 
-        .founder-avatar {
-            width: 60px;
-            height: 60px;
-            background-color: var(--dark-blue);
-            color: white;
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 1.8rem;
-            font-weight: 700;
-            margin-bottom: 15px;
-            margin-left: auto;
-            margin-right: auto;
-        }
+.founder-dialog::before {
+    content: '';
+    position: absolute;
+    top: -50px;
+    right: -50px;
+    width: 150px;
+    height: 150px;
+    background: radial-gradient(circle, rgba(252,211,77,0.3) 0%, transparent 70%);
+    border-radius: 50%;
+    z-index: 0;
+}
+.founder-dialog::after {
+    content: '';
+    position: absolute;
+    bottom: -50px;
+    left: -50px;
+    width: 150px;
+    height: 150px;
+    background: radial-gradient(circle, rgba(44,89,163,0.15) 0%, transparent 70%);
+    border-radius: 50%;
+    z-index: 0;
+}
 
-        .founder-dialog h4 { font-size: 1.25rem; color: var(--dark-blue); margin-bottom: 5px; text-align: center; }
-        .founder-dialog p.role { font-size: 0.95rem; color: var(--light-gray); margin-bottom: 20px; text-align: center; }
-        .founder-dialog .quote { font-style: italic; font-size: 1.05rem; color: var(--text-color-light); margin-bottom: 25px; line-height: 1.5; }
+.founder-dialog-content {
+    position: relative;
+    z-index: 1;
+}
 
-        .founder-stats { display: flex; justify-content: space-around; margin-top: 25px; border-top: 1px solid #eee; padding-top: 20px; }
-        .founder-stats div { text-align: center; }
-        .founder-stats strong { display: block; font-size: 1.1rem; color: var(--dark-blue); font-weight: 600; }
-        .founder-stats span { font-size: 0.85rem; color: var(--light-gray); white-space: nowrap; }
+.founder-avatar {
+    width: 60px;
+    height: 60px;
+    background-color: var(--dark-blue);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-bottom: 15px;
+    margin-left: auto;
+    margin-right: auto;
+}
 
-        #testimonials { background-color: white; padding-bottom: 100px; }
-        .testimonial-carousel { margin-top: 60px; position: relative; }
-        .testimonial-card {
-            max-width: 800px;
-            margin: 0 auto;
-            background-color: white;
-            padding: 50px;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            text-align: center;
-            position: relative;
-        }
+.founder-dialog h4 {
+    font-size: 1.25rem;
+    color: var(--dark-blue);
+    margin-bottom: 5px;
+    text-align: center;
+}
 
-        .stars { color: var(--yellow-accent); font-size: 1.8rem; margin-bottom: 25px; }
-        .testimonial-card .quote { font-size: 1.7rem; font-style: italic; color: var(--text-color-dark); margin-bottom: 30px; line-height: 1.4; font-weight: 400; }
-        .testimonial-author-avatar {
-            width: 70px;
-            height: 70px;
-            background-color: var(--dark-blue);
-            color: white;
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 2rem;
-            font-weight: 600;
-            margin: 0 auto 15px auto;
-        }
+.founder-dialog p.role {
+    font-size: 0.95rem;
+    color: var(--light-gray);
+    margin-bottom: 20px;
+    text-align: center;
+}
 
-        .testimonial-author-info strong { display: block; font-size: 1.3rem; color: var(--dark-blue); margin-bottom: 5px; }
-        .testimonial-author-info span { font-size: 1rem; color: var(--light-gray); }
+.founder-dialog .quote {
+    font-style: italic;
+    font-size: 1.05rem;
+    color: var(--text-color-light);
+    margin-bottom: 25px;
+    line-height: 1.5;
+}
 
-        .carousel-nav-btn {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            background-color: white;
-            border: 1px solid #ddd;
-            border-radius: 50%;
-            width: 50px;
-            height: 50px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 1.5rem;
-            color: var(--dark-blue);
-            cursor: pointer;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            transition: all 0.2s ease;
-            z-index: 2;
-        }
+.founder-stats {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 25px;
+    border-top: 1px solid #eee;
+    padding-top: 20px;
+}
 
-        .carousel-nav-btn:hover { background-color: var(--off-white); box-shadow: 0 4px 15px rgba(0,0,0,0.15); }
-        .carousel-nav-btn.left { left: -70px; }
-        .carousel-nav-btn.right { right: -70px; }
+.founder-stats div {
+    text-align: center;
+}
 
-        .carousel-dots { display: flex; justify-content: center; margin-top: 40px; gap: 10px; }
-        .carousel-dot {
-            width: 12px; height: 12px;
-            background-color: #ccc;
-            border-radius: 50%;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-        .carousel-dot.active { background-color: var(--dark-blue); }
+.founder-stats strong {
+    display: block;
+    font-size: 1.1rem;
+    color: var(--dark-blue);
+    font-weight: 600;
+}
 
-        #waitlist {
-            background-color: var(--dark-blue);
-            padding: 100px 0;
-            text-align: center;
-        }
+.founder-stats span {
+    font-size: 0.85rem;
+    color: var(--light-gray);
+    white-space: nowrap;
+}
 
-        .waitlist-card {
-            max-width: 600px;
-            margin: 0 auto;
-            background-color: white;
-            padding: 60px;
-            border-radius: 20px;
-            box-shadow: 0 15px 40px rgba(0,0,0,0.2);
-            position: relative;
-        }
+/* --- Testimonials Section --- */
+#testimonials {
+    background-color: white;
+    padding-bottom: 100px;
+}
 
-        .waitlist-card .icon { font-size: 3.5rem; color: var(--dark-blue); margin-bottom: 25px; }
-        #waitlist h2 { font-size: 2.5rem; color: var(--dark-blue); margin-bottom: 15px; }
-        #waitlist p { font-size: 1.15rem; color: var(--text-color-light); margin-bottom: 40px; }
+.testimonial-carousel {
+    margin-top: 60px;
+    position: relative;
+}
 
-        .waitlist-form { display: flex; flex-direction: column; gap: 20px; }
-        .waitlist-form input[type="text"],
-        .waitlist-form input[type="email"] {
-            padding: 15px 20px;
-            border: 1px solid #d1d5db;
-            border-radius: 10px;
-            font-size: 1.1rem;
-            color: var(--text-color-dark);
-            outline: none;
-            transition: border-color 0.3s ease, box-shadow 0.3s ease;
-        }
-        .waitlist-form input[type="text"]:focus,
-        .waitlist-form input[type="email"]:focus {
-            border-color: var(--medium-blue);
-            box-shadow: 0 0 0 3px rgba(44, 89, 163, 0.2);
-        }
+.testimonial-card {
+    max-width: 800px;
+    margin: 0 auto;
+    background-color: white;
+    padding: 50px;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    text-align: center;
+    position: relative;
+}
 
-        .btn-accent {
-            background-color: var(--yellow-accent);
-            color: var(--text-color-dark);
-            border: none;
-            font-weight: 700;
-            padding: 16px 30px;
-            border-radius: 10px;
-            font-size: 1.2rem;
-            cursor: pointer;
-            transition: background-color 0.3s ease, transform 0.3s ease;
-            box-shadow: 0 5px 20px rgba(252,211,77,0.4);
-        }
-        .btn-accent:hover {
-            background-color: #fcd963;
-            transform: translateY(-2px);
-            box-shadow: 0 7px 25px rgba(252,211,77,0.5);
-        }
-        .waitlist-card small {
-            display: block;
-            margin-top: 30px;
-            font-size: 0.9rem;
-            color: var(--light-gray);
-        }
+.stars {
+    color: var(--yellow-accent);
+    font-size: 1.8rem;
+    margin-bottom: 25px;
+}
 
-        footer {
-            background-color: var(--slate-blue-footer);
-            color: white;
-            padding: 80px 0 40px 0;
-            text-align: left;
-        }
+.testimonial-card .quote {
+    font-size: 1.7rem;
+    font-style: italic;
+    color: var(--text-color-dark);
+    margin-bottom: 30px;
+    line-height: 1.4;
+    font-weight: 400;
+}
 
-        .footer-grid {
-            display: grid;
-            grid-template-columns: 2.5fr 1fr 1fr;
-            gap: 50px;
-            margin-bottom: 50px;
-        }
+.testimonial-author-avatar {
+    width: 70px;
+    height: 70px;
+    background-color: var(--dark-blue);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2rem;
+    font-weight: 600;
+    margin: 0 auto 15px auto;
+}
 
-        .footer-logo { font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 1.8rem; color: white; text-decoration: none; display: block; margin-bottom: 20px; }
-        .footer-description { font-size: 1rem; color: #ccc; line-height: 1.7; }
-        .footer-column h4 { font-family: 'Montserrat', sans-serif; font-weight: 600; font-size: 1.1rem; margin-bottom: 25px; color: white; }
-        .footer-column ul { list-style: none; padding: 0; margin: 0; }
-        .footer-column ul li { margin-bottom: 15px; }
-        .footer-column a { color: #ccc; text-decoration: none; font-size: 0.95rem; transition: color 0.3s ease; }
-        .footer-column a:hover { color: white; }
-        .footer-bottom {
-            border-top: 1px solid rgba(255,255,255,0.1);
-            padding-top: 30px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 20px;
-        }
-        .footer-bottom .copyright { font-size: 0.9rem; color: #aaa; }
-        .social-icons { display: flex; gap: 20px; }
-        .social-icons a { color: #ccc; font-size: 1.3rem; transition: color 0.3s ease; }
-        .social-icons a:hover { color: white; }
+.testimonial-author-info strong {
+    display: block;
+    font-size: 1.3rem;
+    color: var(--dark-blue);
+    margin-bottom: 5px;
+}
 
-        @media (max-width: 1024px) {
-            #home h1 { font-size: 3.5rem; }
-            #home p { font-size: 1.2rem; }
-            .carousel-nav-btn.left { left: 10px; }
-            .carousel-nav-btn.right { right: 10px; }
-        }
+.testimonial-author-info span {
+    font-size: 1rem;
+    color: var(--light-gray);
+}
 
-        @media (max-width: 768px) {
-            h1 { font-size: 2.8rem; }
-            h2 { font-size: 2rem; }
-            h3 { font-size: 1.5rem; }
-            section { padding: 60px 0; }
-            .hero-actions { flex-direction: column; gap: 15px; }
-            .btn { width: 80%; max-width: 300px; margin: 0 auto; }
-            .about-content-wrapper { flex-direction: column; }
-            .about-text { padding-right: 0; text-align: center; }
-            .founder-dialog { margin-top: 40px; width: 100%; }
-            .testimonial-card { padding: 40px 25px; }
-            .testimonial-card .quote { font-size: 1.4rem; }
-            .carousel-nav-btn { display: none; }
-            .waitlist-card { padding: 40px 25px; }
-            .footer-grid { grid-template-columns: 1fr; text-align: center; gap: 40px; }
-            .footer-bottom { flex-direction: column; text-align: center; }
-        }
-    </style>
+.carousel-nav-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5rem;
+    color: var(--dark-blue);
+    cursor: pointer;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    transition: all 0.2s ease;
+}
+
+.carousel-nav-btn:hover {
+    background-color: var(--off-white);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+}
+
+.carousel-nav-btn.left { left: -70px; }
+.carousel-nav-btn.right { right: -70px; }
+
+.carousel-dots {
+    display: flex;
+    justify-content: center;
+    margin-top: 40px;
+    gap: 10px;
+}
+
+.carousel-dot {
+    width: 12px;
+    height: 12px;
+    background-color: #ccc;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.carousel-dot.active {
+    background-color: var(--dark-blue);
+}
+
+/* --- Waitlist Section --- */
+#waitlist {
+    background-color: var(--dark-blue);
+    padding: 100px 0;
+    text-align: center;
+}
+
+.waitlist-card {
+    max-width: 600px;
+    margin: 0 auto;
+    background-color: white;
+    padding: 60px;
+    border-radius: 20px;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+    position: relative;
+}
+
+.waitlist-card .icon {
+    font-size: 3.5rem;
+    color: var(--dark-blue);
+    margin-bottom: 25px;
+}
+
+#waitlist h2 {
+    font-size: 2.5rem;
+    color: var(--dark-blue);
+    margin-bottom: 15px;
+}
+
+#waitlist p {
+    font-size: 1.15rem;
+    color: var(--text-color-light);
+    margin-bottom: 40px;
+}
+
+.waitlist-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.waitlist-form input[type="text"],
+.waitlist-form input[type="email"] {
+    padding: 15px 20px;
+    border: 1px solid #d1d5db;
+    border-radius: 10px;
+    font-size: 1.1rem;
+    color: var(--text-color-dark);
+    outline: none;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.waitlist-form input[type="text"]:focus,
+.waitlist-form input[type="email"]:focus {
+    border-color: var(--medium-blue);
+    box-shadow: 0 0 0 3px rgba(44, 89, 163, 0.2);
+}
+
+.btn-accent {
+    background-color: var(--yellow-accent);
+    color: var(--text-color-dark);
+    border: none;
+    font-weight: 700;
+    padding: 16px 30px;
+    border-radius: 10px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    box-shadow: 0 5px 20px rgba(252,211,77,0.4);
+}
+
+.btn-accent:hover {
+    background-color: #fcd963;
+    transform: translateY(-2px);
+    box-shadow: 0 7px 25px rgba(252,211,77,0.5);
+}
+
+.waitlist-card small {
+    display: block;
+    margin-top: 30px;
+    font-size: 0.9rem;
+    color: var(--light-gray);
+}
+
+/* --- Footer --- */
+footer {
+    background-color: var(--slate-blue-footer);
+    color: white;
+    padding: 80px 0 40px 0;
+    text-align: left;
+}
+
+.footer-grid {
+    display: grid;
+    grid-template-columns: 2.5fr 1fr 1fr;
+    gap: 50px;
+    margin-bottom: 50px;
+}
+
+.footer-logo {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    font-size: 1.8rem;
+    color: white;
+    text-decoration: none;
+    display: block;
+    margin-bottom: 20px;
+}
+
+.footer-description {
+    font-size: 1rem;
+    color: #ccc;
+    line-height: 1.7;
+}
+
+.footer-column h4 {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    font-size: 1.1rem;
+    margin-bottom: 25px;
+    color: white;
+}
+
+.footer-column ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.footer-column ul li {
+    margin-bottom: 15px;
+}
+
+.footer-column a {
+    color: #ccc;
+    text-decoration: none;
+    font-size: 0.95rem;
+    transition: color 0.3s ease;
+}
+
+.footer-column a:hover {
+    color: white;
+}
+
+.footer-bottom {
+    border-top: 1px solid rgba(255,255,255,0.1);
+    padding-top: 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.footer-bottom .copyright {
+    font-size: 0.9rem;
+    color: #aaa;
+}
+
+.social-icons {
+    display: flex;
+    gap: 20px;
+}
+
+.social-icons a {
+    color: #ccc;
+    font-size: 1.3rem;
+    transition: color 0.3s ease;
+}
+
+.social-icons a:hover {
+    color: white;
+}
+
+/* --- Responsive --- */
+@media (max-width: 1024px) {
+    #home h1 { font-size: 3.5rem; }
+    #home p { font-size: 1.2rem; }
+    .carousel-nav-btn.left { left: 10px; }
+    .carousel-nav-btn.right { right: 10px; }
+}
+
+@media (max-width: 768px) {
+    h1 { font-size: 2.8rem; }
+    h2 { font-size: 2rem; }
+    h3 { font-size: 1.5rem; }
+    section { padding: 60px 0; }
+    .hero-actions { flex-direction: column; gap: 15px; }
+    .btn { width: 80%; max-width: 300px; margin: 0 auto; }
+    .about-content-wrapper { flex-direction: column; }
+    .about-text { padding-right: 0; text-align: center; }
+    .founder-dialog { margin-top: 40px; width: 100%; }
+    .testimonial-card { padding: 40px 25px; }
+    .testimonial-card .quote { font-size: 1.4rem; }
+    .carousel-nav-btn { display: none; }
+    .waitlist-card { padding: 40px 25px; }
+    .footer-grid { grid-template-columns: 1fr; text-align: center; }
+    .footer-logo { text-align: center; }
+    .footer-description { margin-bottom: 30px; }
+    .footer-column ul { margin-bottom: 30px; }
+    .footer-column h4 { margin-top: 30px; }
+    .footer-bottom { flex-direction: column; }
+    .social-icons { margin-top: 20px; }
+}
+
+@media (max-width: 480px) {
+    h1 { font-size: 2.2rem; }
+    h2 { font-size: 1.8rem; }
+    p { font-size: 1rem; }
+    .hero-actions .btn { font-size: 0.95rem; padding: 12px 20px; }
+    .testimonial-card .quote { font-size: 1.2rem; }
+    .testimonial-author-avatar { width: 50px; height: 50px; font-size: 1.5rem; }
+    .testimonial-author-info strong { font-size: 1.1rem; }
+    .testimonial-author-info span { font-size: 0.85rem; }
+}
+</style>
 </head>
 <body>
-    <!-- Header -->
-    <header>
-        <div class="container nav-content">
-            <a href="#home" class="logo">Terapush</a>
-            <nav>
-                <ul>
-                    <li><a href="#home">Home</a></li>
-                    <li><a href="#services">Services</a></li>
-                    <li><a href="#about">About</a></li>
-                    <li><a href="#testimonials">Testimonials</a></li>
-                    <li><a href="#waitlist">Waitlist</a></li>
-                </ul>
-            </nav>
-        </div>
-    </header>
 
-    <!-- Home Section -->
+<header>
+    <div class="container nav-content">
+        <a href="#" class="logo">Terapush</a>
+        <nav>
+            <ul>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#services">Services</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#testimonials">Testimonials</a></li>
+                <li><a href="#waitlist">Waitlist</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<main>
+    <!-- Home -->
     <section id="home">
         <div class="container">
-            <h1>Empowering Innovators to Build the Future</h1>
-            <p>At Terapush, we connect visionary founders with resources, mentorship, and a network that transforms ideas into impactful realities.</p>
+            <h1>Empowering the Next Generation of Innovators</h1>
+            <p>A seamless platform for startups to grow, connect, and thrive. Join thousands of entrepreneurs building the future.</p>
             <div class="hero-actions">
-                <a href="#waitlist" class="btn btn-primary">Join the Waitlist</a>
-                <a href="#services" class="btn btn-secondary">Our Services</a>
+                <a href="#waitlist" class="btn btn-primary">Get Started</a>
+                <a href="#services" class="btn btn-secondary">Learn More</a>
             </div>
         </div>
     </section>
 
-    <!-- Services Section -->
+    <!-- Services -->
     <section id="services">
         <div class="container">
-            <h2>What We Offer</h2>
+            <h2>Everything You Need to Scale</h2>
+            <p>From funding to talent, resources to community – we've built the complete ecosystem for startup success.</p>
             <div class="grid-4">
                 <div class="service-card">
-                    <div class="icon"><i class="fas fa-lightbulb"></i></div>
-                    <h3>Innovation Hub</h3>
-                    <p>Access resources, mentorship, and workshops to bring your startup ideas to life.</p>
-                </div>
-                <div class="service-card">
-                    <div class="icon"><i class="fas fa-network-wired"></i></div>
-                    <h3>Networking</h3>
-                    <p>Connect with investors, experts, and fellow entrepreneurs to grow your business.</p>
-                </div>
-                <div class="service-card">
-                    <div class="icon"><i class="fas fa-rocket"></i></div>
-                    <h3>Accelerator Programs</h3>
-                    <p>Get into tailored acceleration tracks that speed up your product-market fit journey.</p>
-                </div>
-                <div class="service-card">
                     <div class="icon"><i class="fas fa-chart-line"></i></div>
-                    <h3>Growth Support</h3>
-                    <p>We guide startups in scaling operations, funding rounds, and business strategy.</p>
+                    <h3>Access to Investors</h3>
+                    <p>Connect with curated funding opportunities from angel investors, VCs, and institutional backers.</p>
+                </div>
+                <div class="service-card">
+                    <div class="icon"><i class="fas fa-users"></i></div>
+                    <h3>Find Talent</h3>
+                    <p>Discover freelancers, experts, and co-founders with the exact skills your startup needs.</p>
+                </div>
+                <div class="service-card">
+                    <div class="icon"><i class="fas fa-lightbulb"></i></div>
+                    <h3>Resources for Growth</h3>
+                    <p>Access tools, guides, and networks designed to accelerate your startup's journey from idea to scale.</p>
+                </div>
+                <div class="service-card">
+                    <div class="icon"><i class="fas fa-handshake"></i></div>
+                    <h3>Collaborate with Ease</h3>
+                    <p>Join a thriving community where entrepreneurs connect, share insights, and build the future together.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- About Section -->
+    <!-- About & Founders -->
     <section id="about">
         <div class="container">
             <h2>About Terapush</h2>
             <div class="about-content-wrapper">
                 <div class="about-text">
-                    <p>Terapush is a forward-thinking innovation hub designed to help early-stage startups grow and succeed. Our mission is to empower founders with the tools, mentorship, and connections they need to thrive in today’s competitive landscape.</p>
-                    <p>Through our programs, startups gain access to industry experts, potential investors, and collaborative community networks that accelerate growth and impact.</p>
+                    <p>Terapush was founded to create an ecosystem where startups can thrive effortlessly. We provide the tools, network, and guidance to turn ideas into successful businesses.</p>
+                    <p>Our founders have years of experience building, scaling, and mentoring startups, ensuring every member gets actionable support to succeed.</p>
                 </div>
                 <div class="founder-dialog">
                     <div class="founder-dialog-content">
-                        <div class="founder-avatar">A</div>
-                        <h4>Ashwin Bafna</h4>
-                        <p class="role">Founder & CEO</p>
-                        <p class="quote">"We believe that innovation is for everyone, and our goal is to make entrepreneurial resources accessible to visionary minds across the globe."</p>
+                        <div class="founder-avatar">AB</div>
+                        <h4>Amit Bafna</h4>
+                        <p class="role">Co-Founder & CEO</p>
+                        <p class="quote">"Our mission is to make entrepreneurship accessible, efficient, and impactful. Terapush is more than a platform; it's a movement."</p>
                         <div class="founder-stats">
                             <div><strong>500+</strong><span>Startups Supported</span></div>
-                            <div><strong>200+</strong><span>Mentors</span></div>
-                            <div><strong>50+</strong><span>Investor Partnerships</span></div>
+                            <div><strong>50+</strong><span>Global Investors</span></div>
+                            <div><strong>120K+</strong><span>Community Members</span></div>
                         </div>
                     </div>
                 </div>
@@ -550,156 +760,86 @@
         </div>
     </section>
 
-    <!-- Testimonials Section -->
+    <!-- Testimonials -->
     <section id="testimonials">
         <div class="container">
-            <h2>What Our Community Says</h2>
+            <h2>What Our Members Say</h2>
             <div class="testimonial-carousel">
                 <div class="testimonial-card">
                     <div class="stars">★★★★★</div>
-                    <p class="quote">"Terapush has transformed our startup journey with unparalleled support and mentorship."</p>
-                    <div class="testimonial-author-avatar">S</div>
+                    <p class="quote">"Terapush transformed our fundraising journey. The investor connections are unparalleled."</p>
+                    <div class="testimonial-author-avatar">RS</div>
                     <div class="testimonial-author-info">
-                        <strong>Samira Roy</strong>
-                        <span>Co-founder, TechNova</span>
+                        <strong>Ria Sharma</strong>
+                        <span>Founder, TechNova</span>
                     </div>
                 </div>
                 <div class="testimonial-card">
                     <div class="stars">★★★★★</div>
-                    <p class="quote">"The network and resources we accessed through Terapush helped us secure our first funding round."</p>
-                    <div class="testimonial-author-avatar">A</div>
+                    <p class="quote">"The resources and mentorship available here are game-changing for early-stage startups."</p>
+                    <div class="testimonial-author-avatar">MK</div>
                     <div class="testimonial-author-info">
-                        <strong>Aditya Singh</strong>
-                        <span>Founder, GreenLeaf</span>
+                        <strong>Manav Kapoor</strong>
+                        <span>Co-Founder, HealthSync</span>
                     </div>
-                </div>
-                <div class="testimonial-card">
-                    <div class="stars">★★★★★</div>
-                    <p class="quote">"A one-stop hub for innovative startups seeking growth and mentorship."</p>
-                    <div class="testimonial-author-avatar">L</div>
-                    <div class="testimonial-author-info">
-                        <strong>Lina Patel</strong>
-                        <span>CEO, SmartSolutions</span>
-                    </div>
-                </div>
-
-                <div class="carousel-nav-btn left"><i class="fas fa-chevron-left"></i></div>
-                <div class="carousel-nav-btn right"><i class="fas fa-chevron-right"></i></div>
-                <div class="carousel-dots">
-                    <div class="carousel-dot"></div>
-                    <div class="carousel-dot"></div>
-                    <div class="carousel-dot"></div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Waitlist Section -->
+    <!-- Waitlist -->
     <section id="waitlist">
         <div class="container">
             <div class="waitlist-card">
                 <div class="icon"><i class="fas fa-envelope-open-text"></i></div>
                 <h2>Join Our Waitlist</h2>
-                <p>Be the first to get access to our startup programs and mentorship opportunities. Sign up today!</p>
+                <p>Be the first to access Terapush and unlock the full potential of your startup journey.</p>
                 <form class="waitlist-form">
-                    <input type="text" placeholder="Full Name" required>
+                    <input type="text" placeholder="Your Name" required>
                     <input type="email" placeholder="Email Address" required>
-                    <button class="btn-accent" type="submit">Join Now</button>
-                    <small>We respect your privacy. No spam, only updates.</small>
+                    <button type="submit" class="btn-accent">Join Now</button>
+                    <small>No spam. We respect your privacy.</small>
                 </form>
             </div>
         </div>
     </section>
+</main>
 
-    <!-- Footer -->
-    <footer>
-        <div class="container">
-            <div class="footer-grid">
-                <div>
-                    <a href="#home" class="footer-logo">Terapush</a>
-                    <p class="footer-description">Empowering startups and innovators with the tools, mentorship, and connections to grow and succeed globally.</p>
-                </div>
-                <div class="footer-column">
-                    <h4>Company</h4>
-                    <ul>
-                        <li><a href="#about">About Us</a></li>
-                        <li><a href="#services">Services</a></li>
-                        <li><a href="#waitlist">Waitlist</a></li>
-                    </ul>
-                </div>
-                <div class="footer-column">
-                    <h4>Connect</h4>
-                    <ul>
-                        <li><a href="#">LinkedIn</a></li>
-                        <li><a href="#">Twitter</a></li>
-                        <li><a href="#">Instagram</a></li>
-                    </ul>
-                </div>
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="footer-grid">
+            <div>
+                <a href="#" class="footer-logo">Terapush</a>
+                <p class="footer-description">Terapush is the ecosystem for startups. From investors to talent, from resources to networking, we empower entrepreneurs to succeed globally.</p>
             </div>
-            <div class="footer-bottom">
-                <div class="copyright">&copy; 2025 Terapush. All rights reserved.</div>
-                <div class="social-icons">
-                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
-                    <a href="#"><i class="fab fa-twitter"></i></a>
-                    <a href="#"><i class="fab fa-instagram"></i></a>
-                </div>
+            <div class="footer-column">
+                <h4>Company</h4>
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#services">Services</a></li>
+                    <li><a href="#about">About</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4>Resources</h4>
+                <ul>
+                    <li><a href="#testimonials">Testimonials</a></li>
+                    <li><a href="#waitlist">Waitlist</a></li>
+                    <li><a href="#">Blog</a></li>
+                </ul>
             </div>
         </div>
-    </footer>
+        <div class="footer-bottom">
+            <span class="copyright">© 2025 Terapush. All rights reserved.</span>
+            <div class="social-icons">
+                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-linkedin-in"></i></a>
+            </div>
+        </div>
+    </div>
+</footer>
 
-    <!-- Scripts -->
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            const testimonials = document.querySelectorAll(".testimonial-card");
-            const dots = document.querySelectorAll(".carousel-dot");
-            const prevBtn = document.querySelector(".carousel-nav-btn.left");
-            const nextBtn = document.querySelector(".carousel-nav-btn.right");
-            let currentIndex = 0;
-            let autoplayInterval;
-
-            function showTestimonial(index) {
-                testimonials.forEach((card, i) => {
-                    card.style.display = i === index ? "block" : "none";
-                });
-                dots.forEach((dot, i) => {
-                    dot.classList.toggle("active", i === index);
-                });
-            }
-
-            function showNext() {
-                currentIndex = (currentIndex + 1) % testimonials.length;
-                showTestimonial(currentIndex);
-            }
-
-            function showPrev() {
-                currentIndex = (currentIndex - 1 + testimonials.length) % testimonials.length;
-                showTestimonial(currentIndex);
-            }
-
-            function startAutoplay() {
-                autoplayInterval = setInterval(showNext, 5000);
-            }
-
-            function stopAutoplay() {
-                clearInterval(autoplayInterval);
-            }
-
-            // Event listeners
-            nextBtn.addEventListener("click", () => { showNext(); stopAutoplay(); startAutoplay(); });
-            prevBtn.addEventListener("click", () => { showPrev(); stopAutoplay(); startAutoplay(); });
-            dots.forEach((dot, i) => {
-                dot.addEventListener("click", () => {
-                    currentIndex = i;
-                    showTestimonial(currentIndex);
-                    stopAutoplay();
-                    startAutoplay();
-                });
-            });
-
-            // Initialize
-            showTestimonial(currentIndex);
-            startAutoplay();
-        });
-    </script>
 </body>
 </html>
