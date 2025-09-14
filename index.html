@@ -18,123 +18,37 @@
     --text-color-light: #4b5563;
 }
 
-* { box-sizing: border-box; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Poppins', sans-serif; color: var(--text-color-dark); line-height: 1.6; background-color: #fff; }
 
-body {
-    font-family: 'Poppins', sans-serif;
-    margin: 0;
-    padding: 0;
-    color: var(--text-color-dark);
-    background-color: white;
-    line-height: 1.6;
-}
+.container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
 
-.container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 20px;
-}
-
-.btn {
-    display: inline-block;
-    padding: 14px 28px;
-    border-radius: 9999px;
-    font-weight: 600;
-    text-decoration: none;
-    transition: all 0.3s ease;
-    cursor: pointer;
-    font-size: 1rem;
-    text-align: center;
-}
-
-.btn:focus-visible {
-    outline: 3px solid var(--yellow-accent);
-    outline-offset: 3px;
-}
-
-.btn-primary {
-    background: var(--dark-blue);
-    color: white;
-    border: 2px solid var(--dark-blue);
-    box-shadow: 0 4px 15px rgba(26, 59, 125, 0.3);
-}
-
-.btn-primary:hover {
-    background: var(--medium-blue);
-    border-color: var(--medium-blue);
-    box-shadow: 0 6px 20px rgba(26, 59, 125, 0.4);
-    transform: translateY(-2px);
-}
-
-.btn-secondary {
-    background: transparent;
-    color: var(--dark-blue);
-    border: 2px solid var(--dark-blue);
-}
-
-.btn-secondary:hover {
-    background: var(--off-white);
-    color: var(--medium-blue);
-    border-color: var(--medium-blue);
-    transform: translateY(-2px);
-}
-
-section { padding: 80px 0; text-align: center; }
-
-h1, h2, h3 {
-    font-family: 'Montserrat', sans-serif;
-    color: var(--dark-blue);
-    font-weight: 700;
-    line-height: 1.2;
-    margin-bottom: 20px;
-}
-
-h1 { font-size: 3.5rem; }
-h2 { font-size: 2.5rem; }
-h3 { font-size: 1.75rem; }
-
-p { font-size: 1.1rem; color: var(--text-color-light); margin-bottom: 20px; }
+a { text-decoration: none; color: inherit; }
 
 header {
     padding: 20px 0;
+    background-color: white;
     position: sticky;
     top: 0;
-    background-color: white;
     z-index: 1000;
     box-shadow: 0 2px 10px rgba(0,0,0,0.05);
 }
 
 .nav-content { display: flex; justify-content: space-between; align-items: center; }
 
-.logo {
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 700;
-    font-size: 1.8rem;
-    color: var(--dark-blue);
-    text-decoration: none;
-}
+.logo { font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 1.8rem; color: var(--dark-blue); }
 
-nav ul {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    gap: 30px;
-}
+nav { display: flex; align-items: center; }
 
-nav a {
-    text-decoration: none;
-    color: var(--text-color-light);
-    font-weight: 600;
-    font-size: 1rem;
-    transition: color 0.3s ease;
-}
+nav ul { display: flex; gap: 25px; list-style: none; }
 
-nav a:hover { color: var(--dark-blue); }
+nav li a { font-weight: 600; color: var(--text-color-dark); transition: 0.3s; }
+nav li a:hover { color: var(--dark-blue); }
 
-/* Home */
-#home {
-    background: linear-gradient(180deg, #ffffff 0%, #e0efff 100%);
+.menu-toggle { display: none; font-size: 1.5rem; cursor: pointer; }
+
+/* Hero Section */
+#home { 
     min-height: 100vh;
     display: flex;
     flex-direction: column;
@@ -142,250 +56,71 @@ nav a:hover { color: var(--dark-blue); }
     align-items: center;
     text-align: center;
     padding: 0 20px;
+    background: linear-gradient(180deg, #ffffff 0%, #e0efff 100%);
 }
-
-#home h1 { font-size: clamp(2rem, 5vw, 4.5rem); margin-bottom: 25px; max-width: 900px; margin-left: auto; margin-right: auto; }
-#home p { font-size: clamp(1rem, 2.5vw, 1.35rem); color: var(--light-gray); max-width: 700px; margin-left: auto; margin-right: auto; margin-bottom: 40px; }
-.hero-actions { display: flex; justify-content: center; gap: 20px; }
+#home h1 { font-size: clamp(2rem, 5vw, 4.5rem); margin-bottom: 20px; }
+#home p { font-size: clamp(1rem, 2.5vw, 1.35rem); color: var(--light-gray); max-width: 700px; margin-bottom: 30px; }
+.hero-actions { display: flex; gap: 20px; flex-wrap: wrap; justify-content: center; }
+.btn { padding: 14px 28px; border-radius: 9999px; font-weight: 600; transition: all 0.3s; text-align: center; cursor: pointer; }
+.btn-primary { background: var(--dark-blue); color: white; border: 2px solid var(--dark-blue); }
+.btn-primary:hover { background: var(--medium-blue); border-color: var(--medium-blue); transform: translateY(-2px); }
+.btn-secondary { background: transparent; color: var(--dark-blue); border: 2px solid var(--dark-blue); }
+.btn-secondary:hover { background: var(--medium-blue); color: white; }
 
 /* Services */
-#services .grid-4 {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 30px;
-    margin-top: 50px;
-}
-
-.service-card {
-    background-color: white;
-    padding: 40px;
-    border-radius: 15px;
-    box-shadow: 0 8px 25px rgba(0,0,0,0.08);
-    text-align: center;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.service-card:hover { transform: translateY(-5px); box-shadow: 0 12px 30px rgba(0,0,0,0.12); }
+#services { padding: 80px 0; text-align: center; }
+#services h2 { margin-bottom: 50px; font-size: clamp(2rem, 4vw, 2.5rem); }
+.grid-4 { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; }
+.service-card { background: white; padding: 40px; border-radius: 15px; box-shadow: 0 8px 25px rgba(0,0,0,0.08); transition: transform 0.3s; }
+.service-card:hover { transform: translateY(-5px); }
 .service-card .icon { font-size: 3rem; color: var(--dark-blue); margin-bottom: 20px; }
 
 /* About */
-#about { text-align: left; background-color: var(--off-white); }
-#about .container { display: flex; flex-direction: column; gap: 60px; }
-#about h2 { text-align: center; margin-bottom: 60px; }
-.about-content-wrapper { display: flex; gap: 50px; align-items: flex-start; }
-.about-text { flex: 2; padding-right: 30px; }
-.about-text p { margin-bottom: 25px; }
-.about-text p:last-of-type { margin-bottom: 40px; }
+#about { background-color: var(--off-white); padding: 80px 0; }
+.about-content-wrapper { display: flex; gap: 50px; flex-wrap: wrap; align-items: flex-start; justify-content: center; }
+.about-text { flex: 1; min-width: 300px; }
+.founder-dialog { flex: 1; min-width: 300px; background: white; border-radius: 15px; padding: 30px; box-shadow: 0 8px 25px rgba(0,0,0,0.08); }
+.founder-avatar { width: 60px; height: 60px; background-color: var(--dark-blue); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 1.8rem; margin: 0 auto 15px; }
+.founder-dialog h4 { text-align: center; margin-bottom: 5px; }
+.founder-dialog p.role { text-align: center; margin-bottom: 20px; color: var(--light-gray); }
+.founder-dialog .quote { font-style: italic; color: var(--text-color-light); margin-bottom: 25px; line-height: 1.5; }
 
-.founder-dialog {
-    flex: 1;
-    background: white;
-    border-radius: 15px;
-    padding: 40px;
-    box-shadow: 0 8px 25px rgba(0,0,0,0.08);
-    position: relative;
-    overflow: hidden;
-}
-.founder-dialog::before {
-    content: '';
-    position: absolute;
-    top: -50px;
-    right: -50px;
-    width: 150px;
-    height: 150px;
-    background: radial-gradient(circle, rgba(252,211,77,0.3) 0%, transparent 70%);
-    border-radius: 50%;
-    z-index: 0;
-}
-.founder-dialog::after {
-    content: '';
-    position: absolute;
-    bottom: -50px;
-    left: -50px;
-    width: 150px;
-    height: 150px;
-    background: radial-gradient(circle, rgba(44,89,163,0.15) 0%, transparent 70%);
-    border-radius: 50%;
-    z-index: 0;
-}
-.founder-dialog-content { position: relative; z-index: 1; }
-.founder-avatar {
-    width: 60px;
-    height: 60px;
-    background-color: var(--dark-blue);
-    color: white;
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 1.8rem;
-    font-weight: 700;
-    margin-bottom: 15px;
-    margin-left: auto;
-    margin-right: auto;
-}
-.founder-dialog h4 { font-size: 1.25rem; color: var(--dark-blue); margin-bottom: 5px; text-align: center; }
-.founder-dialog p.role { font-size: 0.95rem; color: var(--light-gray); margin-bottom: 20px; text-align: center; }
-.founder-dialog .quote { font-style: italic; font-size: 1.05rem; color: var(--text-color-light); margin-bottom: 25px; line-height: 1.5; }
-.founder-stats { display: flex; justify-content: space-around; margin-top: 25px; border-top: 1px solid #eee; padding-top: 20px; }
-.founder-stats div { text-align: center; }
-.founder-stats strong { display: block; font-size: 1.1rem; color: var(--dark-blue); font-weight: 600; }
-.founder-stats span { font-size: 0.85rem; color: var(--light-gray); white-space: nowrap; }
-
-/* Testimonials - Multi Card Carousel */
-#testimonials { background-color: white; padding-bottom: 100px; }
-.testimonial-carousel { overflow: hidden; position: relative; margin-top: 60px; }
-.testimonial-carousel-track {
-    display: flex;
-    gap: 30px;
-    transition: transform 0.5s ease-in-out;
-}
-.testimonial-card {
-    min-width: 300px;
-    flex: 1 0 auto;
-    background-color: white;
-    padding: 50px;
-    border-radius: 15px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-    text-align: center;
-}
-.stars { color: var(--yellow-accent); font-size: 1.8rem; margin-bottom: 25px; }
-.testimonial-card .quote { font-size: 1.7rem; font-style: italic; color: var(--text-color-dark); margin-bottom: 30px; line-height: 1.4; font-weight: 400; }
-.testimonial-author-avatar {
-    width: 70px;
-    height: 70px;
-    background-color: var(--dark-blue);
-    color: white;
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 2rem;
-    font-weight: 600;
-    margin: 0 auto 15px auto;
-}
-.testimonial-author-info strong { display: block; font-size: 1.3rem; color: var(--dark-blue); margin-bottom: 5px; }
-.testimonial-author-info span { font-size: 1rem; color: var(--light-gray); }
-.carousel-nav-btn {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    background-color: white;
-    border: 1px solid #ddd;
-    border-radius: 50%;
-    width: 50px;
-    height: 50px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 1.5rem;
-    color: var(--dark-blue);
-    cursor: pointer;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-    transition: all 0.2s ease;
-    z-index: 2;
-}
-.carousel-nav-btn:hover { background-color: var(--off-white); box-shadow: 0 4px 15px rgba(0,0,0,0.15); }
-.carousel-nav-btn.left { left: -70px; }
-.carousel-nav-btn.right { right: -70px; }
-.carousel-dots { display: flex; justify-content: center; margin-top: 40px; gap: 10px; }
-.carousel-dot { width: 12px; height: 12px; background-color: #ccc; border-radius: 50%; cursor: pointer; transition: background-color 0.3s ease; }
-.carousel-dot.active { background-color: var(--dark-blue); }
+/* Testimonials */
+#testimonials { padding: 80px 0; text-align: center; background: white; }
+.testimonial-carousel { overflow: hidden; position: relative; }
+.testimonial-carousel-track { display: flex; gap: 30px; transition: transform 0.5s ease-in-out; }
+.testimonial-card { flex: 0 0 auto; min-width: 300px; background: white; padding: 40px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
+.stars { color: var(--yellow-accent); font-size: 1.5rem; margin-bottom: 20px; }
+.testimonial-card .quote { font-size: 1rem; font-style: italic; margin-bottom: 25px; }
 
 /* Waitlist */
-#waitlist { background-color: var(--dark-blue); padding: 100px 0; text-align: center; }
-.waitlist-card {
-    max-width: 600px;
-    margin: 0 auto;
-    background-color: white;
-    padding: 60px;
-    border-radius: 20px;
-    box-shadow: 0 15px 40px rgba(0,0,0,0.2);
-    position: relative;
-}
-.waitlist-card .icon { font-size: 3.5rem; color: var(--dark-blue); margin-bottom: 25px; }
-#waitlist h2 { font-size: 2.5rem; color: var(--dark-blue); margin-bottom: 15px; }
-#waitlist p { font-size: 1.15rem; color: var(--text-color-light); margin-bottom: 40px; }
+#waitlist { background-color: var(--dark-blue); padding: 80px 20px; text-align: center; }
+.waitlist-card { max-width: 500px; margin: 0 auto; background: white; padding: 40px; border-radius: 20px; }
 .waitlist-form { display: flex; flex-direction: column; gap: 20px; }
-.waitlist-form input[type="text"], .waitlist-form input[type="email"] {
-    padding: 15px 20px;
-    border: 1px solid #d1d5db;
-    border-radius: 10px;
-    font-size: 1.1rem;
-    color: var(--text-color-dark);
-    outline: none;
-    transition: border-color 0.3s ease, box-shadow 0.3s ease;
-}
-.waitlist-form input[type="text"]:focus, .waitlist-form input[type="email"]:focus {
-    border-color: var(--medium-blue);
-    box-shadow: 0 0 0 3px rgba(44, 89, 163, 0.2);
-}
-.btn-accent {
-    background-color: var(--yellow-accent);
-    color: var(--text-color-dark);
-    border: none;
-    font-weight: 700;
-    padding: 16px 30px;
-    border-radius: 10px;
-    font-size: 1.2rem;
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.3s ease;
-    box-shadow: 0 5px 20px rgba(252,211,77,0.4);
-}
-.btn-accent:hover { background-color: #fcd963; transform: translateY(-2px); box-shadow: 0 7px 25px rgba(252,211,77,0.5); }
-.waitlist-card small { display: block; margin-top: 30px; font-size: 0.9rem; color: var(--light-gray); }
+.waitlist-form input { padding: 14px; border-radius: 10px; border: 1px solid #d1d5db; font-size: 1rem; }
+.waitlist-form input:focus { outline: none; border-color: var(--medium-blue); box-shadow: 0 0 0 3px rgba(44,89,163,0.2); }
+.btn-accent { background: var(--yellow-accent); border: none; font-weight: 700; padding: 16px; border-radius: 10px; cursor: pointer; }
+.btn-accent:hover { background: #fcd963; transform: translateY(-2px); }
 
 /* Footer */
-footer {
-    background-color: var(--slate-blue-footer);
-    color: white;
-    padding: 80px 0 40px 0;
-    text-align: left;
-}
-.footer-grid { display: grid; grid-template-columns: 2.5fr 1fr 1fr; gap: 50px; margin-bottom: 50px; }
-.footer-logo { font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 1.8rem; color: white; text-decoration: none; display: block; margin-bottom: 20px; }
-.footer-description { font-size: 1rem; color: #ccc; line-height: 1.7; }
-.footer-column h4 { font-family: 'Montserrat', sans-serif; font-weight: 600; font-size: 1.1rem; margin-bottom: 25px; color: white; }
-.footer-column ul { list-style: none; padding: 0; margin: 0; }
-.footer-column ul li { margin-bottom: 15px; }
-.footer-column a { color: #ccc; text-decoration: none; font-size: 0.95rem; transition: color 0.3s ease; }
+footer { background: var(--slate-blue-footer); color: white; padding: 80px 20px 40px 20px; }
+.footer-grid { display: flex; flex-wrap: wrap; gap: 50px; justify-content: space-between; }
+.footer-column { min-width: 150px; }
+.footer-column h4 { margin-bottom: 20px; }
+.footer-column ul { list-style: none; padding: 0; }
+.footer-column li { margin-bottom: 10px; }
+.footer-column a { color: #ccc; }
 .footer-column a:hover { color: white; }
-.footer-bottom {
-    border-top: 1px solid rgba(255,255,255,0.1);
-    padding-top: 30px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 20px;
-}
-.footer-bottom .copyright { font-size: 0.9rem; color: #aaa; }
-.social-icons { display: flex; gap: 20px; }
-.social-icons a { color: #ccc; font-size: 1.3rem; transition: color 0.3s ease; }
-.social-icons a:hover { color: var(--yellow-accent); }
+.footer-bottom { border-top: 1px solid rgba(255,255,255,0.1); margin-top: 30px; padding-top: 20px; display: flex; justify-content: space-between; flex-wrap: wrap; }
 
 /* Responsive */
-@media (max-width: 1024px) {
-    #home h1 { font-size: 3.5rem; }
-    #home p { font-size: 1.2rem; }
-    .carousel-nav-btn.left { left: 10px; }
-    .carousel-nav-btn.right { right: 10px; }
-}
-@media (max-width: 768px) {
-    h1 { font-size: 2.8rem; }
-    h2 { font-size: 2rem; }
-    h3 { font-size: 1.5rem; }
-    section { padding: 60px 0; }
-    .hero-actions { flex-direction: column; gap: 15px; }
-    .btn { width: 80%; max-width: 300px; margin: 0 auto; }
-    .about-content-wrapper { flex-direction: column; }
-    .about-text { padding-right: 0; text-align: center; }
-    .founder-dialog { margin-top: 40px; width: 100%; }
-    .testimonial-card { padding: 40px 25px; font-size: 1.4rem; }
-    .carousel-nav-btn { display: none; }
-    .waitlist-card { padding: 40px 25px; }
-    .footer-grid { grid-template-columns: 1fr; gap: 40px; }
-    .footer-bottom { flex-direction: column; text-align: center; }
+@media(max-width: 768px){
+    nav ul { display: none; flex-direction: column; gap: 15px; background: white; position: absolute; top: 70px; left: 0; width: 100%; padding: 20px; box-shadow: 0 5px 20px rgba(0,0,0,0.1); }
+    nav ul.show { display: flex; }
+    .menu-toggle { display: block; }
+    .about-content-wrapper { flex-direction: column; gap: 30px; }
+    .grid-4 { grid-template-columns: 1fr; }
+    .testimonial-card { min-width: 90%; margin: 0 auto; }
 }
 </style>
 </head>
@@ -394,6 +129,7 @@ footer {
 <header>
     <div class="container nav-content">
         <a href="#" class="logo">Terapush</a>
+        <i class="fas fa-bars menu-toggle"></i>
         <nav>
             <ul>
                 <li><a href="#home">Home</a></li>
@@ -433,74 +169,12 @@ footer {
         <div class="about-content-wrapper">
             <div class="about-text">
                 <p>Terapush is a startup innovation hub designed to empower entrepreneurs at every stage of their journey. From ideation to growth, we provide the tools, mentorship, and connections necessary to succeed.</p>
-                <p>Our founders have built successful startups and bring real-world experience to guide emerging entrepreneurs. Join a community of innovators, disruptors, and problem-solvers transforming industries across India.</p>
             </div>
             <div class="founder-dialog">
-                <div class="founder-dialog-content">
-                    <div class="founder-avatar">H</div>
-                    <h4>Harsh Bafna</h4>
-                    <p class="role">Co-founder & CEO</p>
-                    <p class="quote">"Our mission is to create an ecosystem where startups thrive through innovation, collaboration, and support."</p>
-                    <div class="founder-stats">
-                        <div><strong>50+</strong><span>Startups Mentored</span></div>
-                        <div><strong>20+</strong><span>Funding Partners</span></div>
-                        <div><strong>1000+</strong><span>Community Members</span></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<section id="testimonials">
-    <div class="container">
-        <h2>What Our Community Says</h2>
-        <div class="testimonial-carousel">
-            <div class="testimonial-carousel-track">
-                <div class="testimonial-card">
-                    <div class="stars">★★★★★</div>
-                    <p class="quote">"Terapush has transformed our startup journey with unparalleled support and mentorship."</p>
-                    <div class="testimonial-author-avatar">S</div>
-                    <div class="testimonial-author-info">
-                        <strong>Samira Roy</strong>
-                        <span>Co-founder, TechNova</span>
-                    </div>
-                </div>
-                <div class="testimonial-card">
-                    <div class="stars">★★★★★</div>
-                    <p class="quote">"The network and resources we accessed through Terapush helped us secure our first funding round."</p>
-                    <div class="testimonial-author-avatar">A</div>
-                    <div class="testimonial-author-info">
-                        <strong>Aditya Singh</strong>
-                        <span>Founder, GreenLeaf</span>
-                    </div>
-                </div>
-                <div class="testimonial-card">
-                    <div class="stars">★★★★★</div>
-                    <p class="quote">"A one-stop hub for innovative startups seeking growth and mentorship."</p>
-                    <div class="testimonial-author-avatar">L</div>
-                    <div class="testimonial-author-info">
-                        <strong>Lina Patel</strong>
-                        <span>CEO, SmartSolutions</span>
-                    </div>
-                </div>
-                <div class="testimonial-card">
-                    <div class="stars">★★★★★</div>
-                    <p class="quote">"Terapush provided mentorship that accelerated our product-market fit journey."</p>
-                    <div class="testimonial-author-avatar">R</div>
-                    <div class="testimonial-author-info">
-                        <strong>Rohan Mehta</strong>
-                        <span>CTO, InnovateX</span>
-                    </div>
-                </div>
-            </div>
-            <div class="carousel-nav-btn left"><i class="fas fa-chevron-left"></i></div>
-            <div class="carousel-nav-btn right"><i class="fas fa-chevron-right"></i></div>
-            <div class="carousel-dots">
-                <div class="carousel-dot"></div>
-                <div class="carousel-dot"></div>
-                <div class="carousel-dot"></div>
-                <div class="carousel-dot"></div>
+                <div class="founder-avatar">H</div>
+                <h4>Harsh Bafna</h4>
+                <p class="role">Co-founder & CEO</p>
+                <p class="quote">"Our mission is to create an ecosystem where startups thrive through innovation, collaboration, and support."</p>
             </div>
         </div>
     </div>
@@ -509,14 +183,11 @@ footer {
 <section id="waitlist">
     <div class="container">
         <div class="waitlist-card">
-            <div class="icon"><i class="fas fa-envelope-open-text"></i></div>
             <h2>Join the Terapush Waitlist</h2>
-            <p>Get early access to mentorship, resources, and a thriving community of innovators.</p>
-            <form class="waitlist-form" onsubmit="event.preventDefault(); alert('Thanks for joining the waitlist!');">
+            <form class="waitlist-form" onsubmit="event.preventDefault(); alert('Thanks for joining!');">
                 <input type="text" placeholder="Full Name" required>
                 <input type="email" placeholder="Email Address" required>
                 <button type="submit" class="btn-accent">Join Waitlist</button>
-                <small>We respect your privacy. Your info is safe with us.</small>
             </form>
         </div>
     </div>
@@ -525,91 +196,18 @@ footer {
 <footer>
     <div class="container">
         <div class="footer-grid">
-            <div>
-                <a href="#" class="footer-logo">Terapush</a>
-                <p class="footer-description">Empowering startups through innovation, mentorship, and networking to achieve scalable growth.</p>
-            </div>
-            <div class="footer-column">
-                <h4>Quick Links</h4>
-                <ul>
-                    <li><a href="#home">Home</a></li>
-                    <li><a href="#services">Services</a></li>
-                    <li><a href="#about">About</a></li>
-                    <li><a href="#testimonials">Testimonials</a></li>
-                    <li><a href="#waitlist">Waitlist</a></li>
-                </ul>
-            </div>
-            <div class="footer-column">
-                <h4>Connect</h4>
-                <div class="social-icons">
-                    <a href="#"><i class="fab fa-twitter"></i></a>
-                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
-                    <a href="#"><i class="fab fa-instagram"></i></a>
-                </div>
-            </div>
+            <div><h4>Terapush</h4><p>Empowering startups through innovation and mentorship.</p></div>
+            <div class="footer-column"><h4>Links</h4><ul><li><a href="#home">Home</a></li><li><a href="#services">Services</a></li></ul></div>
+            <div class="footer-column"><h4>Connect</h4><a href="#"><i class="fab fa-twitter"></i></a></div>
         </div>
-        <div class="footer-bottom">
-            <small class="copyright">© 2025 Terapush. All rights reserved.</small>
-            <div class="social-icons">
-                <a href="#"><i class="fab fa-facebook-f"></i></a>
-                <a href="#"><i class="fab fa-youtube"></i></a>
-            </div>
-        </div>
+        <div class="footer-bottom"><small>© 2025 Terapush</small></div>
     </div>
 </footer>
 
 <script>
-// Multi-Testimonial Carousel JS
-document.addEventListener("DOMContentLoaded", function() {
-    const track = document.querySelector(".testimonial-carousel-track");
-    const cards = document.querySelectorAll(".testimonial-card");
-    const dots = document.querySelectorAll(".carousel-dot");
-    const prevBtn = document.querySelector(".carousel-nav-btn.left");
-    const nextBtn = document.querySelector(".carousel-nav-btn.right");
-    let currentIndex = 0;
-    let autoplayInterval;
-
-    function getVisibleCount() {
-        if (window.innerWidth >= 1024) return 3;
-        if (window.innerWidth >= 768) return 2;
-        return 1;
-    }
-
-    function updateCarousel() {
-        const visibleCount = getVisibleCount();
-        const cardWidth = cards[0].offsetWidth + 30;
-        track.style.transform = `translateX(-${currentIndex * cardWidth}px)`;
-        updateDots();
-    }
-
-    function updateDots() {
-        dots.forEach((dot, i) => dot.classList.toggle("active", i === currentIndex));
-    }
-
-    function showNext() {
-        const visibleCount = getVisibleCount();
-        currentIndex = (currentIndex + 1) % cards.length;
-        if (currentIndex > cards.length - visibleCount) currentIndex = 0;
-        updateCarousel();
-    }
-
-    function showPrev() {
-        const visibleCount = getVisibleCount();
-        currentIndex = (currentIndex - 1 + cards.length) % cards.length;
-        if (currentIndex < 0) currentIndex = cards.length - visibleCount;
-        updateCarousel();
-    }
-
-    function startAutoplay() { autoplayInterval = setInterval(showNext, 5000); }
-    function stopAutoplay() { clearInterval(autoplayInterval); }
-
-    nextBtn.addEventListener("click", () => { showNext(); stopAutoplay(); startAutoplay(); });
-    prevBtn.addEventListener("click", () => { showPrev(); stopAutoplay(); startAutoplay(); });
-    dots.forEach((dot, i) => { dot.addEventListener("click", () => { currentIndex = i; updateCarousel(); stopAutoplay(); startAutoplay(); }); });
-    window.addEventListener("resize", updateCarousel);
-
-    updateCarousel();
-    startAutoplay();
+// Mobile menu toggle
+document.querySelector('.menu-toggle').addEventListener('click', () => {
+    document.querySelector('nav ul').classList.toggle('show');
 });
 </script>
 
