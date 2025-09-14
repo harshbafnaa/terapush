@@ -139,10 +139,13 @@
 
         #home {
             background: linear-gradient(180deg, #ffffff 0%, #e0efff 100%);
-            padding: 100px 0;
-            min-height: 80vh;
+            min-height: 100vh; /* Full screen height */
             display: flex;
-            align-items: center;
+            flex-direction: column; /* Stack content vertically */
+            justify-content: center; /* Center content vertically */
+            align-items: center; /* Center content horizontally */
+            text-align: center; /* Center text */
+            padding: 0 20px; /* Optional horizontal padding */
         }
 
         #home h1 {
