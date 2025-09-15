@@ -59,6 +59,15 @@
     .faq-item {margin-bottom:1.5rem; border-bottom:1px solid #ccc; padding-bottom:1rem;}
     .faq-item h4 {cursor:pointer; margin-bottom:0.5rem; color:#0070f3;}
     .faq-item p {display:none; font-size:0.95rem; color:#555;}
+    .faq-item p {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s ease;
+    }
+    .faq-item.open p {
+      max-height: 200px; /* enough for the answer */
+    }
+
 
     /* Join Community */
     #waitlist {background:linear-gradient(135deg,#e0f7f1,#ffffff);}
@@ -433,6 +442,10 @@
             const p = item.querySelector('p');
             p.style.display = p.style.display === 'block' ? 'none' : 'block';
         }
+        function toggleFAQ(item) {
+              item.classList.toggle('open');
+            }
+
 
         // Waitlist form open/close
         function openForm() {
