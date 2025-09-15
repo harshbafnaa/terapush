@@ -407,8 +407,6 @@
         <p><a href="#">Data Protection</a> | <a href="#">Privacy Policy</a></p>
         <div class="footer-bottom">
             &copy; 2025 Terapush India Private Limited. All rights reserved.
-            <br>
-            Visitor Count: <span id="visitor-count">Loading...</span>
         </div>
     </footer>
 
@@ -473,17 +471,6 @@
 
         document.addEventListener('DOMContentLoaded', function() {
             updateScroll();
-
-            // Visitor counter
-            fetch("https://countapi-js.herokuapp.com/hit/terapush.in/visits")
-                .then(res => res.json())
-                .then(res => {
-                    document.getElementById("visitor-count").innerText = res.value;
-                })
-                .catch(err => {
-                    document.getElementById("visitor-count").innerText = "Error";
-                    console.error(err);
-                });
         });
     </script>
 </body>
