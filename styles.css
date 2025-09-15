@@ -48,7 +48,7 @@ nav {
 .logo {
   font-size: 1.8rem;
   letter-spacing: 1px;
-   font-weight: 700;
+  font-weight: 700; /* 🔥 makes it bold */
 }
 
 .nav-links {
