@@ -1,6 +1,6 @@
-/* ================================
-   RESET & BASE
-================================ */
+/* =========================
+   RESET & BASE STYLES
+========================= */
 * {
   margin: 0;
   padding: 0;
@@ -13,7 +13,6 @@ body {
   color: #111;
   background: #fafafa;
   scroll-behavior: smooth;
-  font-size: 16px; /* base mobile size */
 }
 
 a {
@@ -25,9 +24,15 @@ ul {
   list-style: none;
 }
 
-/* ================================
+h1, h2, h3, h4 {
+  font-family: 'League Spartan', sans-serif;
+  font-weight: 700;
+  color: #111;
+}
+
+/* =========================
    NAVBAR
-================================ */
+========================= */
 nav {
   display: flex;
   justify-content: space-between;
@@ -40,13 +45,7 @@ nav {
   box-shadow: 0 5px 15px rgba(0,0,0,0.05);
 }
 
-.logo {
-  font-family: 'League Spartan', sans-serif;
-  font-size: 2rem;
-  font-weight: 700; /* bold logo */
-  color: #111;
-  letter-spacing: 1px;
-}
+.logo {font-family:'League Spartan', sans-serif; font-size:1.8rem; font-weight:700; color:#111; letter-spacing:1px;}
 
 .nav-links {
   display: flex;
@@ -74,27 +73,36 @@ nav {
   width: 100%;
 }
 
+/* Hamburger */
 .hamburger {
   display: none;
   cursor: pointer;
   flex-direction: column;
   gap: 5px;
+  background: none;
+  border: none;
 }
 
-.hamburger div {
+.hamburger span {
   width: 25px;
   height: 3px;
   background: #111;
   transition: 0.3s;
 }
 
-.hamburger.open div:nth-child(1) { transform: rotate(45deg) translate(5px,5px); }
-.hamburger.open div:nth-child(2) { opacity: 0; }
-.hamburger.open div:nth-child(3) { transform: rotate(-45deg) translate(5px,-5px); }
+.hamburger.open span:nth-child(1) {
+  transform: rotate(45deg) translate(5px,5px);
+}
+.hamburger.open span:nth-child(2) {
+  opacity: 0;
+}
+.hamburger.open span:nth-child(3) {
+  transform: rotate(-45deg) translate(5px,-5px);
+}
 
-/* ================================
+/* =========================
    HERO SECTION
-================================ */
+========================= */
 header {
   height: 100vh;
   display: flex;
@@ -107,10 +115,8 @@ header {
 }
 
 header h1 {
-  font-family: 'League Spartan', sans-serif;
   font-size: 3rem;
   margin-bottom: 1rem;
-  color: #111;
 }
 
 header p {
@@ -120,7 +126,7 @@ header p {
   color: #444;
 }
 
-header .cta-buttons a {
+.cta-buttons a {
   display: inline-block;
   margin: 0 0.5rem;
   padding: 0.75rem 1.8rem;
@@ -132,30 +138,23 @@ header .cta-buttons a {
   box-shadow: 0 5px 15px rgba(0,112,243,0.3);
 }
 
-header .cta-buttons a:hover {
+.cta-buttons a:hover {
   background: #0051a3;
   transform: translateY(-2px);
   box-shadow: 0 8px 20px rgba(0,81,163,0.4);
 }
 
-/* ================================
+/* =========================
    SECTIONS
-================================ */
+========================= */
 section {
   padding: 6rem 2rem;
 }
 
 h2 {
-  font-family: 'League Spartan', sans-serif;
   font-size: 2.5rem;
   margin-bottom: 2rem;
   text-align: center;
-  color: #111;
-}
-
-p {
-  margin-bottom: 1rem;
-  color: #555;
 }
 
 .container {
@@ -163,9 +162,9 @@ p {
   margin: 0 auto;
 }
 
-/* ================================
-   ABOUT
-================================ */
+/* =========================
+   ABOUT SECTION
+========================= */
 #about {
   background: linear-gradient(135deg,#e6f0ff,#ffffff);
 }
@@ -191,32 +190,20 @@ p {
   display: flex;
   justify-content: center;
   align-items: center;
-  font-family: 'League Spartan', sans-serif;
   font-size: 3rem;
-  font-weight: 700;
   color: #fff;
   background: linear-gradient(135deg,#0070f3,#00bfff);
   margin: 0 auto 1rem auto;
   box-shadow: 0 5px 15px rgba(0,112,243,0.3);
 }
 
-.founder h4 {
-  font-weight: 600;
-  margin-bottom: 0.5rem;
-}
-
-.founder p {
-  font-size: 0.95rem;
-  color: #666;
-}
-
 .founder:hover {
-  transform: translateY(-5px);
+  transform: translateY(-5px) scale(1.02);
 }
 
-/* ================================
-   SERVICES
-================================ */
+/* =========================
+   SERVICES SECTION
+========================= */
 .services-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit,minmax(250px,1fr));
@@ -241,13 +228,9 @@ p {
   color: #0070f3;
 }
 
-.service p {
-  color: #555;
-}
-
-/* ================================
-   FAQ
-================================ */
+/* =========================
+   FAQ SECTION
+========================= */
 .faq-container {
   max-width: 800px;
   margin: 0 auto;
@@ -257,23 +240,29 @@ p {
   margin-bottom: 1.5rem;
   border-bottom: 1px solid #ccc;
   padding-bottom: 1rem;
+  cursor: pointer;
 }
 
 .faq-item h4 {
-  cursor: pointer;
   margin-bottom: 0.5rem;
   color: #0070f3;
 }
 
 .faq-item p {
-  display: none;
+  max-height: 0;
+  overflow: hidden;
   font-size: 0.95rem;
   color: #555;
+  transition: max-height 0.3s ease;
 }
 
-/* ================================
-   JOIN COMMUNITY
-================================ */
+.faq-item.open p {
+  max-height: 300px;
+}
+
+/* =========================
+   JOIN COMMUNITY SECTION
+========================= */
 #waitlist {
   background: linear-gradient(135deg,#e0f7f1,#ffffff);
 }
@@ -301,9 +290,9 @@ p {
   box-shadow: 0 8px 20px rgba(18,140,126,0.4);
 }
 
-/* ================================
+/* =========================
    WAITLIST FORM MODAL
-================================ */
+========================= */
 #waitlist-form {
   display: none;
   position: fixed;
@@ -330,10 +319,8 @@ p {
 
 #waitlist-form h3 {
   text-align: center;
-  font-family: 'League Spartan', sans-serif;
   font-size: 1.8rem;
   margin-bottom: 1.5rem;
-  color: #111;
 }
 
 #waitlist-form form {
@@ -348,8 +335,8 @@ p {
   border-radius: 8px;
   border: 1px solid #ccc;
   font-size: 1rem;
-  transition: 0.3s;
   outline: none;
+  transition: 0.3s;
 }
 
 #waitlist-form input:focus,
@@ -381,6 +368,8 @@ p {
   font-size: 1.5rem;
   cursor: pointer;
   color: #666;
+  background: none;
+  border: none;
   transition: 0.3s;
 }
 
@@ -393,9 +382,9 @@ p {
   to {opacity: 1; transform: translateY(0);}
 }
 
-/* ================================
-   CONTACT
-================================ */
+/* =========================
+   CONTACT SECTION
+========================= */
 #contact .contact-info {
   display: flex;
   flex-direction: column;
@@ -413,18 +402,18 @@ p {
   text-decoration: underline;
 }
 
-/* ================================
+/* =========================
    DISCLAIMER
-================================ */
+========================= */
 #disclaimer {
   max-width: 800px;
   margin: 0 auto;
   text-align: center;
 }
 
-/* ================================
+/* =========================
    FOOTER
-================================ */
+========================= */
 footer {
   background: #111;
   color: #fff;
@@ -447,9 +436,9 @@ footer a:hover {
   font-size: 0.85rem;
 }
 
-/* ================================
-   SCROLL ELEMENTS
-================================ */
+/* =========================
+   SCROLL PROGRESS & TOP BTN
+========================= */
 #scroll-progress {
   position: fixed;
   bottom: 0;
@@ -489,9 +478,9 @@ footer a:hover {
   transform: translateY(-5px);
 }
 
-/* ================================
-   RESPONSIVE BREAKPOINTS
-================================ */
+/* =========================
+   RESPONSIVE
+========================= */
 @media (max-width: 768px) {
   .nav-links {
     position: fixed;
@@ -513,64 +502,5 @@ footer a:hover {
 
   .hamburger {
     display: flex;
-  }
-}
-
-/* Laptops (≥ 992px) */
-@media (min-width: 992px) {
-  body {
-    font-size: 20px;
-  }
-
-  header h1 {
-    font-size: 4rem;
-  }
-
-  header p {
-    font-size: 1.6rem;
-  }
-
-  h2 {
-    font-size: 3rem;
-  }
-
-  .founder-initials {
-    width: 200px;
-    height: 200px;
-    font-size: 4rem;
-  }
-
-  .service {
-    padding: 3rem;
-    font-size: 1.2rem;
-  }
-}
-
-/* Desktops (≥ 1400px) */
-@media (min-width: 1400px) {
-  body {
-    font-size: 22px;
-  }
-
-  header h1 {
-    font-size: 5rem;
-  }
-
-  header p {
-    font-size: 1.8rem;
-    max-width: 1000px;
-  }
-
-  h2 {
-    font-size: 3.5rem;
-  }
-
-  .container {
-    max-width: 1600px;
-  }
-
-  .service {
-    padding: 3.5rem;
-    font-size: 1.3rem;
   }
 }
