@@ -1,0 +1,858 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Admin — Terapush</title>
+  <meta name="robots" content="noindex, nofollow"/>
+  <link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@300;400;500;600;700;800;900&family=Instrument+Serif:ital@0;1&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="shared.css"/>
+  <link rel="icon" type="image/png" href="favicon.png">
+  <style>
+    /* ─── LOCK ─── */
+    #lockScreen { position:fixed; inset:0; z-index:9000; background:var(--bg); display:flex; align-items:center; justify-content:center; }
+    .lock-box { width:100%; max-width:400px; padding:0 24px; display:flex; flex-direction:column; gap:24px; }
+    .lock-logo { font-family:'League Spartan',sans-serif; font-weight:700; font-size:1.3rem; letter-spacing:-0.02em; color:var(--text); margin-bottom:8px; }
+    .lock-label { font-size:0.72rem; letter-spacing:0.18em; text-transform:uppercase; color:var(--text3); margin-bottom:4px; display:block; }
+    .lock-title { font-family:'Instrument Serif',serif; font-size:1.6rem; color:var(--text); font-weight:400; }
+    .lock-input-wrap { display:flex; flex-direction:column; gap:8px; }
+    .lock-input { width:100%; background:var(--input-bg); border:1px solid var(--border2); border-radius:8px; padding:14px 16px; font-family:'League Spartan',sans-serif; font-size:0.92rem; color:var(--text); outline:none; letter-spacing:0.08em; transition:border-color 0.2s; }
+    .lock-input:focus { border-color:var(--text3); }
+    .lock-input.error { border-color:rgba(255,80,80,0.5); }
+    .lock-error { font-size:0.72rem; color:rgba(255,80,80,0.8); letter-spacing:0.08em; display:none; }
+    .lock-error.visible { display:block; }
+    .lock-btn { width:100%; padding:13px; background:var(--cta-bg); color:var(--cta-text); font-family:'League Spartan',sans-serif; font-size:0.82rem; font-weight:600; letter-spacing:0.14em; text-transform:uppercase; border:none; border-radius:8px; cursor:pointer; transition:opacity 0.2s; }
+    .lock-btn:hover { opacity:0.85; }
+
+    /* ─── SHELL ─── */
+    #adminShell { display:none; }
+    #adminShell.visible { display:block; }
+
+    /* ─── ADMIN NAV ─── */
+    .admin-nav { position:fixed; top:0; left:0; right:0; z-index:200; display:flex; align-items:center; justify-content:space-between; padding:0 48px; height:64px; background:var(--bg); border-bottom:1px solid var(--border); }
+    .admin-nav-left { display:flex; align-items:center; gap:20px; }
+    .admin-nav-logo { font-family:'League Spartan',sans-serif; font-weight:700; font-size:1.2rem; letter-spacing:-0.02em; color:var(--text); text-decoration:none; }
+    .admin-nav-badge { font-size:0.62rem; letter-spacing:0.12em; text-transform:uppercase; padding:4px 10px; border:1px solid var(--border2); border-radius:100px; color:var(--text3); }
+    .admin-nav-right { display:flex; align-items:center; gap:16px; }
+    .admin-save-status { font-size:0.72rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--text3); transition:color 0.3s; }
+    .admin-save-status.saved { color:rgba(100,200,120,0.8); }
+    .admin-nav-btn { font-family:'League Spartan',sans-serif; font-size:0.72rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--text2); border:1px solid var(--border); padding:7px 16px; border-radius:100px; background:transparent; cursor:pointer; text-decoration:none; transition:border-color 0.2s, color 0.2s; white-space:nowrap; }
+    .admin-nav-btn:hover { border-color:var(--border2); color:var(--text); }
+
+    /* ─── TABS ─── */
+    .admin-tabs { position:fixed; top:64px; left:0; right:0; z-index:190; background:var(--bg2); border-bottom:1px solid var(--border); display:flex; align-items:center; padding:0 48px; }
+    .admin-tab { font-family:'League Spartan',sans-serif; font-size:0.78rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--text3); font-weight:500; padding:14px 20px; border-bottom:2px solid transparent; cursor:pointer; transition:color 0.2s, border-color 0.2s; display:flex; align-items:center; gap:8px; background:none; border-top:none; border-left:none; border-right:none; }
+    .admin-tab:hover { color:var(--text2); }
+    .admin-tab.active { color:var(--text); border-bottom-color:var(--text); }
+    .tab-count { font-size:0.6rem; background:var(--card-bg); border:1px solid var(--border); padding:2px 7px; border-radius:100px; color:var(--text3); }
+
+    /* ─── SECTIONS ─── */
+    .admin-section { display:none; padding-top:128px; }
+    .admin-section.active { display:block; }
+    .admin-layout { max-width:1080px; margin:0 auto; padding:40px 48px 120px; display:grid; grid-template-columns:1fr 380px; gap:40px; align-items:start; }
+
+    /* ─── PANEL LABELS ─── */
+    .panel-label { font-size:0.72rem; letter-spacing:0.18em; text-transform:uppercase; color:var(--text3); margin-bottom:20px; display:flex; align-items:center; justify-content:space-between; }
+    .count-badge { background:var(--card-bg); border:1px solid var(--border); padding:3px 10px; border-radius:100px; font-size:0.62rem; color:var(--text3); }
+
+    /* ─── LIST ROWS ─── */
+    .admin-list { display:flex; flex-direction:column; gap:2px; }
+    .admin-row { border:1px solid var(--border); padding:20px 24px; display:grid; grid-template-columns:1fr auto; gap:16px; align-items:center; transition:background 0.2s, border-color 0.2s; }
+    .admin-row.selected { border-color:var(--border2); background:var(--bg2); }
+    .admin-row:hover { background:var(--bg2); }
+    .admin-row.inactive { opacity:0.45; }
+    .admin-row-left { display:flex; flex-direction:column; gap:6px; cursor:pointer; }
+    .admin-row-title { font-family:'Instrument Serif',serif; font-size:1rem; color:var(--text); }
+    .admin-row-excerpt { font-size:0.75rem; color:var(--text3); line-height:1.5; max-width:480px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+    .admin-row-meta { display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
+    .admin-tag { font-size:0.62rem; letter-spacing:0.1em; text-transform:uppercase; padding:3px 9px; border-radius:100px; border:1px solid var(--border); color:var(--text3); font-weight:400; white-space:nowrap; }
+    .admin-tag.active-tag { border-color:rgba(100,200,120,0.3); color:rgba(100,200,120,0.8); }
+    .admin-tag.inactive-tag { border-color:rgba(255,80,80,0.25); color:rgba(255,80,80,0.6); }
+    .admin-tag.featured-tag { border-color:var(--border2); color:var(--text2); }
+    .admin-row-actions { display:flex; align-items:center; gap:8px; flex-shrink:0; }
+    .admin-icon-btn { width:32px; height:32px; display:flex; align-items:center; justify-content:center; border:1px solid var(--border); border-radius:6px; background:transparent; cursor:pointer; color:var(--text3); transition:color 0.2s, border-color 0.2s, background 0.2s; }
+    .admin-icon-btn:hover { border-color:var(--border2); color:var(--text2); background:var(--card-bg); }
+    .admin-icon-btn.delete:hover { border-color:rgba(255,80,80,0.4); color:rgba(255,80,80,0.8); background:rgba(255,80,80,0.05); }
+    .admin-empty-list { border:1px solid var(--border); border-radius:8px; padding:48px; text-align:center; display:none; }
+    .admin-empty-list.visible { display:block; }
+    .admin-empty-list p { font-size:0.88rem; color:var(--text3); }
+
+    /* ─── FORM PANEL ─── */
+    .form-panel { border:1px solid var(--border); border-radius:12px; padding:32px; position:sticky; top:140px; background:var(--card-bg); }
+    .form-panel-title { font-family:'Instrument Serif',serif; font-size:1.15rem; color:var(--text); margin-bottom:24px; font-weight:400; }
+    .form-group { display:flex; flex-direction:column; gap:7px; margin-bottom:18px; }
+    .form-group label { font-size:0.68rem; letter-spacing:0.14em; text-transform:uppercase; color:var(--text3); font-weight:500; }
+    .form-input, .form-select, .form-textarea { width:100%; background:var(--input-bg); border:1px solid var(--border); border-radius:8px; padding:11px 14px; font-family:'League Spartan',sans-serif; font-size:0.88rem; color:var(--text); outline:none; transition:border-color 0.2s; appearance:none; -webkit-appearance:none; }
+    .form-input:focus, .form-select:focus, .form-textarea:focus { border-color:var(--border2); }
+    .form-input::placeholder, .form-textarea::placeholder { color:var(--text3); }
+    .form-textarea { resize:vertical; min-height:72px; line-height:1.6; font-family:'League Spartan',sans-serif; }
+    .form-select-wrap { position:relative; }
+    .form-select-wrap::after { content:''; position:absolute; right:14px; top:50%; transform:translateY(-50%); width:0; height:0; border-left:4px solid transparent; border-right:4px solid transparent; border-top:5px solid var(--text3); pointer-events:none; }
+    .form-row { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+    .form-toggle-row { display:flex; align-items:center; justify-content:space-between; padding:12px 0; border-top:1px solid var(--border); margin-top:8px; }
+    .form-toggle-label { font-size:0.78rem; color:var(--text2); display:flex; flex-direction:column; gap:3px; }
+    .form-toggle-sublabel { font-size:0.68rem; color:var(--text3); }
+    .toggle-switch { position:relative; width:40px; height:22px; flex-shrink:0; }
+    .toggle-switch input { opacity:0; width:0; height:0; }
+    .toggle-slider { position:absolute; inset:0; cursor:pointer; background:var(--input-bg); border:1px solid var(--border2); border-radius:100px; transition:background 0.3s; }
+    .toggle-slider::before { content:''; position:absolute; width:16px; height:16px; left:2px; top:2px; background:var(--text3); border-radius:50%; transition:transform 0.3s cubic-bezier(0.34,1.56,0.64,1), background 0.3s; }
+    input:checked + .toggle-slider { background:rgba(100,200,120,0.15); border-color:rgba(100,200,120,0.4); }
+    input:checked + .toggle-slider::before { transform:translateX(18px); background:rgba(100,200,120,0.9); }
+    .form-actions { display:flex; gap:10px; margin-top:24px; padding-top:20px; border-top:1px solid var(--border); }
+    .btn-primary { flex:1; padding:11px; background:var(--cta-bg); color:var(--cta-text); font-family:'League Spartan',sans-serif; font-size:0.78rem; font-weight:600; letter-spacing:0.12em; text-transform:uppercase; border:none; border-radius:8px; cursor:pointer; transition:opacity 0.2s; }
+    .btn-primary:hover { opacity:0.85; }
+    .btn-secondary { padding:11px 18px; background:transparent; color:var(--text2); font-family:'League Spartan',sans-serif; font-size:0.78rem; font-weight:500; letter-spacing:0.1em; text-transform:uppercase; border:1px solid var(--border); border-radius:8px; cursor:pointer; transition:border-color 0.2s, color 0.2s; }
+    .btn-secondary:hover { border-color:var(--border2); color:var(--text); }
+    .btn-add-new { display:flex; align-items:center; justify-content:center; gap:8px; width:100%; padding:14px; border:1px dashed var(--border2); border-radius:8px; background:transparent; color:var(--text2); font-family:'League Spartan',sans-serif; font-size:0.78rem; font-weight:500; letter-spacing:0.12em; text-transform:uppercase; cursor:pointer; transition:border-color 0.2s, color 0.2s, background 0.2s; margin-top:12px; }
+    .btn-add-new:hover { border-color:var(--text3); color:var(--text); background:var(--card-bg); }
+
+    /* ─── EDITOR OVERLAY ─── */
+    .editor-overlay { position:fixed; inset:0; z-index:300; background:var(--bg); display:none; flex-direction:column; overflow:hidden; }
+    .editor-overlay.visible { display:flex; }
+    .editor-topbar { height:60px; border-bottom:1px solid var(--border); display:flex; align-items:center; justify-content:space-between; padding:0 48px; flex-shrink:0; gap:24px; }
+    .editor-topbar-left { display:flex; align-items:center; gap:16px; min-width:0; flex:1; }
+    .editor-back-btn { display:flex; align-items:center; gap:8px; font-family:'League Spartan',sans-serif; font-size:0.72rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--text2); background:none; border:none; cursor:pointer; padding:0; transition:color 0.2s; flex-shrink:0; }
+    .editor-back-btn:hover { color:var(--text); }
+    .editor-title-input { font-family:'Instrument Serif',serif; font-size:1.1rem; color:var(--text); background:none; border:none; outline:none; flex:1; min-width:0; }
+    .editor-title-input::placeholder { color:var(--text3); }
+    .editor-topbar-right { display:flex; align-items:center; gap:12px; flex-shrink:0; }
+    .editor-status { display:flex; align-items:center; gap:6px; }
+    .editor-status-dot { width:6px; height:6px; border-radius:50%; background:var(--text3); }
+    .editor-status-dot.published { background:rgba(100,200,120,0.8); }
+    .editor-status-label { font-size:0.68rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--text3); }
+    .editor-btn { font-family:'League Spartan',sans-serif; font-size:0.72rem; letter-spacing:0.12em; text-transform:uppercase; font-weight:500; padding:8px 18px; border-radius:100px; cursor:pointer; transition:opacity 0.2s, border-color 0.2s, color 0.2s; }
+    .editor-btn.outline { color:var(--text2); border:1px solid var(--border2); background:transparent; }
+    .editor-btn.outline:hover { border-color:var(--text3); color:var(--text); }
+    .editor-btn.filled { background:var(--cta-bg); color:var(--cta-text); border:none; font-weight:600; }
+    .editor-btn.filled:hover { opacity:0.85; }
+
+    .editor-meta-bar { border-bottom:1px solid var(--border); padding:10px 48px; display:flex; align-items:center; gap:20px; flex-shrink:0; flex-wrap:wrap; background:var(--bg2); }
+    .editor-meta-field { display:flex; align-items:center; gap:8px; }
+    .editor-meta-label { font-size:0.65rem; letter-spacing:0.14em; text-transform:uppercase; color:var(--text3); white-space:nowrap; }
+    .editor-meta-input { background:transparent; border:none; outline:none; font-family:'League Spartan',sans-serif; font-size:0.82rem; color:var(--text2); padding:4px 8px; border-radius:4px; transition:background 0.2s; }
+    .editor-meta-input:focus { background:var(--input-bg); color:var(--text); }
+    .editor-meta-input::placeholder { color:var(--text3); }
+    .editor-meta-select { background:transparent; border:none; outline:none; font-family:'League Spartan',sans-serif; font-size:0.82rem; color:var(--text2); padding:4px 8px; border-radius:4px; cursor:pointer; appearance:none; }
+    .editor-meta-sep { width:1px; height:16px; background:var(--border); flex-shrink:0; }
+
+    .editor-toolbar { border-bottom:1px solid var(--border); padding:8px 48px; display:flex; align-items:center; gap:2px; flex-shrink:0; flex-wrap:wrap; }
+    .toolbar-btn { width:30px; height:30px; display:flex; align-items:center; justify-content:center; background:none; border:1px solid transparent; border-radius:6px; cursor:pointer; color:var(--text3); font-family:'League Spartan',sans-serif; font-size:0.72rem; font-weight:700; letter-spacing:0; transition:color 0.2s, border-color 0.2s, background 0.2s; }
+    .toolbar-btn:hover { color:var(--text2); border-color:var(--border); background:var(--card-bg); }
+    .toolbar-btn.active { color:var(--text); background:var(--bg3); border-color:var(--border2); }
+    .toolbar-sep { width:1px; height:18px; background:var(--border); margin:0 4px; }
+
+    .editor-body { flex:1; overflow-y:auto; padding:48px; display:flex; justify-content:center; }
+    .editor-content-wrap { width:100%; max-width:720px; }
+    .editor-content { min-height:60vh; outline:none; font-family:'Instrument Serif',serif; font-size:1.15rem; color:var(--text); line-height:1.8; caret-color:var(--text); }
+    .editor-content:empty::before { content:attr(data-placeholder); color:var(--text3); pointer-events:none; }
+    .editor-content h1 { font-family:'Instrument Serif',serif; font-size:2rem; font-weight:400; line-height:1.2; margin:28px 0 16px; letter-spacing:-0.02em; }
+    .editor-content h2 { font-family:'Instrument Serif',serif; font-size:1.5rem; font-weight:400; line-height:1.3; margin:24px 0 12px; }
+    .editor-content h3 { font-family:'League Spartan',sans-serif; font-size:0.95rem; font-weight:600; letter-spacing:0.06em; text-transform:uppercase; margin:20px 0 10px; color:var(--text2); }
+    .editor-content p { margin:0 0 16px; }
+    .editor-content strong { font-weight:600; }
+    .editor-content em { font-style:italic; color:var(--text2); }
+    .editor-content blockquote { border-left:2px solid var(--border2); margin:24px 0; padding:4px 0 4px 24px; color:var(--text2); font-style:italic; }
+    .editor-content ul, .editor-content ol { padding-left:28px; margin:0 0 16px; }
+    .editor-content li { margin-bottom:6px; }
+    .editor-content a { color:var(--text); text-decoration:underline; text-decoration-color:var(--border2); }
+    .editor-content hr { border:none; border-top:1px solid var(--border); margin:36px 0; }
+    .editor-content code { font-family:'DM Mono',monospace; font-size:0.85em; background:var(--bg3); padding:2px 6px; border-radius:4px; color:var(--text2); }
+
+    .editor-footer { border-top:1px solid var(--border); padding:8px 48px; display:flex; align-items:center; gap:20px; flex-shrink:0; background:var(--bg2); }
+    .editor-stat { font-size:0.68rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--text3); }
+
+    /* ─── CONFIRM ─── */
+    .confirm-overlay { position:fixed; inset:0; z-index:9500; background:rgba(0,0,0,0.65); backdrop-filter:blur(6px); display:flex; align-items:center; justify-content:center; opacity:0; visibility:hidden; transition:opacity 0.2s, visibility 0.2s; }
+    .confirm-overlay.visible { opacity:1; visibility:visible; }
+    .confirm-box { background:var(--bg2); border:1px solid var(--border2); border-radius:12px; padding:36px 32px; max-width:380px; width:100%; margin:0 24px; }
+    .confirm-box h3 { font-family:'Instrument Serif',serif; font-size:1.2rem; color:var(--text); margin-bottom:10px; font-weight:400; }
+    .confirm-box p { font-size:0.85rem; color:var(--text2); line-height:1.6; margin-bottom:24px; }
+    .confirm-actions { display:flex; gap:10px; }
+    .btn-danger { flex:1; padding:11px; background:rgba(255,80,80,0.1); color:rgba(255,80,80,0.9); border:1px solid rgba(255,80,80,0.3); border-radius:8px; font-family:'League Spartan',sans-serif; font-size:0.78rem; font-weight:600; letter-spacing:0.1em; text-transform:uppercase; cursor:pointer; transition:background 0.2s; }
+    .btn-danger:hover { background:rgba(255,80,80,0.2); }
+
+    @media (max-width:900px) {
+      .admin-nav, .admin-tabs { padding:0 16px; }
+      .admin-layout { grid-template-columns:1fr; padding:32px 20px 80px; gap:32px; }
+      .form-panel { position:static; }
+      .form-row { grid-template-columns:1fr; }
+      .editor-topbar, .editor-meta-bar, .editor-toolbar, .editor-body, .editor-footer { padding-left:20px; padding-right:20px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- LOCK SCREEN -->
+<div id="lockScreen">
+  <div class="lock-box">
+    <div>
+      <div class="lock-logo">Terapush</div>
+      <span class="lock-label">Admin Panel</span>
+      <h1 class="lock-title">Sign in to continue</h1>
+    </div>
+    <div class="lock-input-wrap">
+      <input type="password" class="lock-input" id="passwordInput" placeholder="Enter password" autocomplete="current-password"/>
+      <span class="lock-error" id="lockError">Incorrect password. Try again.</span>
+    </div>
+    <button class="lock-btn" id="unlockBtn">Unlock</button>
+  </div>
+</div>
+
+<!-- ADMIN SHELL -->
+<div id="adminShell">
+
+  <div class="admin-nav">
+    <div class="admin-nav-left">
+      <a href="index.html" class="admin-nav-logo">Terapush</a>
+      <span class="admin-nav-badge">Admin</span>
+    </div>
+    <div class="admin-nav-right">
+      <span class="admin-save-status" id="saveStatus">—</span>
+      <a href="careers.html" target="_blank" class="admin-nav-btn">View careers ↗</a>
+      <a href="blog.html" target="_blank" class="admin-nav-btn">View blog ↗</a>
+      <button class="admin-nav-btn" id="logoutBtn">Log out</button>
+    </div>
+  </div>
+
+  <div class="admin-tabs">
+    <button class="admin-tab active" data-tab="careers">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20 7H4a2 2 0 00-2 2v10a2 2 0 002 2h16a2 2 0 002-2V9a2 2 0 00-2-2z"/><path d="M16 21V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v16"/></svg>
+      Careers <span class="tab-count" id="careersTabCount">0</span>
+    </button>
+    <button class="admin-tab" data-tab="blog">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+      Blog & News <span class="tab-count" id="blogTabCount">0</span>
+    </button>
+  </div>
+
+  <!-- CAREERS TAB -->
+  <div class="admin-section active" id="section-careers">
+    <div class="admin-layout">
+      <div>
+        <div class="panel-label">Open Roles <span class="count-badge" id="jobCountBadge">—</span></div>
+        <div class="admin-list" id="adminJobList"></div>
+        <div class="admin-empty-list" id="adminEmptyJobs"><p>No roles yet. Add your first opening using the panel →</p></div>
+        <button class="btn-add-new" id="btnAddJob">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+          Add new role
+        </button>
+      </div>
+      <div class="form-panel">
+        <div class="form-panel-title" id="jobFormTitle">New role</div>
+        <div class="form-group"><label>Job title</label><input type="text" class="form-input" id="fTitle" placeholder="e.g. Full-Stack Engineer"/></div>
+        <div class="form-row">
+          <div class="form-group"><label>Team</label><div class="form-select-wrap"><select class="form-select" id="fTeam"><option value="tech">Tech</option><option value="business">Business</option><option value="design">Design</option><option value="operations">Operations</option></select></div></div>
+          <div class="form-group"><label>Type</label><div class="form-select-wrap"><select class="form-select" id="fType"><option value="Full-time">Full-time</option><option value="Part-time">Part-time</option><option value="Contract">Contract</option><option value="Internship">Internship</option></select></div></div>
+        </div>
+        <div class="form-row">
+          <div class="form-group"><label>Location</label><input type="text" class="form-input" id="fLocation" placeholder="Bengaluru"/></div>
+          <div class="form-group"><label>Work mode</label><div class="form-select-wrap"><select class="form-select" id="fRemote"><option value="On-site">On-site</option><option value="Hybrid">Hybrid</option><option value="Remote">Remote</option></select></div></div>
+        </div>
+        <div class="form-group"><label>LinkedIn job URL</label><input type="url" class="form-input" id="fUrl" placeholder="https://linkedin.com/jobs/view/..."/></div>
+        <div class="form-toggle-row"><div class="form-toggle-label">Mark as New<span class="form-toggle-sublabel">Shows "New" badge on listing</span></div><label class="toggle-switch"><input type="checkbox" id="fFeatured"/><span class="toggle-slider"></span></label></div>
+        <div class="form-toggle-row"><div class="form-toggle-label">Active<span class="form-toggle-sublabel">Uncheck to hide without deleting</span></div><label class="toggle-switch"><input type="checkbox" id="fActive" checked/><span class="toggle-slider"></span></label></div>
+        <div class="form-actions">
+          <button class="btn-secondary" id="btnCancelJob">Cancel</button>
+          <button class="btn-primary" id="btnSaveJob">Add role</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BLOG TAB -->
+  <div class="admin-section" id="section-blog">
+    <div class="admin-layout">
+      <div>
+        <div class="panel-label">Posts <span class="count-badge" id="postCountBadge">—</span></div>
+        <div class="admin-list" id="adminPostList"></div>
+        <div class="admin-empty-list" id="adminEmptyPosts"><p>No posts yet. Write your first story →</p></div>
+        <button class="btn-add-new" id="btnAddPost">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+          Write new post
+        </button>
+      </div>
+      <div class="form-panel">
+        <div class="form-panel-title">Post settings</div>
+        <p style="font-size:0.8rem;color:var(--text3);line-height:1.6;margin-bottom:20px;">Select a post to edit metadata here, or click "Open editor" to write content.</p>
+        <div class="form-group"><label>Title</label><input type="text" class="form-input" id="pMetaTitle" placeholder="Post title"/></div>
+        <div class="form-group"><label>Excerpt</label><textarea class="form-textarea" id="pMetaExcerpt" placeholder="Short description for the blog index…"></textarea></div>
+        <div class="form-row">
+          <div class="form-group"><label>Category</label><div class="form-select-wrap"><select class="form-select" id="pMetaCategory"><option value="ecosystem">Ecosystem</option><option value="fundraising">Fundraising</option><option value="founders">Founders</option><option value="markets">Markets</option><option value="terapush">Terapush</option><option value="news">News</option></select></div></div>
+          <div class="form-group"><label>Read time (min)</label><input type="number" class="form-input" id="pMetaReadTime" value="5" min="1"/></div>
+        </div>
+        <div class="form-toggle-row"><div class="form-toggle-label">Published<span class="form-toggle-sublabel">Visible on blog page</span></div><label class="toggle-switch"><input type="checkbox" id="pMetaPublished" checked/><span class="toggle-slider"></span></label></div>
+        <div class="form-toggle-row"><div class="form-toggle-label">Featured<span class="form-toggle-sublabel">Pinned at top of blog</span></div><label class="toggle-switch"><input type="checkbox" id="pMetaFeatured"/><span class="toggle-slider"></span></label></div>
+        <div class="form-actions">
+          <button class="btn-secondary" id="btnCancelPost">Cancel</button>
+          <button class="btn-primary" id="btnOpenEditor">Open editor</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /adminShell -->
+
+<!-- BLOG EDITOR OVERLAY -->
+<div class="editor-overlay" id="editorOverlay">
+
+  <div class="editor-topbar">
+    <div class="editor-topbar-left">
+      <button class="editor-back-btn" id="editorBack">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+        Back
+      </button>
+      <div style="width:1px;height:20px;background:var(--border);flex-shrink:0;"></div>
+      <input type="text" class="editor-title-input" id="editorTitle" placeholder="Post title…"/>
+    </div>
+    <div class="editor-topbar-right">
+      <div class="editor-status">
+        <div class="editor-status-dot" id="editorStatusDot"></div>
+        <span class="editor-status-label" id="editorStatusLabel">Draft</span>
+      </div>
+      <button class="editor-btn outline" id="editorSaveDraft">Save draft</button>
+      <button class="editor-btn filled" id="editorPublish">Publish</button>
+    </div>
+  </div>
+
+  <div class="editor-meta-bar">
+    <div class="editor-meta-field">
+      <span class="editor-meta-label">Category</span>
+      <select class="editor-meta-select" id="editorCategory"><option value="ecosystem">Ecosystem</option><option value="fundraising">Fundraising</option><option value="founders">Founders</option><option value="markets">Markets</option><option value="terapush">Terapush</option><option value="news">News</option></select>
+    </div>
+    <div class="editor-meta-sep"></div>
+    <div class="editor-meta-field">
+      <span class="editor-meta-label">Author</span>
+      <input class="editor-meta-input" id="editorAuthor" placeholder="Harsh Bafna" style="width:130px;"/>
+    </div>
+    <div class="editor-meta-sep"></div>
+    <div class="editor-meta-field">
+      <span class="editor-meta-label">Read time</span>
+      <input class="editor-meta-input" id="editorReadTime" type="number" value="5" min="1" style="width:44px;"/>
+      <span class="editor-meta-label">min</span>
+    </div>
+    <div class="editor-meta-sep"></div>
+    <div class="editor-meta-field">
+      <span class="editor-meta-label">Excerpt</span>
+      <input class="editor-meta-input" id="editorExcerpt" placeholder="Short description shown on blog index…" style="width:300px;"/>
+    </div>
+  </div>
+
+  <div class="editor-toolbar">
+    <button class="toolbar-btn" data-cmd="bold" title="Bold"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 4h8a4 4 0 010 8H6zM6 12h9a4 4 0 010 8H6z"/></svg></button>
+    <button class="toolbar-btn" data-cmd="italic" title="Italic"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="4" x2="10" y2="4"/><line x1="14" y1="20" x2="5" y2="20"/><line x1="15" y1="4" x2="9" y2="20"/></svg></button>
+    <button class="toolbar-btn" data-cmd="underline" title="Underline"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 3v7a6 6 0 0012 0V3"/><line x1="4" y1="21" x2="20" y2="21"/></svg></button>
+    <div class="toolbar-sep"></div>
+    <button class="toolbar-btn" data-cmd="h1" title="Heading 1">H1</button>
+    <button class="toolbar-btn" data-cmd="h2" title="Heading 2">H2</button>
+    <button class="toolbar-btn" data-cmd="h3" title="Heading 3">H3</button>
+    <div class="toolbar-sep"></div>
+    <button class="toolbar-btn" data-cmd="insertUnorderedList" title="Bullet list"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="9" y1="6" x2="20" y2="6"/><line x1="9" y1="12" x2="20" y2="12"/><line x1="9" y1="18" x2="20" y2="18"/><circle cx="4" cy="6" r="1.5" fill="currentColor" stroke="none"/><circle cx="4" cy="12" r="1.5" fill="currentColor" stroke="none"/><circle cx="4" cy="18" r="1.5" fill="currentColor" stroke="none"/></svg></button>
+    <button class="toolbar-btn" data-cmd="insertOrderedList" title="Numbered list"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="10" y1="6" x2="21" y2="6"/><line x1="10" y1="12" x2="21" y2="12"/><line x1="10" y1="18" x2="21" y2="18"/></svg></button>
+    <button class="toolbar-btn" data-cmd="blockquote" title="Blockquote"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"/><path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2h.75c0 2.25.25 4-2.75 4v3c0 1 0 1 1 1z"/></svg></button>
+    <div class="toolbar-sep"></div>
+    <button class="toolbar-btn" data-cmd="createLink" title="Link"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/></svg></button>
+    <button class="toolbar-btn" data-cmd="insertHR" title="Divider"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="3" y1="12" x2="21" y2="12"/></svg></button>
+    <button class="toolbar-btn" data-cmd="removeFormat" title="Clear formatting"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 7V4h16v3"/><path d="M9 20h6"/><path d="M12 4v16"/><line x1="2" y1="2" x2="22" y2="22"/></svg></button>
+  </div>
+
+  <div class="editor-body">
+    <div class="editor-content-wrap">
+      <div class="editor-content" id="editorContent" contenteditable="true" data-placeholder="Start writing your post…"></div>
+    </div>
+  </div>
+
+  <div class="editor-footer">
+    <span class="editor-stat" id="editorWordCount">0 words</span>
+    <span class="editor-stat" id="editorCharCount">0 characters</span>
+  </div>
+
+</div>
+
+<!-- CONFIRM DIALOG -->
+<div class="confirm-overlay" id="confirmOverlay">
+  <div class="confirm-box">
+    <h3 id="confirmTitle">Delete this item?</h3>
+    <p id="confirmDesc">This cannot be undone.</p>
+    <div class="confirm-actions">
+      <button class="btn-secondary" id="confirmCancel">Cancel</button>
+      <button class="btn-danger" id="confirmDelete">Delete</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ══════════════════════════════════════════
+   CONFIG
+   Password: SHA-256 hash. To change: echo -n 'newpassword' | sha256sum
+══════════════════════════════════════════ */
+const ADMIN_HASH = 'f0b0adf2fe50559fdbaa1478183d528629344efa1cb83453ded95e0d2eee8cbb';
+
+const AT_BASE    = 'appTw8tOpvI7BJ6kT';
+const AT_JOBS    = 'tblEy2iZrPk40syvj';
+const AT_POSTS   = 'tblXkvUWNSrbvMwuV';
+const AT_KEY     = 'patRFec5Of1vjA5k1.4750ff4719623f66b48aa843c95174dd54bdff769d4ebc87c5c07b72778ee8b4';
+const AT_URL     = `https://api.airtable.com/v0/${AT_BASE}`;
+const AT_HEADERS = { 'Authorization': `Bearer ${AT_KEY}`, 'Content-Type': 'application/json' };
+
+/* ══════════════════════════════════════════
+   AUTH
+══════════════════════════════════════════ */
+async function sha256(str) {
+  const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
+  return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2,'0')).join('');
+}
+const $pwd = document.getElementById('passwordInput');
+const $err = document.getElementById('lockError');
+async function unlock() {
+  if ((await sha256($pwd.value)) === ADMIN_HASH) {
+    document.getElementById('lockScreen').style.display = 'none';
+    document.getElementById('adminShell').classList.add('visible');
+    initAll();
+  } else {
+    $pwd.classList.add('error'); $err.classList.add('visible');
+    $pwd.value = '';
+    setTimeout(() => $pwd.classList.remove('error'), 600);
+  }
+}
+document.getElementById('unlockBtn').addEventListener('click', unlock);
+$pwd.addEventListener('keydown', e => e.key === 'Enter' && unlock());
+document.getElementById('logoutBtn').addEventListener('click', () => {
+  document.getElementById('adminShell').classList.remove('visible');
+  document.getElementById('lockScreen').style.display = 'flex';
+  $pwd.value = ''; $err.classList.remove('visible');
+});
+
+/* ══════════════════════════════════════════
+   AIRTABLE HELPERS
+══════════════════════════════════════════ */
+async function atGet(table, params='') {
+  const r = await fetch(`${AT_URL}/${table}?${params}`, { headers: AT_HEADERS });
+  if (!r.ok) throw new Error(await r.text());
+  return r.json();
+}
+async function atCreate(table, fields) {
+  const r = await fetch(`${AT_URL}/${table}`, {
+    method: 'POST', headers: AT_HEADERS,
+    body: JSON.stringify({ fields })
+  });
+  if (!r.ok) throw new Error(await r.text());
+  return r.json();
+}
+async function atUpdate(table, id, fields) {
+  const r = await fetch(`${AT_URL}/${table}/${id}`, {
+    method: 'PATCH', headers: AT_HEADERS,
+    body: JSON.stringify({ fields })
+  });
+  if (!r.ok) throw new Error(await r.text());
+  return r.json();
+}
+async function atDelete(table, id) {
+  const r = await fetch(`${AT_URL}/${table}/${id}`, {
+    method: 'DELETE', headers: AT_HEADERS
+  });
+  if (!r.ok) throw new Error(await r.text());
+  return r.json();
+}
+
+/* ══════════════════════════════════════════
+   SAVE STATUS / UTILS
+══════════════════════════════════════════ */
+let saveTimer;
+function showSaved() {
+  const el = document.getElementById('saveStatus');
+  el.textContent = 'Saved'; el.classList.add('saved');
+  clearTimeout(saveTimer);
+  saveTimer = setTimeout(() => { el.textContent = '—'; el.classList.remove('saved'); }, 2500);
+}
+function showError(msg) {
+  const el = document.getElementById('saveStatus');
+  el.textContent = 'Error — check console';
+  el.style.color = 'rgba(255,80,80,0.8)';
+  setTimeout(() => { el.textContent = '—'; el.style.color = ''; }, 4000);
+  console.error(msg);
+}
+function setLoading(on) {
+  document.getElementById('saveStatus').textContent = on ? 'Saving…' : '—';
+}
+function fmtDate(ts) { if (!ts) return ''; return new Date(ts).toLocaleDateString('en-IN', {day:'numeric',month:'short',year:'numeric'}); }
+function stripHtml(html) { const d = document.createElement('div'); d.innerHTML = html; return d.textContent || ''; }
+
+/* ── TABS ── */
+document.querySelectorAll('.admin-tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    document.querySelectorAll('.admin-tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.admin-section').forEach(s => s.classList.remove('active'));
+    tab.classList.add('active');
+    document.getElementById('section-' + tab.dataset.tab).classList.add('active');
+  });
+});
+
+/* ── CONFIRM DIALOG ── */
+let pendingDeleteId = null, pendingDeleteType = null;
+function openConfirm(id, type, label) {
+  pendingDeleteId = id; pendingDeleteType = type;
+  document.getElementById('confirmTitle').textContent = `Delete "${label}"?`;
+  document.getElementById('confirmDesc').textContent  = type === 'job'
+    ? 'This removes the role from the careers page. Cannot be undone.'
+    : 'This permanently deletes the post and all its content. Cannot be undone.';
+  document.getElementById('confirmOverlay').classList.add('visible');
+}
+document.getElementById('confirmCancel').addEventListener('click', () => { document.getElementById('confirmOverlay').classList.remove('visible'); });
+document.getElementById('confirmDelete').addEventListener('click', () => {
+  if (pendingDeleteType === 'job') deleteJob(pendingDeleteId);
+  else deletePost(pendingDeleteId);
+  document.getElementById('confirmOverlay').classList.remove('visible');
+});
+document.getElementById('confirmOverlay').addEventListener('click', function(e) { if (e.target === this) this.classList.remove('visible'); });
+
+/* ══════════════════════════════════════════
+   CAREERS — Airtable backed
+══════════════════════════════════════════ */
+let jobs = [];   // in-memory cache
+let selJobId = null, editJobId = null;
+
+async function fetchJobs() {
+  try {
+    const data = await atGet(AT_JOBS, 'sort%5B0%5D%5Bfield%5D=Title');
+    jobs = data.records.map(r => ({
+      id:          r.id,
+      title:       r.fields['Title']        || '',
+      team:        (r.fields['Team']        || 'tech').toLowerCase(),
+      type:        r.fields['Type']         || 'Full-time',
+      location:    r.fields['Location']     || 'Bengaluru',
+      remote:      r.fields['Remote']       || 'Hybrid',
+      linkedinUrl: r.fields['LinkedIn URL'] || '',
+      featured:    !!r.fields['Featured'],
+      active:      !!r.fields['Active'],
+    }));
+    renderJobList();
+    updateTabCounts();
+  } catch(e) { showError(e); }
+}
+
+function renderJobList() {
+  const list  = document.getElementById('adminJobList');
+  const empty = document.getElementById('adminEmptyJobs');
+  document.getElementById('jobCountBadge').textContent = `${jobs.filter(j=>j.active).length} active · ${jobs.length} total`;
+  list.innerHTML = '';
+  if (!jobs.length) { empty.classList.add('visible'); return; }
+  empty.classList.remove('visible');
+  jobs.forEach(job => {
+    const row = document.createElement('div');
+    row.className = 'admin-row' + (job.id===selJobId?' selected':'') + (!job.active?' inactive':'');
+    row.innerHTML = `
+      <div class="admin-row-left">
+        <div class="admin-row-title">${job.title}</div>
+        <div class="admin-row-meta">
+          <span class="admin-tag">${job.team}</span><span class="admin-tag">${job.type}</span><span class="admin-tag">${job.remote}</span>
+          ${job.featured?'<span class="admin-tag featured-tag">New</span>':''}
+          <span class="admin-tag ${job.active?'active-tag':'inactive-tag'}">${job.active?'Active':'Hidden'}</span>
+        </div>
+      </div>
+      <div class="admin-row-actions">
+        <button class="admin-icon-btn" data-action="edit" title="Edit"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button>
+        <button class="admin-icon-btn delete" data-action="delete" title="Delete"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4h6v2"/></svg></button>
+      </div>`;
+    row.querySelector('.admin-row-left').addEventListener('click', () => openJobEdit(job.id));
+    row.querySelector('[data-action="edit"]').addEventListener('click', e => { e.stopPropagation(); openJobEdit(job.id); });
+    row.querySelector('[data-action="delete"]').addEventListener('click', e => { e.stopPropagation(); openConfirm(job.id,'job',job.title); });
+    list.appendChild(row);
+  });
+}
+
+function clearJobForm() {
+  document.getElementById('fTitle').value    = '';
+  document.getElementById('fUrl').value      = '';
+  document.getElementById('fTeam').value     = 'tech';
+  document.getElementById('fType').value     = 'Full-time';
+  document.getElementById('fLocation').value = 'Bengaluru';
+  document.getElementById('fRemote').value   = 'Hybrid';
+  document.getElementById('fFeatured').checked = false;
+  document.getElementById('fActive').checked   = true;
+  document.getElementById('jobFormTitle').textContent = 'New role';
+  document.getElementById('btnSaveJob').textContent   = 'Add role';
+  editJobId = null; selJobId = null;
+}
+function openJobEdit(id) {
+  const job = jobs.find(j=>j.id===id); if (!job) return;
+  editJobId = id; selJobId = id;
+  document.getElementById('fTitle').value      = job.title;
+  document.getElementById('fTeam').value       = job.team;
+  document.getElementById('fType').value       = job.type;
+  document.getElementById('fLocation').value   = job.location;
+  document.getElementById('fRemote').value     = job.remote;
+  document.getElementById('fUrl').value        = job.linkedinUrl||'';
+  document.getElementById('fFeatured').checked = job.featured;
+  document.getElementById('fActive').checked   = job.active;
+  document.getElementById('jobFormTitle').textContent = 'Edit role';
+  document.getElementById('btnSaveJob').textContent   = 'Save changes';
+  renderJobList();
+}
+async function deleteJob(id) {
+  try { setLoading(true); await atDelete(AT_JOBS, id); await fetchJobs(); if(editJobId===id) clearJobForm(); showSaved(); }
+  catch(e) { showError(e); }
+}
+
+document.getElementById('btnAddJob').addEventListener('click', () => { clearJobForm(); renderJobList(); document.getElementById('fTitle').focus(); });
+document.getElementById('btnCancelJob').addEventListener('click', clearJobForm);
+document.getElementById('btnSaveJob').addEventListener('click', async () => {
+  const title = document.getElementById('fTitle').value.trim();
+  if (!title) { document.getElementById('fTitle').focus(); return; }
+  const fields = {
+    'Title':        title,
+    'Team':         document.getElementById('fTeam').value,
+    'Type':         document.getElementById('fType').value,
+    'Location':     document.getElementById('fLocation').value.trim() || 'Bengaluru',
+    'Remote':       document.getElementById('fRemote').value,
+    'LinkedIn URL': document.getElementById('fUrl').value.trim() || 'https://www.linkedin.com/company/terapush/jobs/',
+    'Featured':     document.getElementById('fFeatured').checked,
+    'Active':       document.getElementById('fActive').checked,
+  };
+  try {
+    setLoading(true);
+    if (editJobId) await atUpdate(AT_JOBS, editJobId, fields);
+    else await atCreate(AT_JOBS, fields);
+    await fetchJobs();
+    clearJobForm();
+    showSaved();
+  } catch(e) { showError(e); }
+});
+
+/* ══════════════════════════════════════════
+   BLOG — Airtable backed
+══════════════════════════════════════════ */
+let posts = [];  // in-memory cache
+let selPostId = null, editPostId = null;
+
+async function fetchPosts() {
+  try {
+    const data = await atGet(AT_POSTS, 'sort%5B0%5D%5Bfield%5D=Title&sort%5B0%5D%5Bdirection%5D=desc');
+    posts = data.records.map(r => ({
+      id:        r.id,
+      title:     r.fields['Title']     || '',
+      content:   r.fields['Content']   || '',
+      excerpt:   r.fields['Excerpt']   || '',
+      category:  (r.fields['Category'] || 'ecosystem').toLowerCase(),
+      author:    r.fields['Author']    || '',
+      readTime:  r.fields['Read Time'] || 5,
+      published: !!r.fields['Published'],
+      featured:  !!r.fields['Featured'],
+      updatedAt: r.fields['Updated At'] ? new Date(r.fields['Updated At']).getTime() : Date.now(),
+    }));
+    renderPostList();
+    updateTabCounts();
+  } catch(e) { showError(e); }
+}
+
+function renderPostList() {
+  const list  = document.getElementById('adminPostList');
+  const empty = document.getElementById('adminEmptyPosts');
+  document.getElementById('postCountBadge').textContent = `${posts.filter(p=>p.published).length} published · ${posts.length} total`;
+  list.innerHTML = '';
+  if (!posts.length) { empty.classList.add('visible'); return; }
+  empty.classList.remove('visible');
+  posts.slice().reverse().forEach(post => {
+    const row = document.createElement('div');
+    row.className = 'admin-row' + (post.id===selPostId?' selected':'') + (!post.published?' inactive':'');
+    const excerpt = post.excerpt || stripHtml(post.content).slice(0,90)+'…';
+    row.innerHTML = `
+      <div class="admin-row-left">
+        <div class="admin-row-title">${post.title||'Untitled'}</div>
+        <div class="admin-row-excerpt">${excerpt}</div>
+        <div class="admin-row-meta" style="margin-top:4px;">
+          <span class="admin-tag">${post.category}</span>
+          <span class="admin-tag">${post.readTime} min</span>
+          ${post.featured?'<span class="admin-tag featured-tag">Featured</span>':''}
+          <span class="admin-tag ${post.published?'active-tag':'inactive-tag'}">${post.published?'Published':'Draft'}</span>
+          <span class="admin-tag" style="font-family:'DM Mono',monospace;text-transform:none;letter-spacing:0;">${fmtDate(post.updatedAt)}</span>
+        </div>
+      </div>
+      <div class="admin-row-actions">
+        <button class="admin-icon-btn" data-action="edit" title="Open editor"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button>
+        <button class="admin-icon-btn delete" data-action="delete" title="Delete"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4h6v2"/></svg></button>
+      </div>`;
+    row.querySelector('.admin-row-left').addEventListener('click', () => openPostMeta(post.id));
+    row.querySelector('[data-action="edit"]').addEventListener('click', e => { e.stopPropagation(); openEditorFor(post.id); });
+    row.querySelector('[data-action="delete"]').addEventListener('click', e => { e.stopPropagation(); openConfirm(post.id,'post',post.title||'Untitled'); });
+    list.appendChild(row);
+  });
+}
+
+function clearPostMeta() {
+  document.getElementById('pMetaTitle').value      = '';
+  document.getElementById('pMetaExcerpt').value    = '';
+  document.getElementById('pMetaCategory').value   = 'ecosystem';
+  document.getElementById('pMetaReadTime').value   = 5;
+  document.getElementById('pMetaPublished').checked = true;
+  document.getElementById('pMetaFeatured').checked  = false;
+  editPostId = null; selPostId = null;
+}
+function openPostMeta(id) {
+  const post = posts.find(p=>p.id===id); if (!post) return;
+  selPostId = id; editPostId = id;
+  document.getElementById('pMetaTitle').value       = post.title;
+  document.getElementById('pMetaExcerpt').value     = post.excerpt;
+  document.getElementById('pMetaCategory').value    = post.category;
+  document.getElementById('pMetaReadTime').value    = post.readTime;
+  document.getElementById('pMetaPublished').checked = post.published;
+  document.getElementById('pMetaFeatured').checked  = post.featured;
+  renderPostList();
+}
+async function savePostMeta() {
+  if (!editPostId) return;
+  const fields = {
+    'Title':     document.getElementById('pMetaTitle').value.trim(),
+    'Excerpt':   document.getElementById('pMetaExcerpt').value.trim(),
+    'Category':  document.getElementById('pMetaCategory').value,
+    'Read Time': parseInt(document.getElementById('pMetaReadTime').value)||5,
+    'Published': document.getElementById('pMetaPublished').checked,
+    'Featured':  document.getElementById('pMetaFeatured').checked,
+  };
+  try { await atUpdate(AT_POSTS, editPostId, fields); await fetchPosts(); showSaved(); }
+  catch(e) { showError(e); }
+}
+async function deletePost(id) {
+  try { setLoading(true); await atDelete(AT_POSTS, id); await fetchPosts(); if(editPostId===id) clearPostMeta(); showSaved(); }
+  catch(e) { showError(e); }
+}
+
+// Debounced meta save
+let metaSaveTimer;
+function debouncedMetaSave() { clearTimeout(metaSaveTimer); metaSaveTimer = setTimeout(savePostMeta, 800); }
+['pMetaTitle','pMetaExcerpt','pMetaReadTime'].forEach(id => document.getElementById(id).addEventListener('input', debouncedMetaSave));
+['pMetaCategory','pMetaPublished','pMetaFeatured'].forEach(id => document.getElementById(id).addEventListener('change', savePostMeta));
+
+document.getElementById('btnCancelPost').addEventListener('click', () => { clearPostMeta(); renderPostList(); });
+
+document.getElementById('btnAddPost').addEventListener('click', async () => {
+  try {
+    setLoading(true);
+    const rec = await atCreate(AT_POSTS, { 'Title':'', 'Content':'', 'Excerpt':'', 'Category':'ecosystem', 'Author':'', 'Read Time':5, 'Published':false, 'Featured':false });
+    await fetchPosts();
+    openEditorFor(rec.id);
+  } catch(e) { showError(e); }
+});
+
+document.getElementById('btnOpenEditor').addEventListener('click', () => {
+  if (editPostId) { savePostMeta(); openEditorFor(editPostId); }
+  else document.getElementById('btnAddPost').click();
+});
+
+/* ══════════════════════════════════════════
+   EDITOR
+══════════════════════════════════════════ */
+let editorPostId = null;
+
+function openEditorFor(id) {
+  const post = posts.find(p=>p.id===id); if (!post) return;
+  editorPostId = id;
+  document.getElementById('editorTitle').value       = post.title||'';
+  document.getElementById('editorContent').innerHTML = post.content||'';
+  document.getElementById('editorCategory').value    = post.category||'ecosystem';
+  document.getElementById('editorAuthor').value      = post.author||'';
+  document.getElementById('editorReadTime').value    = post.readTime||5;
+  document.getElementById('editorExcerpt').value     = post.excerpt||'';
+  setEditorStatus(post.published);
+  updateWordCount();
+  document.getElementById('editorOverlay').classList.add('visible');
+  setTimeout(() => document.getElementById('editorContent').focus(), 100);
+}
+function setEditorStatus(published) {
+  document.getElementById('editorStatusDot').className    = 'editor-status-dot ' + (published?'published':'');
+  document.getElementById('editorStatusLabel').textContent = published?'Published':'Draft';
+}
+
+async function saveEditorPost(publishOverride) {
+  if (!editorPostId) return;
+  const excerpt = document.getElementById('editorExcerpt').value.trim()
+    || stripHtml(document.getElementById('editorContent').innerHTML).slice(0,160);
+  const fields = {
+    'Title':      document.getElementById('editorTitle').value.trim()||'Untitled',
+    'Content':    document.getElementById('editorContent').innerHTML,
+    'Excerpt':    excerpt,
+    'Category':   document.getElementById('editorCategory').value,
+    'Author':     document.getElementById('editorAuthor').value.trim(),
+    'Read Time':  parseInt(document.getElementById('editorReadTime').value)||5,
+  };
+  if (publishOverride !== undefined) fields['Published'] = publishOverride;
+  try {
+    await atUpdate(AT_POSTS, editorPostId, fields);
+    // Update local cache so status dot reflects immediately
+    const i = posts.findIndex(p=>p.id===editorPostId);
+    if (i !== -1) { Object.assign(posts[i], { title:fields['Title'], content:fields['Content'], excerpt:fields['Excerpt'], category:fields['Category'], author:fields['Author'], readTime:fields['Read Time'] }); if (publishOverride!==undefined) posts[i].published=publishOverride; }
+    setEditorStatus(publishOverride !== undefined ? publishOverride : (posts[i]||{}).published);
+    showSaved();
+    renderPostList();
+  } catch(e) { showError(e); }
+}
+
+document.getElementById('editorSaveDraft').addEventListener('click', async () => {
+  await saveEditorPost(false);
+  const btn = document.getElementById('editorSaveDraft');
+  btn.textContent = 'Saved ✓'; btn.style.color = 'rgba(100,200,120,0.9)';
+  setTimeout(() => { btn.textContent = 'Save draft'; btn.style.color = ''; }, 2000);
+});
+document.getElementById('editorPublish').addEventListener('click', async () => {
+  await saveEditorPost(true);
+  const btn = document.getElementById('editorPublish');
+  btn.textContent = 'Published ✓';
+  setTimeout(() => { btn.textContent = 'Publish'; }, 2000);
+});
+document.getElementById('editorBack').addEventListener('click', async () => {
+  await saveEditorPost();
+  document.getElementById('editorOverlay').classList.remove('visible');
+  await fetchPosts();
+  if (selPostId === editorPostId) openPostMeta(editorPostId);
+});
+
+// Auto-save debounced
+let autoSave;
+document.getElementById('editorContent').addEventListener('input', () => { clearTimeout(autoSave); autoSave = setTimeout(() => saveEditorPost(), 2000); updateWordCount(); });
+document.getElementById('editorTitle').addEventListener('input',   () => { clearTimeout(autoSave); autoSave = setTimeout(() => saveEditorPost(), 2000); });
+
+function updateWordCount() {
+  const text = document.getElementById('editorContent').innerText||'';
+  const w = text.trim() ? text.trim().split(/\s+/).length : 0;
+  document.getElementById('editorWordCount').textContent = `${w} word${w!==1?'s':''}`;
+  document.getElementById('editorCharCount').textContent = `${text.length} characters`;
+}
+
+// Toolbar
+document.querySelectorAll('.toolbar-btn[data-cmd]').forEach(btn => {
+  btn.addEventListener('mousedown', e => {
+    e.preventDefault();
+    document.getElementById('editorContent').focus();
+    const cmd = btn.dataset.cmd;
+    if      (cmd==='h1')         document.execCommand('formatBlock',false,'h1');
+    else if (cmd==='h2')         document.execCommand('formatBlock',false,'h2');
+    else if (cmd==='h3')         document.execCommand('formatBlock',false,'h3');
+    else if (cmd==='blockquote') document.execCommand('formatBlock',false,'blockquote');
+    else if (cmd==='insertHR')   document.execCommand('insertHTML',false,'<hr/>');
+    else if (cmd==='createLink') { const url=prompt('Enter URL:'); if(url) document.execCommand('createLink',false,url); }
+    else document.execCommand(cmd,false,null);
+  });
+});
+document.getElementById('editorContent').addEventListener('keyup',  syncToolbar);
+document.getElementById('editorContent').addEventListener('mouseup', syncToolbar);
+function syncToolbar() {
+  ['bold','italic','underline'].forEach(cmd => {
+    const btn = document.querySelector(`.toolbar-btn[data-cmd="${cmd}"]`);
+    if (btn) btn.classList.toggle('active', document.queryCommandState(cmd));
+  });
+}
+
+/* ══════════════════════════════════════════
+   TAB COUNTS + INIT
+══════════════════════════════════════════ */
+function updateTabCounts() {
+  document.getElementById('careersTabCount').textContent = jobs.filter(j=>j.active).length;
+  document.getElementById('blogTabCount').textContent    = posts.filter(p=>p.published).length;
+}
+async function initAll() {
+  document.getElementById('saveStatus').textContent = 'Loading…';
+  await Promise.all([fetchJobs(), fetchPosts()]);
+  document.getElementById('saveStatus').textContent = '—';
+}
+</script>
+</body>
+</html>

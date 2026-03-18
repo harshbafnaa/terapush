@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Pitch Us — Terapush</title>
+  <meta name="description" content="Pitch your startup to Terapush. Send us your deck and we'll get back to you."/>
+  <!-- Open Graph -->
+  <meta property="og:type"        content="website"/>
+  <meta property="og:site_name"   content="Terapush"/>
+  <meta property="og:title"       content="Pitch Us — Terapush"/>
+  <meta property="og:description" content="Pitch your startup to Terapush. We work with early-stage founders on fundraising, deal structuring, and connecting with the right investors."/>
+  <meta property="og:url"         content="https://terapush.in/pitch"/>
+  <meta property="og:image"       content="https://terapush.in/images/og-image.png"/>
+  <meta property="og:image:width" content="1200"/>
+  <meta property="og:image:height"content="630"/>
+  <meta property="og:locale"      content="en_IN"/>
+  <!-- Twitter Card -->
+  <meta name="twitter:card"        content="summary_large_image"/>
+  <meta name="twitter:site"        content="@terapush"/>
+  <meta name="twitter:title"       content="Pitch Us — Terapush"/>
+  <meta name="twitter:description" content="Pitch your startup to Terapush. We work with early-stage founders on fundraising, deal structuring, and connecting with the right investors."/>
+  <meta name="twitter:image"       content="https://terapush.in/images/og-image.png"/>
+  <!-- Canonical -->
+  <link rel="canonical" href="https://terapush.in/pitch"/>
+  <link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@300;400;500;600;700;800;900&family=Instrument+Serif:ital@0;1&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet"/>
+  <link rel="sitemap" type="application/xml" title="Sitemap" href="sitemap.xml"/>
+  <link rel="stylesheet" href="shared.css"/>
+  <link rel="icon" type="image/png" href="favicon.png">
+  <style>
+    .pitch-layout {
+      max-width:1080px; margin:0 auto;
+      display:grid; grid-template-columns:1fr 1.3fr;
+      gap:80px; padding:80px 48px 100px;
+      align-items:start;
+    }
+    .pitch-info-label { font-size:0.72rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--text2); margin-bottom:20px; font-weight:500; }
+    .pitch-info-heading { font-family:'Instrument Serif',serif; font-size:clamp(1.8rem,3vw,2.8rem); font-weight:400; line-height:1.15; color:var(--text); letter-spacing:-0.02em; margin-bottom:24px; }
+    .pitch-info-heading em { font-style:italic; color:var(--text2); }
+    .pitch-info-body { font-size:0.85rem; color:var(--text2); line-height:1.8; font-weight:300; margin-bottom:16px; }
+    .pitch-criteria { margin-top:36px; display:flex; flex-direction:column; gap:0; border:1px solid var(--border); border-radius:12px; overflow:hidden; }
+    .criteria-row { display:flex; align-items:flex-start; gap:16px; padding:16px 20px; border-bottom:1px solid var(--border); transition:background 0.2s; }
+    .criteria-row:last-child { border-bottom:none; }
+    .criteria-row:hover { background:var(--bg3); }
+    .criteria-num { font-family:'DM Mono',monospace; font-size:0.72rem; color:var(--text2); flex-shrink:0; padding-top:2px; font-weight:500; }
+    .criteria-text { font-size:0.78rem; color:var(--text2); line-height:1.6; }
+    .criteria-text strong { color:var(--text); font-weight:500; display:block; margin-bottom:2px; }
+
+    /* FORM */
+    .pitch-form-box {
+      border:1px solid var(--border); border-radius:16px;
+      padding:48px 40px; background:var(--card-bg);
+      position:sticky; top:88px;
+    }
+    .pitch-form-title { font-family:'Instrument Serif',serif; font-size:1.5rem; font-style:italic; color:var(--text); margin-bottom:6px; }
+    .pitch-form-sub { font-size:0.85rem; color:var(--text2); margin-bottom:32px; font-weight:400; }
+    .pitch-fields { display:flex; flex-direction:column; gap:12px; }
+    .pitch-field { display:flex; flex-direction:column; gap:5px; }
+    .pitch-field label { font-size:0.68rem; letter-spacing:0.14em; text-transform:uppercase; color:var(--text2); font-weight:600; }
+    .pitch-field input,
+    .pitch-field select,
+    .pitch-field textarea {
+      background:var(--input-bg); border:1px solid var(--border); border-radius:10px;
+      padding:13px 16px; color:var(--text); font-family:'League Spartan',sans-serif;
+      font-size:0.92rem; font-weight:400; outline:none; -webkit-appearance:none; appearance:none;
+      transition:border-color 0.25s,background 0.25s,color var(--transition);
+      resize:none;
+    }
+    .pitch-field input::placeholder,
+    .pitch-field textarea::placeholder { color:var(--text2); }
+    .pitch-field input:focus,
+    .pitch-field select:focus,
+    .pitch-field textarea:focus { border-color:var(--border2); }
+    .pitch-field select option { background:var(--bg2); color:var(--text); }
+    .pitch-row { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+    .pitch-cta {
+      margin-top:8px; width:100%; padding:14px 24px;
+      background:var(--cta-bg); color:var(--cta-text);
+      font-family:'League Spartan',sans-serif; font-size:0.76rem; font-weight:700;
+      letter-spacing:0.16em; text-transform:uppercase;
+      border:none; border-radius:10px; cursor:pointer;
+      transition:opacity 0.2s,transform 0.2s,background var(--transition),color var(--transition);
+    }
+    .pitch-cta:hover { opacity:0.88; transform:translateY(-1px); }
+    .pitch-note { margin-top:16px; font-size:0.68rem; color:var(--text3); line-height:1.6; text-align:center; }
+    .pitch-success { display:none; text-align:center; padding:24px 0; }
+    .pitch-success .icon { width:44px; height:44px; border:1px solid var(--border2); border-radius:50%; display:flex; align-items:center; justify-content:center; margin:0 auto 16px; font-size:1rem; }
+    .pitch-success h3 { font-family:'Instrument Serif',serif; font-size:1.6rem; font-style:italic; color:var(--text); margin-bottom:8px; }
+    .pitch-success p { font-size:0.78rem; color:var(--text3); line-height:1.65; }
+
+    @media (max-width:900px) {
+      .pitch-layout { grid-template-columns:1fr; gap:48px; padding:60px 24px 80px; }
+      .pitch-form-box { position:static; padding:36px 28px; }
+      .pitch-row { grid-template-columns:1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-ring" id="cursorRing"></div>
+
+  <nav id="navbar">
+    <a href="index.html" class="logo">Terapush</a>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="services.html">Services</a>
+      <a href="careers.html">Careers</a>
+      <a href="blog.html">Blog</a>
+    </div>
+    <div class="nav-right">
+      <div class="theme-toggle" onclick="toggleTheme()">
+        <span class="toggle-label" class="themeLabel">Dark</span>
+        <div class="toggle-track"><div class="toggle-thumb"></div></div>
+      </div>
+      <a href="pitch.html" class="nav-pill">Pitch Us</a>
+      <a href="index.html" class="nav-pill" style="background:var(--cta-bg);color:var(--cta-text);border-color:var(--cta-bg);">Early Access</a>
+    </div>
+    <button class="nav-hamburger" id="navHamburger" aria-label="Toggle menu" aria-expanded="false"><div class="bar"><span></span><span></span></div></button>
+  </nav>
+
+  <!-- MOBILE DRAWER -->
+  <div class="mobile-drawer" id="mobileDrawer" aria-hidden="true">
+    <nav class="mobile-drawer-links">
+      <a href="index.html">Home <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></a>
+      <a href="about.html">About <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></a>
+      <a href="services.html">Services <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></a>
+      <a href="pitch.html">Pitch Us <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></a>
+      <a href="careers.html">Careers <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></a>
+    </nav>
+    <div class="mobile-drawer-bottom">
+      <a href="index.html" class="mobile-drawer-cta">Request Early Access</a>
+      <div class="mobile-drawer-theme">
+        <span class="mobile-drawer-theme-label">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+          Appearance
+        </span>
+        <div class="mobile-theme-pill" id="mobileThemePill">
+          <button onclick="setTheme('dark')" id="pillDark" class="active">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 12.79A9 9 0 1111.21 3a7 7 0 109.79 9.79z"/></svg>
+            Dark
+          </button>
+          <button onclick="setTheme('light')" id="pillLight">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+            Light
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="page-hero">
+    <p class="page-kicker">Pitch Us</p>
+    <h1 class="page-title">Tell us about<br/>your <em>startup</em></h1>
+    <p class="page-desc">We're always open to interesting conversations. Send us your pitch and we'll review it personally.</p>
+  </div>
+
+  <div class="pitch-layout">
+    <!-- INFO SIDE -->
+    <div>
+      <p class="pitch-info-label">What We're Looking For</p>
+      <h2 class="pitch-info-heading">We back <em>audacious</em><br/>founders with a plan</h2>
+      <p class="pitch-info-body">We review all pitches that come our way — whether you're looking for a platform partnership, co-operation, or investment connections. There's no perfect template. We care about the idea, the team, and the timing.</p>
+      <p class="pitch-info-body">Our network spans founders, investors, and operators across India's ecosystem. A compelling pitch through Terapush could open the right doors.</p>
+
+      <div class="pitch-criteria">
+        <div class="criteria-row">
+          <span class="criteria-num">01</span>
+          <div class="criteria-text"><strong>India-relevant problem</strong>We're focused on the Indian startup context. Your problem should matter here.</div>
+        </div>
+        <div class="criteria-row">
+          <span class="criteria-num">02</span>
+          <div class="criteria-text"><strong>Clear value proposition</strong>Tell us what you do, for whom, and why now — in plain language.</div>
+        </div>
+        <div class="criteria-row">
+          <span class="criteria-num">03</span>
+          <div class="criteria-text"><strong>Strong founding team</strong>We back people first. Tell us who you are and why you're the right team.</div>
+        </div>
+        <div class="criteria-row">
+          <span class="criteria-num">04</span>
+          <div class="criteria-text"><strong>Some traction or insight</strong>Doesn't need to be revenue. Could be users, pilots, research, or a sharp observation.</div>
+        </div>
+        <div class="criteria-row">
+          <span class="criteria-num">05</span>
+          <div class="criteria-text"><strong>What you're looking for</strong>Be specific about what kind of help or connection you need from us.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- FORM SIDE -->
+    <div class="reveal">
+      <div class="pitch-form-box">
+        <div id="pitch-form-inner">
+          <div class="pitch-form-title">Send your pitch</div>
+          <div class="pitch-form-sub">We review every submission and respond within 5 business days.</div>
+
+          <div class="pitch-fields">
+            <div class="pitch-row">
+              <div class="pitch-field"><label for="p-name">Your Name</label><input type="text" id="p-name" placeholder="Full name"/></div>
+              <div class="pitch-field"><label for="p-role">Your Role</label><input type="text" id="p-role" placeholder="CEO, CTO..."/></div>
+            </div>
+            <div class="pitch-field"><label for="p-company">Company / Startup Name</label><input type="text" id="p-company" placeholder="What's your company called?"/></div>
+            <div class="pitch-field"><label for="p-email">Email Address</label><input type="email" id="p-email" placeholder="you@company.com"/></div>
+            <div class="pitch-row">
+              <div class="pitch-field"><label for="p-stage">Stage</label>
+                <select id="p-stage">
+                  <option value="" disabled selected>Select</option>
+                  <option>Idea</option><option>Pre-seed</option><option>Seed</option>
+                  <option>Series A</option><option>Series B+</option>
+                </select>
+              </div>
+              <div class="pitch-field"><label for="p-sector">Sector</label>
+                <select id="p-sector">
+                  <option value="" disabled selected>Select</option>
+                  <option>Fintech</option><option>SaaS</option><option>D2C / Consumer</option>
+                  <option>HealthTech</option><option>EdTech</option><option>DeepTech</option>
+                  <option>Climate</option><option>Other</option>
+                </select>
+              </div>
+            </div>
+            <div class="pitch-field"><label for="p-ask">What are you looking for?</label>
+              <select id="p-ask">
+                <option value="" disabled selected>Select</option>
+                <option>Platform Partnership</option><option>Investor Introduction</option>
+                <option>Co-operation / Collaboration</option><option>General Interest</option>
+              </select>
+            </div>
+            <div class="pitch-field"><label for="p-pitch">Your Pitch <span style="text-transform:none;letter-spacing:0;">(2–3 paragraphs)</span></label>
+              <textarea id="p-pitch" rows="6" placeholder="Tell us about what you're building, why it matters, and what you need. Link to your deck if you have one."></textarea>
+            </div>
+            <div class="pitch-field"><label for="p-deck">Deck Link <span style="text-transform:none;letter-spacing:0;">(optional)</span></label>
+              <input type="url" id="p-deck" placeholder="https://drive.google.com/..."/></div>
+            <button class="pitch-cta" onclick="handlePitch()">Submit Pitch →</button>
+            <p class="pitch-note">Your pitch will be sent to <strong></strong> and reviewed by our team.</p>
+          </div>
+        </div>
+
+        <div class="pitch-success" id="pitch-success">
+          <div class="icon">✦</div>
+          <h3>Pitch received.</h3>
+          <p>We've sent your pitch to .<br/>Our team will review and respond within 5 business days.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="footer-main">
+      <div class="footer-brand">
+        <a href="index.html" class="footer-logo">Terapush</a>
+        <p>The OS for India's startup ecosystem. Connecting founders, investors, and creators on one platform built for Bharat's builders.</p>
+        <div class="footer-social" style="margin-top:20px;">
+          <a href="https://www.linkedin.com/company/terapush" target="_blank" rel="noopener"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>LinkedIn</a>
+          <a href="https://www.instagram.com/terapush" target="_blank" rel="noopener"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>Instagram</a>
+        </div>
+      </div>
+      <div class="footer-col"><h4>Pages</h4><a href="index.html">Home</a><a href="about.html">About</a><a href="services.html">Services</a><a href="pitch.html">Pitch Us</a><a href="careers.html">Careers</a><a href="blog.html">Blog</a></div>
+      <div class="footer-col"><h4>Legal</h4><a href="privacy.html">Privacy Policy</a><a href="terms.html">Terms of Use</a><a href="sitemap.html">Sitemap</a></div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <a href="#" onclick="this.href='mailto:'+('contact'+'@terapush.in');return true;" style="text-decoration:none;color:inherit;">contact&#64;terapush.in</a>
+        <a href="#" onclick="this.href='mailto:'+('careers'+'@terapush.in');return true;" style="text-decoration:none;color:inherit;">careers&#64;terapush.in</a>
+        <div class="footer-address">Terapush India Private Limited<br/>1st Floor, SPD Plaza,<br/>KHB Colony, Koramangala 4-B Block,<br/>5th Block, Koramangala,<br/>Bengaluru, Karnataka 560095</div>
+        <div class="footer-map" style="margin-top:14px;"><iframe src="https://maps.google.com/maps?q=Koramangala+5th+Block+Bengaluru&output=embed" allowfullscreen loading="lazy" style="width:100%;height:110px;border:none;filter:grayscale(1);border-radius:6px;"></iframe></div>
+      </div>
+    </div>
+    <div class="footer-bottom" style="max-width:100%;padding:20px 48px;">
+      <div class="footer-bottom-inner"><div><div class="footer-copy">© 2026 Terapush India Private Limited. All rights reserved.</div><div style="margin-top:8px;display:flex;gap:20px;"><a href="privacy.html" style="font-size:0.62rem;color:var(--text3);text-decoration:none;letter-spacing:0.08em;text-transform:uppercase;">Privacy Policy</a><a href="terms.html" style="font-size:0.62rem;color:var(--text3);text-decoration:none;letter-spacing:0.08em;text-transform:uppercase;">Terms of Use</a></div></div></div>
+      <div class="footer-disclaimer"><strong style="font-weight:500;">Disclaimer:</strong> Investments in startups involve risk. Terapush is a platform to connect stakeholders and does not guarantee returns. Users should conduct independent due diligence before making investment decisions.</div>
+    </div>
+  </footer>
+
+  <script data-cfasync="false" src="shared.js"></script>
+  <script>
+    function handlePitch() {
+      const name    = document.getElementById('p-name').value.trim();
+      const email   = document.getElementById('p-email').value.trim();
+      const company = document.getElementById('p-company').value.trim();
+      const role    = document.getElementById('p-role').value.trim();
+      const stage   = document.getElementById('p-stage').value;
+      const sector  = document.getElementById('p-sector').value;
+      const ask     = document.getElementById('p-ask').value;
+      const pitch   = document.getElementById('p-pitch').value.trim();
+      const deck    = document.getElementById('p-deck').value.trim();
+
+      if (!name || !email || !company || !pitch || !stage || !sector || !ask) {
+        alert('Please fill in all required fields.'); return;
+      }
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        alert('Please enter a valid email address.'); return;
+      }
+
+      const subject = encodeURIComponent(`Pitch: ${company} — ${stage} stage`);
+      const body = encodeURIComponent(
+        `Name: ${name}\nRole: ${role}\nCompany: ${company}\nEmail: ${email}\n` +
+        `Stage: ${stage}\nSector: ${sector}\nLooking for: ${ask}\n\n` +
+        `Pitch:\n${pitch}\n\n` +
+        (deck ? `Deck: ${deck}` : '')
+      );
+
+      window.location.href = `mailto:contact@terapush.in?subject=${subject}&body=${body}`;
+
+      // Show success state
+      document.getElementById('pitch-form').style.display = 'none';
+      const success = document.getElementById('pitch-success');
+      if (success) success.style.display = 'block';
+    }
+  </script>
+</body>
+</html>
