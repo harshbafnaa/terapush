@@ -105,15 +105,17 @@
     .faq-item.open .faq-answer { max-height:400px; padding:0 24px 20px; }
     .faq-answer-text { font-size:0.9rem; color:var(--text2); line-height:1.7; font-weight:400; }
     @media (max-width:900px) {
-      .faq-section { padding:0 24px; }
-      .faq-grid { grid-template-columns:1fr; gap:16px; }
-      .faq-question { font-size:0.88rem; padding:16px 20px; }
       .bento { grid-template-columns:1fr; }
       .bento-card.wide,.bento-card.narrow,.bento-card.third { grid-column:span 1; }
       .row { grid-template-columns:1fr; }
       .stats { flex-direction:column; }
       .stat { border-right:none; border-bottom:1px solid var(--border); }
       .stat:last-child { border-bottom:none; }
+    }
+    @media (max-width:600px) {
+      .faq-section { padding:0 24px; }
+      .faq-grid { grid-template-columns:1fr; gap:16px; }
+      .faq-question { font-size:0.88rem; padding:16px 20px; }
     }
   </style>
 </head>
@@ -132,7 +134,7 @@
     </div>
     <div class="nav-right">
       <div class="theme-toggle" onclick="toggleTheme()">
-        <span class="toggle-label" class="themeLabel">Dark</span>
+        <span class="toggle-label themeLabel">Dark</span>
         <div class="toggle-track"><div class="toggle-thumb"></div></div>
       </div>
       <a href="pitch.html" class="nav-pill">Pitch Us</a>
@@ -175,6 +177,7 @@
   <!-- HERO -->
   <section class="hero">
     <div class="grid-lines"></div>
+    <p class="hero-kicker">India's Startup Platform</p>
     <h1 class="hero-headline">The <em>OS</em> for India's<br/>Startup Ecosystem</h1>
     <p class="hero-sub">One platform where founders connect, investors discover, and deals get done — built for the pace and ambition of Bharat's builders.</p>
     <div class="hero-divider"></div>
@@ -233,7 +236,7 @@
   <section class="section">
     <p class="section-kicker">Why Terapush</p>
     <h2 class="section-heading">Everything a builder needs,<br/><em>finally in one place</em></h2>
-    <div class="bento">
+    <div class="bento bento-grid">
       <div class="bento-card wide">
         <span class="card-num">01</span>
         <div class="card-title">Professional Network</div>
@@ -369,7 +372,7 @@
           <span class="faq-toggle">+</span>
         </div>
         <div class="faq-answer">
-          <div class="faq-answer-text">You can reach us at  or through our contact page. Our team is responsive and available to answer questions about partnerships, investments, or general inquiries.</div>
+          <div class="faq-answer-text">You can reach us at <a href="#" onclick="this.href='mailto:'+('contact'+'@terapush.in');return true;" style="color:inherit;">contact@terapush.in</a> or through our contact page. Our team is responsive and available to answer questions about partnerships, investments, or general inquiries.</div>
         </div>
       </div>
     </div>
@@ -421,7 +424,7 @@
         </div>
       </div>
     </div>
-    <div class="footer-bottom" style="max-width:100%;padding:20px 48px;">
+    <div class="footer-bottom">
       <div class="footer-bottom-inner">
         <div>
           <div class="footer-copy">© 2026 Terapush India Private Limited. All rights reserved.</div>
