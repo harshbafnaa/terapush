@@ -8,357 +8,439 @@
   <meta property="og:type" content="website"/>
   <meta property="og:site_name" content="Terapush"/>
   <meta property="og:title" content="Fundraise Readiness Score — Terapush"/>
-  <meta property="og:description" content="Assess your startup's fundraise readiness across 25 criteria in 5 pillars. Get your Terapush Fundraise Readiness Score."/>
+  <meta property="og:description" content="Assess your startup's fundraise readiness across 25 criteria in 5 pillars."/>
   <meta property="og:url" content="https://terapush.in/readiness.html"/>
   <meta property="og:image" content="https://terapush.in/images/og-image.png"/>
   <meta property="og:locale" content="en_IN"/>
   <meta name="twitter:card" content="summary_large_image"/>
   <meta name="twitter:site" content="@terapush"/>
-  <meta name="twitter:title" content="Fundraise Readiness Score — Terapush"/>
-  <meta name="twitter:description" content="Assess your startup's fundraise readiness across 25 criteria in 5 pillars."/>
-  <meta name="twitter:image" content="https://terapush.in/images/og-image.png"/>
   <link rel="canonical" href="https://terapush.in/readiness.html"/>
   <link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@300;400;500;600;700;800;900&family=Instrument+Serif:ital@0;1&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="shared.css"/>
   <link rel="icon" type="image/png" href="favicon.png"/>
   <style>
 
-    /* ─── PAGE HERO ─── */
-    .readiness-hero {
-      padding: 140px 48px 64px;
-      max-width: 900px;
-      margin: 0 auto;
-      border-bottom: 1px solid var(--border);
-      text-align: center;
-    }
-    .readiness-hero .page-kicker { text-align: center; }
-    .readiness-hero .page-title { font-size: clamp(2.8rem, 6vw, 5.5rem); }
-    .readiness-hero .page-desc { margin: 0 auto; text-align: center; font-size: 1rem; max-width: 560px; }
-
-    /* ─── SCORE INTERPRETATION BAND ─── */
-    .score-band {
-      max-width: 900px;
-      margin: 0 auto;
-      padding: 48px 48px 0;
-      display: grid;
-      grid-template-columns: repeat(5, 1fr);
-      gap: 2px;
-    }
-    .band-item {
-      padding: 16px 14px;
-      border: 1px solid var(--border);
-      text-align: center;
-      transition: background 0.25s;
-    }
-    .band-item:first-child { border-radius: 10px 0 0 10px; }
-    .band-item:last-child  { border-radius: 0 10px 10px 0; }
-    .band-score { font-family: 'DM Mono', monospace; font-size: 0.7rem; color: var(--text3); margin-bottom: 6px; }
-    .band-verdict { font-size: 0.78rem; font-weight: 600; color: var(--text); letter-spacing: -0.01em; line-height: 1.2; }
-    .band-item.active-band { background: var(--bg2); border-color: var(--border2); }
-
-    /* ─── ASSESSMENT SHELL ─── */
-    .assessment-wrap {
-      max-width: 900px;
-      margin: 0 auto;
-      padding: 48px 48px 80px;
-    }
-
-    /* ─── PROGRESS BAR ─── */
-    .progress-bar-wrap {
-      margin-bottom: 40px;
-      position: sticky;
-      top: 64px;
-      z-index: 10;
-      background: var(--bg);
-      padding: 16px 0 12px;
-      border-bottom: 1px solid var(--border);
-      transition: background var(--transition);
-    }
-    .progress-meta {
+    /* ─── SHELL ─── */
+    .calc-shell {
+      min-height: 100svh;
       display: flex;
+      flex-direction: column;
+      padding-top: 64px;
+    }
+
+    /* ─── INTRO ─── */
+    #screen-intro {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
       align-items: center;
-      justify-content: space-between;
-      margin-bottom: 10px;
+      justify-content: center;
+      padding: 80px 24px;
+      text-align: center;
     }
-    .progress-label { font-size: 0.68rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--text2); font-weight: 600; }
-    .progress-count { font-family: 'DM Mono', monospace; font-size: 0.72rem; color: var(--text3); }
-    .progress-track {
-      height: 2px;
-      background: var(--border);
-      border-radius: 2px;
-      overflow: hidden;
-    }
-    .progress-fill {
-      height: 100%;
-      background: var(--text);
-      border-radius: 2px;
-      transition: width 0.5s cubic-bezier(0.23,1,0.32,1);
-      width: 0%;
-    }
-
-    /* ─── PILLAR HEADER ─── */
-    .pillar-header {
-      margin: 40px 0 24px;
-      padding-bottom: 20px;
-      border-bottom: 1px solid var(--border);
-    }
-    .pillar-header:first-of-type { margin-top: 0; }
-    .pillar-meta { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
-    .pillar-num { font-family: 'DM Mono', monospace; font-size: 0.62rem; color: var(--text3); }
-    .pillar-weight { font-size: 0.62rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text3); border: 1px solid var(--border); padding: 3px 10px; border-radius: 100px; }
-    .pillar-title { font-family: 'Instrument Serif', serif; font-size: 1.5rem; font-weight: 400; color: var(--text); margin-bottom: 6px; line-height: 1.2; }
-    .pillar-desc { font-size: 0.85rem; color: var(--text2); line-height: 1.65; font-weight: 300; font-style: italic; }
-
-    /* ─── QUESTION CARD ─── */
-    .question-card {
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 28px;
-      margin-bottom: 14px;
-      transition: border-color 0.3s, background 0.3s;
-    }
-    .question-card.answered { background: var(--bg2); border-color: var(--border2); }
-    .question-label {
+    .intro-kicker {
       font-size: 0.62rem;
-      letter-spacing: 0.16em;
+      letter-spacing: 0.24em;
       text-transform: uppercase;
       color: var(--text3);
-      font-family: 'DM Mono', monospace;
-      margin-bottom: 10px;
+      margin-bottom: 32px;
+      font-weight: 500;
     }
-    .question-text {
-      font-size: 0.97rem;
-      font-weight: 600;
+    .intro-title {
+      font-family: 'Instrument Serif', serif;
+      font-size: clamp(3rem, 8vw, 7rem);
+      font-weight: 400;
+      line-height: 1.0;
+      letter-spacing: -0.025em;
       color: var(--text);
-      letter-spacing: -0.01em;
-      margin-bottom: 4px;
-      line-height: 1.35;
+      max-width: 800px;
+      margin-bottom: 24px;
     }
-    .question-sub {
-      font-size: 0.8rem;
+    .intro-title em { font-style: italic; color: var(--text2); }
+    .intro-desc {
+      font-size: 0.95rem;
       color: var(--text2);
-      font-style: italic;
-      margin-bottom: 18px;
+      max-width: 420px;
+      line-height: 1.75;
       font-weight: 300;
+      margin-bottom: 44px;
     }
-
-    /* ─── OPTIONS ─── */
-    .options { display: flex; flex-direction: column; gap: 8px; }
-    .option {
+    .intro-pills {
       display: flex;
       align-items: center;
-      justify-content: space-between;
-      gap: 16px;
-      padding: 12px 16px;
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      cursor: pointer;
-      transition: border-color 0.2s, background 0.2s;
-      user-select: none;
+      gap: 8px;
+      margin-bottom: 44px;
+      flex-wrap: wrap;
+      justify-content: center;
     }
-    .option:hover { border-color: var(--border2); background: var(--bg2); }
-    .option.selected { border-color: var(--text); background: var(--bg2); }
-    .option-text { font-size: 0.88rem; color: var(--text2); font-weight: 400; transition: color 0.2s; flex: 1; }
-    .option.selected .option-text { color: var(--text); font-weight: 500; }
-    .option-pts {
-      font-family: 'DM Mono', monospace;
-      font-size: 0.65rem;
+    .intro-pill {
+      font-size: 0.68rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
       color: var(--text3);
-      flex-shrink: 0;
-      transition: color 0.2s;
+      border: 1px solid var(--border);
+      padding: 5px 14px;
+      border-radius: 100px;
+      font-weight: 500;
     }
-    .option.selected .option-pts { color: var(--text2); }
-    .option-check {
-      width: 16px; height: 16px;
-      border: 1px solid var(--border2);
-      border-radius: 50%;
-      flex-shrink: 0;
-      display: flex; align-items: center; justify-content: center;
-      transition: background 0.2s, border-color 0.2s;
-    }
-    .option.selected .option-check {
-      background: var(--text);
-      border-color: var(--text);
-    }
-    .option.selected .option-check::after {
-      content: '';
-      width: 5px; height: 5px;
-      border-radius: 50%;
-      background: var(--bg);
-    }
-
-    /* ─── SUBMIT / SCORE SECTION ─── */
-    .submit-section {
-      margin-top: 40px;
-      padding-top: 32px;
-      border-top: 1px solid var(--border);
-      text-align: center;
-    }
-    .submit-note { font-size: 0.82rem; color: var(--text2); margin-bottom: 20px; font-weight: 300; }
-    .submit-btn {
-      display: inline-block;
-      padding: 15px 48px;
+    .intro-start-btn {
+      padding: 16px 52px;
       background: var(--cta-bg);
       color: var(--cta-text);
       font-family: 'League Spartan', sans-serif;
       font-size: 0.78rem;
       font-weight: 700;
-      letter-spacing: 0.18em;
+      letter-spacing: 0.2em;
       text-transform: uppercase;
       border: none;
       border-radius: 100px;
       cursor: pointer;
       transition: opacity 0.2s, transform 0.2s, background var(--transition), color var(--transition);
     }
-    .submit-btn:hover { opacity: 0.88; transform: translateY(-1px); }
-    .submit-btn:disabled { opacity: 0.35; cursor: not-allowed; transform: none; }
-    .unanswered-note {
-      margin-top: 12px;
-      font-size: 0.75rem;
-      color: var(--text3);
-      font-family: 'DM Mono', monospace;
+    .intro-start-btn:hover { opacity: 0.85; transform: translateY(-2px); }
+
+    /* ─── QUIZ ─── */
+    #screen-quiz {
+      display: none;
+      flex: 1;
+      flex-direction: column;
     }
 
-    /* ─── RESULTS PANEL ─── */
-    #results-panel {
-      display: none;
-      margin-top: 48px;
-      border: 1px solid var(--border2);
-      border-radius: 16px;
+    .quiz-topbar {
+      position: sticky;
+      top: 64px;
+      z-index: 100;
+      background: var(--bg);
+      border-bottom: 1px solid var(--border);
+      padding: 0 48px;
+      height: 54px;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      transition: background var(--transition);
+    }
+    .topbar-pillar {
+      font-size: 0.62rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--text3);
+      font-weight: 500;
+      white-space: nowrap;
+      flex-shrink: 0;
+      min-width: 180px;
+    }
+    .topbar-track {
+      flex: 1;
+      height: 2px;
+      background: var(--border);
+      border-radius: 2px;
+      overflow: hidden;
+    }
+    .topbar-fill {
+      height: 100%;
+      background: var(--text);
+      border-radius: 2px;
+      transition: width 0.55s cubic-bezier(0.23,1,0.32,1);
+      width: 0%;
+    }
+    .topbar-counter {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.65rem;
+      color: var(--text3);
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .quiz-stage {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 56px 24px 72px;
+      min-height: calc(100svh - 64px - 54px);
       overflow: hidden;
     }
 
-    .results-top {
-      padding: 48px 40px 40px;
-      text-align: center;
-      border-bottom: 1px solid var(--border);
-      background: var(--bg2);
+    .q-frame {
+      width: 100%;
+      max-width: 560px;
     }
-    .results-kicker { font-size: 0.62rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--text3); font-weight: 600; margin-bottom: 16px; }
-    .results-score {
-      font-family: 'Instrument Serif', serif;
-      font-size: clamp(4.5rem, 12vw, 8rem);
-      font-weight: 400;
-      line-height: 1;
-      color: var(--text);
-      margin-bottom: 8px;
-    }
-    .results-verdict {
-      font-family: 'Instrument Serif', serif;
-      font-size: 1.6rem;
-      font-style: italic;
-      color: var(--text2);
-      margin-bottom: 16px;
-    }
-    .results-meaning {
-      font-size: 0.92rem;
-      color: var(--text2);
-      max-width: 480px;
-      margin: 0 auto;
-      line-height: 1.7;
-      font-weight: 300;
-    }
+    .q-frame.anim-out-left  { animation: qOutL 0.28s cubic-bezier(0.4,0,1,1) forwards; }
+    .q-frame.anim-in-right  { animation: qInR  0.32s cubic-bezier(0,0,0.2,1) forwards; }
+    .q-frame.anim-out-right { animation: qOutR 0.28s cubic-bezier(0.4,0,1,1) forwards; }
+    .q-frame.anim-in-left   { animation: qInL  0.32s cubic-bezier(0,0,0.2,1) forwards; }
+    @keyframes qOutL  { to   { opacity:0; transform:translateX(-44px); } }
+    @keyframes qInR   { from { opacity:0; transform:translateX(44px);  } to { opacity:1; transform:translateX(0); } }
+    @keyframes qOutR  { to   { opacity:0; transform:translateX(44px);  } }
+    @keyframes qInL   { from { opacity:0; transform:translateX(-44px); } to { opacity:1; transform:translateX(0); } }
 
-    /* ─── PILLAR BREAKDOWN ─── */
-    .results-breakdown {
-      padding: 32px 40px;
-      border-bottom: 1px solid var(--border);
-    }
-    .breakdown-title { font-size: 0.68rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--text3); margin-bottom: 20px; font-weight: 600; }
-    .pillar-row { display: flex; align-items: center; gap: 16px; margin-bottom: 14px; }
-    .pillar-row:last-child { margin-bottom: 0; }
-    .pillar-row-name { font-size: 0.82rem; font-weight: 500; color: var(--text); width: 180px; flex-shrink: 0; letter-spacing: -0.01em; }
-    .pillar-row-bar-wrap { flex: 1; height: 4px; background: var(--border); border-radius: 4px; overflow: hidden; }
-    .pillar-row-bar { height: 100%; background: var(--text); border-radius: 4px; width: 0%; transition: width 1s cubic-bezier(0.23,1,0.32,1); }
-    .pillar-row-score { font-family: 'DM Mono', monospace; font-size: 0.7rem; color: var(--text2); width: 60px; text-align: right; flex-shrink: 0; }
-
-    /* ─── NEXT STEPS ─── */
-    .results-next {
-      padding: 32px 40px 40px;
-    }
-    .next-title { font-size: 0.68rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--text3); margin-bottom: 20px; font-weight: 600; }
-    .next-body { font-size: 0.9rem; color: var(--text2); line-height: 1.75; margin-bottom: 24px; font-weight: 300; }
-    .next-actions { display: flex; gap: 12px; flex-wrap: wrap; }
-    .next-btn-primary {
-      padding: 12px 28px;
-      background: var(--cta-bg);
-      color: var(--cta-text);
-      font-family: 'League Spartan', sans-serif;
-      font-size: 0.72rem;
-      font-weight: 700;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-      border: none;
-      border-radius: 100px;
-      cursor: pointer;
-      text-decoration: none;
-      display: inline-block;
-      transition: opacity 0.2s, background var(--transition), color var(--transition);
-    }
-    .next-btn-primary:hover { opacity: 0.88; }
-    .next-btn-secondary {
-      padding: 12px 28px;
-      background: transparent;
-      color: var(--text2);
-      font-family: 'League Spartan', sans-serif;
-      font-size: 0.72rem;
-      font-weight: 600;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-      border: 1px solid var(--border2);
-      border-radius: 100px;
-      cursor: pointer;
-      text-decoration: none;
-      display: inline-block;
-      transition: border-color 0.2s, color 0.2s, background var(--transition);
-    }
-    .next-btn-secondary:hover { border-color: var(--text); color: var(--text); }
-
-    /* ─── RESET ─── */
-    .reset-row { text-align: center; margin-top: 20px; }
-    .reset-link {
-      font-size: 0.72rem;
-      letter-spacing: 0.12em;
+    .q-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      font-size: 0.6rem;
+      letter-spacing: 0.18em;
       text-transform: uppercase;
       color: var(--text3);
-      cursor: pointer;
-      text-decoration: none;
-      font-family: 'DM Mono', monospace;
-      transition: color 0.2s;
-      border: none;
-      background: none;
+      border: 1px solid var(--border);
+      padding: 4px 12px;
+      border-radius: 100px;
+      margin-bottom: 22px;
     }
-    .reset-link:hover { color: var(--text2); }
+    .q-chip-dot { width: 4px; height: 4px; border-radius: 50%; background: var(--text3); }
 
-    /* ─── DISCLAIMER ─── */
-    .readiness-disclaimer {
-      max-width: 900px;
-      margin: 0 auto;
-      padding: 0 48px 48px;
+    .q-text {
+      font-family: 'Instrument Serif', serif;
+      font-size: clamp(1.55rem, 4vw, 2.3rem);
+      font-weight: 400;
+      color: var(--text);
+      line-height: 1.2;
+      letter-spacing: -0.02em;
+      margin-bottom: 6px;
     }
-    .disclaimer-box {
+    .q-sub {
+      font-size: 0.8rem;
+      color: var(--text2);
+      font-style: italic;
+      font-weight: 300;
+      margin-bottom: 30px;
+      line-height: 1.6;
+    }
+    .q-text-only { margin-bottom: 30px; }
+
+    .q-opts { display: flex; flex-direction: column; gap: 9px; }
+
+    .q-opt {
+      display: flex;
+      align-items: center;
+      gap: 13px;
+      padding: 13px 16px;
       border: 1px solid var(--border);
       border-radius: 10px;
-      padding: 20px 24px;
-      font-size: 0.78rem;
-      color: var(--text3);
-      line-height: 1.7;
-      font-weight: 300;
+      cursor: pointer;
+      transition: border-color 0.18s, background 0.18s, transform 0.12s;
+      user-select: none;
     }
-    .disclaimer-box strong { font-weight: 500; color: var(--text2); }
+    .q-opt:hover { border-color: var(--border2); transform: translateX(4px); }
+    .q-opt.sel   { border-color: var(--text); background: var(--bg2); transform: translateX(4px); }
 
-    @media (max-width: 900px) {
-      .readiness-hero { padding: 110px 24px 48px; }
-      .score-band { grid-template-columns: 1fr 1fr; padding: 32px 24px 0; gap: 8px; }
-      .band-item:first-child, .band-item:last-child { border-radius: 8px; }
-      .band-item { border-radius: 8px; }
-      .assessment-wrap { padding: 32px 24px 60px; }
-      .question-card { padding: 20px; }
-      .pillar-row-name { width: 130px; font-size: 0.75rem; }
-      .results-top { padding: 36px 24px 28px; }
-      .results-breakdown, .results-next { padding: 24px; }
-      .next-actions { flex-direction: column; }
-      .readiness-disclaimer { padding: 0 24px 48px; }
+    .q-opt-radio {
+      width: 18px; height: 18px;
+      border: 1px solid var(--border2);
+      border-radius: 50%;
+      flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+      transition: background 0.18s, border-color 0.18s;
+    }
+    .q-opt.sel .q-opt-radio {
+      background: var(--text);
+      border-color: var(--text);
+    }
+    .q-opt.sel .q-opt-radio::after {
+      content: '';
+      width: 5px; height: 5px;
+      background: var(--bg);
+      border-radius: 50%;
+    }
+    .q-opt-label {
+      font-size: 0.88rem;
+      color: var(--text2);
+      font-weight: 400;
+      transition: color 0.18s;
+      flex: 1;
+    }
+    .q-opt.sel .q-opt-label { color: var(--text); font-weight: 500; }
+
+    /* Nav */
+    .q-nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 32px;
+    }
+    .q-back {
+      display: flex; align-items: center; gap: 6px;
+      font-size: 0.68rem; letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--text3); cursor: pointer; background: none; border: none;
+      font-family: 'League Spartan', sans-serif; font-weight: 600;
+      transition: color 0.2s; padding: 0;
+    }
+    .q-back:hover { color: var(--text2); }
+    .q-back:disabled { opacity: 0.2; cursor: not-allowed; }
+    .q-next {
+      display: flex; align-items: center; gap: 8px;
+      padding: 12px 28px;
+      background: var(--cta-bg); color: var(--cta-text);
+      font-family: 'League Spartan', sans-serif;
+      font-size: 0.7rem; font-weight: 700;
+      letter-spacing: 0.16em; text-transform: uppercase;
+      border: none; border-radius: 100px; cursor: pointer;
+      transition: opacity 0.2s, transform 0.15s, background var(--transition), color var(--transition);
+    }
+    .q-next:hover:not(:disabled) { opacity: 0.86; transform: translateX(3px); }
+    .q-next:disabled { opacity: 0.22; cursor: not-allowed; transform: none; }
+
+    /* ─── RESULTS ─── */
+    #screen-results {
+      display: none;
+      flex: 1;
+      flex-direction: column;
+      align-items: center;
+      padding: 72px 24px 80px;
+    }
+    .r-wrap { width: 100%; max-width: 660px; }
+
+    /* Score ring */
+    .r-header { text-align: center; margin-bottom: 56px; }
+    .r-eyebrow {
+      font-size: 0.6rem; letter-spacing: 0.24em; text-transform: uppercase;
+      color: var(--text3); margin-bottom: 28px; font-weight: 500;
+    }
+    .r-ring-wrap {
+      position: relative; width: 176px; height: 176px;
+      margin: 0 auto 24px;
+    }
+    .r-ring-wrap svg { transform: rotate(-90deg); display: block; }
+    .ring-bg   { fill: none; stroke: var(--border); stroke-width: 3; }
+    .ring-arc  {
+      fill: none; stroke: var(--text); stroke-width: 3;
+      stroke-linecap: round;
+      stroke-dasharray: 502;
+      stroke-dashoffset: 502;
+      transition: stroke-dashoffset 1.5s cubic-bezier(0.23,1,0.32,1);
+    }
+    .r-ring-inner {
+      position: absolute; inset: 0;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+    }
+    .r-score-num {
+      font-family: 'Instrument Serif', serif;
+      font-size: 3.4rem; font-weight: 400;
+      color: var(--text); line-height: 1;
+    }
+    .r-score-denom {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.62rem; color: var(--text3); margin-top: 3px;
+    }
+    .r-verdict {
+      font-family: 'Instrument Serif', serif;
+      font-size: 1.9rem; font-style: italic;
+      color: var(--text); margin-bottom: 12px;
+    }
+    .r-meaning {
+      font-size: 0.88rem; color: var(--text2);
+      max-width: 430px; margin: 0 auto;
+      line-height: 1.75; font-weight: 300;
+    }
+
+    /* Breakdown */
+    .r-section-label {
+      font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--text3); margin-bottom: 14px; font-weight: 600;
+    }
+    .r-breakdown {
+      border: 1px solid var(--border);
+      border-radius: 12px; overflow: hidden;
+      margin-bottom: 24px;
+    }
+    .r-brow {
+      display: flex; align-items: center; gap: 14px;
+      padding: 15px 20px;
+      border-bottom: 1px solid var(--border);
+      transition: background 0.2s;
+    }
+    .r-brow:last-child { border-bottom: none; }
+    .r-brow:hover { background: var(--bg2); }
+    .r-brow-num {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.58rem; color: var(--text3);
+      width: 18px; flex-shrink: 0;
+    }
+    .r-brow-name {
+      font-size: 0.82rem; font-weight: 500;
+      color: var(--text); width: 175px; flex-shrink: 0;
+      letter-spacing: -0.01em;
+    }
+    .r-brow-track {
+      flex: 1; height: 3px;
+      background: var(--border); border-radius: 3px; overflow: hidden;
+    }
+    .r-brow-bar {
+      height: 100%; background: var(--text);
+      border-radius: 3px; width: 0%;
+      transition: width 1.1s cubic-bezier(0.23,1,0.32,1);
+    }
+    .r-brow-wt {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.6rem; color: var(--text3);
+      width: 32px; text-align: right; flex-shrink: 0;
+    }
+
+    /* Next steps */
+    .r-next-box {
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 26px; background: var(--bg2);
+      margin-bottom: 20px;
+    }
+    .r-next-title {
+      font-family: 'Instrument Serif', serif;
+      font-size: 1.15rem; color: var(--text);
+      margin-bottom: 10px;
+    }
+    .r-next-body {
+      font-size: 0.86rem; color: var(--text2);
+      line-height: 1.75; margin-bottom: 20px; font-weight: 300;
+    }
+    .r-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+    .btn-p {
+      padding: 11px 24px;
+      background: var(--cta-bg); color: var(--cta-text);
+      font-family: 'League Spartan', sans-serif;
+      font-size: 0.68rem; font-weight: 700;
+      letter-spacing: 0.15em; text-transform: uppercase;
+      border: none; border-radius: 100px; cursor: pointer;
+      text-decoration: none; display: inline-block;
+      transition: opacity 0.2s, background var(--transition), color var(--transition);
+    }
+    .btn-p:hover { opacity: 0.84; }
+    .btn-s {
+      padding: 11px 24px;
+      background: transparent; color: var(--text2);
+      font-family: 'League Spartan', sans-serif;
+      font-size: 0.68rem; font-weight: 600;
+      letter-spacing: 0.15em; text-transform: uppercase;
+      border: 1px solid var(--border2); border-radius: 100px; cursor: pointer;
+      text-decoration: none; display: inline-block;
+      transition: border-color 0.2s, color 0.2s, background var(--transition);
+    }
+    .btn-s:hover { border-color: var(--text); color: var(--text); }
+
+    .r-retake {
+      text-align: center; margin-top: 16px;
+    }
+    .retake-link {
+      font-size: 0.68rem; letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--text3); cursor: pointer; background: none; border: none;
+      font-family: 'DM Mono', monospace; transition: color 0.2s;
+    }
+    .retake-link:hover { color: var(--text2); }
+
+    .r-disclaimer {
+      margin-top: 28px; font-size: 0.72rem;
+      color: var(--text3); line-height: 1.65; font-weight: 300;
+      text-align: center; max-width: 500px;
+      margin-left: auto; margin-right: auto;
+    }
+
+    @media (max-width: 640px) {
+      .quiz-topbar { padding: 0 16px; }
+      .topbar-pillar { min-width: 0; font-size: 0.55rem; }
+      .r-brow-name { width: 120px; font-size: 0.75rem; }
+      .r-ring-wrap { width: 140px; height: 140px; }
+      .r-ring-wrap svg { width: 140px; height: 140px; }
+      .r-score-num { font-size: 2.8rem; }
     }
   </style>
 </head>
@@ -418,665 +500,539 @@
     </div>
   </div>
 
-  <!-- HERO -->
-  <div class="readiness-hero">
-    <p class="page-kicker">Proprietary Assessment</p>
-    <h1 class="page-title">Fundraise <em>Readiness</em> Score</h1>
-    <p class="page-desc">25 questions across 5 weighted pillars. Get your score and know exactly where you stand before approaching investors.</p>
-  </div>
+  <!-- ═══ CALCULATOR SHELL ═══ -->
+  <div class="calc-shell">
 
-  <!-- SCORE BAND -->
-  <div class="score-band" id="scoreBand">
-    <div class="band-item">
-      <div class="band-score">0 – 29</div>
-      <div class="band-verdict">Pre-readiness</div>
-    </div>
-    <div class="band-item">
-      <div class="band-score">30 – 49</div>
-      <div class="band-verdict">Early stage</div>
-    </div>
-    <div class="band-item">
-      <div class="band-score">50 – 64</div>
-      <div class="band-verdict">Developing</div>
-    </div>
-    <div class="band-item">
-      <div class="band-score">65 – 79</div>
-      <div class="band-verdict">Strong — minor gaps</div>
-    </div>
-    <div class="band-item">
-      <div class="band-score">80 – 100</div>
-      <div class="band-verdict">Investor ready</div>
-    </div>
-  </div>
-
-  <!-- ASSESSMENT -->
-  <div class="assessment-wrap">
-
-    <!-- PROGRESS -->
-    <div class="progress-bar-wrap">
-      <div class="progress-meta">
-        <span class="progress-label">Assessment Progress</span>
-        <span class="progress-count" id="progressCount">0 / 25 answered</span>
+    <!-- INTRO SCREEN -->
+    <div id="screen-intro">
+      <p class="intro-kicker">Proprietary Assessment · Terapush India Private Limited</p>
+      <h1 class="intro-title">Are you truly<br/><em>investor-ready?</em></h1>
+      <p class="intro-desc">25 honest questions across 5 pillars. Takes about 4 minutes. We'll calculate your Fundraise Readiness Score and tell you exactly where you stand.</p>
+      <div class="intro-pills">
+        <span class="intro-pill">25 questions</span>
+        <span class="intro-pill">5 pillars</span>
+        <span class="intro-pill">Score out of 100</span>
+        <span class="intro-pill">~4 minutes</span>
       </div>
-      <div class="progress-track">
-        <div class="progress-fill" id="progressFill"></div>
+      <button class="intro-start-btn" onclick="startQuiz()">Begin Assessment →</button>
+    </div>
+
+    <!-- QUIZ SCREEN -->
+    <div id="screen-quiz">
+      <div class="quiz-topbar">
+        <span class="topbar-pillar" id="topbarPillar">—</span>
+        <div class="topbar-track"><div class="topbar-fill" id="topbarFill"></div></div>
+        <span class="topbar-counter" id="topbarCounter">1 / 25</span>
+      </div>
+      <div class="quiz-stage">
+        <div class="q-frame" id="qFrame"><!-- rendered by JS --></div>
       </div>
     </div>
 
-    <!-- PILLAR 1 -->
-    <div class="pillar-header">
-      <div class="pillar-meta">
-        <span class="pillar-num">01</span>
-        <span class="pillar-weight">Weight: 20%</span>
-      </div>
-      <div class="pillar-title">Business Fundamentals</div>
-      <div class="pillar-desc">Evaluates the clarity of the business model, market opportunity, competitive positioning, regulatory standing, and stage of development.</div>
-    </div>
+    <!-- RESULTS SCREEN -->
+    <div id="screen-results">
+      <div class="r-wrap">
 
-    <div class="question-card" id="qcard-1">
-      <div class="question-label">Q01 · Max 5 pts</div>
-      <div class="question-text">Business model clarity</div>
-      <div class="question-sub">How clearly defined is your revenue model?</div>
-      <div class="options">
-        <div class="option" onclick="selectOption(1,0,'Not defined yet')"><span class="option-text">Not defined yet</span><span class="option-pts">0 pts</span><span class="option-check"></span></div>
-        <div class="option" onclick="selectOption(1,1,'Concept stage only')"><span class="option-text">Concept stage only</span><span class="option-pts">1 pt</span><span class="option-check"></span></div>
-        <div class="option" onclick="selectOption(1,2,'Defined but unvalidated')"><span class="option-text">Defined but unvalidated</span><span class="option-pts">2 pts</span><span class="option-check"></span></div>
-        <div class="option" onclick="selectOption(1,4,'Validated with paying customers')"><span class="option-text">Validated with paying customers</span><span class="option-pts">4 pts</span><span class="option-check"></span></div>
-        <div class="option" onclick="selectOption(1,5,'Proven with repeatable unit economics')"><span class="option-text">Proven with repeatable unit economics</span><span class="option-pts">5 pts</span><span class="option-check"></span></div>
-      </div>
-    </div>
-
-    <div class="question-card" id="qcard-2">
-      <div class="question-label">Q02 · Max 4 pts</div>
-      <div class="question-text">Total Addressable Market (TAM)</div>
-      <div class="options">
-        <div class="option" onclick="selectOption(2,0,'Under ₹100Cr')"><span class="option-text">Under ₹100Cr</span><span class="option-pts">0 pts</span><span class="option-check"></span></div>
-        <div class="option" onclick="selectOption(2,1,'₹100–500Cr')"><span class="option-text">₹100–500Cr</span><span class="option-pts">1 pt</span><span class="option-check"></span></div>
-        <div class="option" onclick="selectOption(2,2,'₹500Cr–₹2,000Cr')"><span class="option-text">₹500Cr–₹2,000Cr</span><span class="option-pts">2 pts</span><span class="option-check"></span></div>
-        <div class="option" onclick="selectOption(2,3,'₹2,000–₹10,000Cr')"><span class="option-text">₹2,000–₹10,000Cr</span><span class="option-pts">3 pts</span><span class="option-check"></span></div>
-        <div class="option" onclick="selectOption(2,4,'Over ₹10,000Cr')"><span class="option-text">Over ₹10,000Cr</span><span class="option-pts">4 pts</span><span class="option-check"></span></div>
-      </div>
-    </div>
-
-    <div class="question-card" id="qcard-3">
-      <div class="question-label">Q03 · Max 4 pts</div>
-      <div class="question-text">Competitive differentiation</div>
-      <div class="options">
-        <div class="option" onclick="selectOption(3,0,'No clear differentiation')"><span class="option-text">No clear differentiation</span><span class="option-pts">0 pts</span><span class="option-check"></span></div>
-        <div class="option" onclick="selectOption(3,1,'Minor product differences')"><span class="option-text">Minor product differences</span><span class="option-pts">1 pt</span><span class="option-check"></span></div>
-        <div class="option" onclick="selectOption(3,2,'Moderate moat (brand, tech)')"><span class="option-text">Moderate moat (brand, tech)</span><span class="option-pts">2 pts</span><span class="option-check"></span></div>
-        <div class="option" onclick="selectOption(3,3,'Strong moat (IP, network effects)')"><span class="option-text">Strong moat (IP, network effects)</span><span class="option-pts">3 pts</span><span class="option-check"></span></div>
-        <div class="option" onclick="selectOption(3,4,'Defensible category leader')"><span class="option-text">Defensible category leader</span><span class="option-pts">4 pts</span><span class="option-check"></span></div>
-      </div>
-    </div>
-
-    <div class="question-card" id="qcard-4">
-      <div class="question-label">Q04 · Max 3 pts</div>
-      <div class="question-text">Regulatory and compliance status</div>
-      <div class="options">
-        <div class="option" onclick="selectOption(4,0,'No compliance review done')"><span class="option-text">No compliance review done</span><span class="option-pts">0 pts</span><span class="option-check"></span></div>
-        <div class="option" onclick="selectOption(4,1,'Basic compliance only')"><span class="option-text">Basic compliance only</span><span class="option-pts">1 pt</span><span class="option-check"></span></div>
-        <div class="option" onclick="selectOption(4,2,'Sector-specific compliance in progress')"><span class="option-text">Sector-specific compliance in progress</span><span class="option-pts">2 pts</span><span class="option-check"></span></div>
-        <div class="option" onclick="selectOption(4,3,'Fully compliant, all licenses obtained')"><span class="option-text">Fully compliant, all licenses obtained</span><span class="option-pts">3 pts</span><span class="option-check"></span></div>
-      </div>
-    </div>
-
-    <div class="question-card" id="qcard-5">
-      <div class="question-label">Q05 · Max 4 pts</div>
-      <div class="question-text">Business stage</div>
-      <div class="options">
-        <div class="option" onclick="selectOption(5,0,'Idea only')"><span class="option-text">Idea only</span><span class="option-pts">0 pts</span><span class="option-check"></span></div>
-        <div class="option" onclick="selectOption(5,1,'MVP built')"><span class="option-text">MVP built</span><span class="option-pts">1 pt</span><span class="option-check"></span></div>
-        <div class="option" onclick="selectOption(5,2,'Product launched, early users')"><span class="option-text">Product launched, early users</span><span class="option-pts">2 pts</span><span class="option-check"></span></div>
-        <div class="option" onclick="selectOption(5,3,'Revenue generating')"><span class="option-text">Revenue generating</span><span class="option-pts">3 pts</span><span class="option-check"></span></div>
-        <div class="option" onclick="selectOption(5,4,'Scaling revenue')"><span class="option-text">Scaling revenue</span><span class="option-pts">4 pts</span><span class="option-check"></span></div>
-      </div>
-    </div>
-
-    <!-- PILLAR 2 -->
-    <div class="pillar-header">
-      <div class="pillar-meta">
-        <span class="pillar-num">02</span>
-        <span class="pillar-weight">Weight: 25%</span>
-      </div>
-      <div class="pillar-title">Financial Health</div>
-      <div class="pillar-desc">Assesses revenue generation, margin structure, cash burn and runway, quality of financial records, and unit economics discipline.</div>
-    </div>
-
-    <div class="question-card" id="qcard-6">
-      <div class="question-label">Q06 · Max 5 pts</div>
-      <div class="question-text">Monthly Recurring Revenue (MRR)</div>
-      <div class="options">
-        <div class="option" onclick="selectOption(6,0,'Zero revenue')"><span class="option-text">Zero revenue</span><span class="option-pts">0 pts</span><span class="option-check"></span></div>
-        <div class="option" onclick="selectOption(6,1,'Under ₹1L/month')"><span class="option-text">Under ₹1L/month</span><span class="option-pts">1 pt</span><span class="option-check"></span></div>
-        <div class="option" onclick="selectOption(6,2,'₹1–5L/month')"><span class="option-text">₹1–5L/month</span><span class="option-pts">2 pts</span><span class="option-check"></span></div>
-        <div class="option" onclick="selectOption(6,3,'₹5–25L/month')"><span class="option-text">₹5–25L/month</span><span class="option-pts">3 pts</span><span class="option-check"></span></div>
-        <div class="option" onclick="selectOption(6,4,'₹25–100L/month')"><span class="option-text">₹25–100L/month</span><span class="option-pts">4 pts</span><span class="option-check"></span></div>
-        <div class="option" onclick="selectOption(6,5,'Over ₹100L/month')"><span class="option-text">Over ₹100L/month</span><span class="option-pts">5 pts</span><span class="option-check"></span></div>
-      </div>
-    </div>
-
-    <div class="question-card" id="qcard-7">
-      <div class="question-label">Q07 · Max 5 pts</div>
-      <div class="question-text">Gross margin</div>
-      <div class="options">
-        <div class="option" onclick="selectOption(7,0,'Negative gross margin')"><span class="option-text">Negative gross margin</span><span class="option-pts">0 pts</span><span class="option-check"></span></div>
-        <div class="option" onclick="selectOption(7,1,'0–20%')"><span class="option-text">0–20%</span><span class="option-pts">1 pt</span><span class="option-check"></span></div>
-        <div class="option" onclick="selectOption(7,2,'20–40%')"><span class="option-text">20–40%</span><span class="option-pts">2 pts</span><span class="option-check"></span></div>
-        <div class="option" onclick="selectOption(7,3,'40–60%')"><span class="option-text">40–60%</span><span class="option-pts">3 pts</span><span class="option-check"></span></div>
-        <div class="option" onclick="selectOption(7,4,'60–80%')"><span class="option-text">60–80%</span><span class="option-pts">4 pts</span><span class="option-check"></span></div>
-        <div class="option" onclick="selectOption(7,5,'Over 80%')"><span class="option-text">Over 80%</span><span class="option-pts">5 pts</span><span class="option-check"></span></div>
-      </div>
-    </div>
-
-    <div class="question-card" id="qcard-8">
-      <div class="question-label">Q08 · Max 5 pts</div>
-      <div class="question-text">Monthly cash burn vs runway</div>
-      <div class="options">
-        <div class="option" onclick="selectOption(8,0,'Less than 3 months runway')"><span class="option-text">Less than 3 months runway</span><span class="option-pts">0 pts</span><span class="option-check"></span></div>
-        <div class="option" onclick="selectOption(8,1,'3–6 months runway')"><span class="option-text">3–6 months runway</span><span class="option-pts">1 pt</span><span class="option-check"></span></div>
-        <div class="option" onclick="selectOption(8,2,'6–12 months runway')"><span class="option-text">6–12 months runway</span><span class="option-pts">2 pts</span><span class="option-check"></span></div>
-        <div class="option" onclick="selectOption(8,3,'12–18 months runway')"><span class="option-text">12–18 months runway</span><span class="option-pts">3 pts</span><span class="option-check"></span></div>
-        <div class="option" onclick="selectOption(8,4,'Over 18 months runway')"><span class="option-text">Over 18 months runway</span><span class="option-pts">4 pts</span><span class="option-check"></span></div>
-        <div class="option" onclick="selectOption(8,5,'Profitable — no burn')"><span class="option-text">Profitable — no burn</span><span class="option-pts">5 pts</span><span class="option-check"></span></div>
-      </div>
-    </div>
-
-    <div class="question-card" id="qcard-9">
-      <div class="question-label">Q09 · Max 5 pts</div>
-      <div class="question-text">Financial records and bookkeeping</div>
-      <div class="options">
-        <div class="option" onclick="selectOption(9,0,'No formal records')"><span class="option-text">No formal records</span><span class="option-pts">0 pts</span><span class="option-check"></span></div>
-        <div class="option" onclick="selectOption(9,1,'Basic spreadsheets only')"><span class="option-text">Basic spreadsheets only</span><span class="option-pts">1 pt</span><span class="option-check"></span></div>
-        <div class="option" onclick="selectOption(9,2,'Tally or basic accounting software')"><span class="option-text">Tally or basic accounting software</span><span class="option-pts">2 pts</span><span class="option-check"></span></div>
-        <div class="option" onclick="selectOption(9,3,'Audited financials available')"><span class="option-text">Audited financials available</span><span class="option-pts">3 pts</span><span class="option-check"></span></div>
-        <div class="option" onclick="selectOption(9,5,'Audited + MIS reports + projections')"><span class="option-text">Audited + MIS reports + projections</span><span class="option-pts">5 pts</span><span class="option-check"></span></div>
-      </div>
-    </div>
-
-    <div class="question-card" id="qcard-10">
-      <div class="question-label">Q10 · Max 5 pts</div>
-      <div class="question-text">Unit economics (CAC vs LTV)</div>
-      <div class="options">
-        <div class="option" onclick="selectOption(10,0,'Not calculated')"><span class="option-text">Not calculated</span><span class="option-pts">0 pts</span><span class="option-check"></span></div>
-        <div class="option" onclick="selectOption(10,1,'Calculated but LTV < CAC')"><span class="option-text">Calculated but LTV &lt; CAC</span><span class="option-pts">1 pt</span><span class="option-check"></span></div>
-        <div class="option" onclick="selectOption(10,2,'LTV:CAC between 1x–2x')"><span class="option-text">LTV:CAC between 1x–2x</span><span class="option-pts">2 pts</span><span class="option-check"></span></div>
-        <div class="option" onclick="selectOption(10,3,'LTV:CAC between 2x–3x')"><span class="option-text">LTV:CAC between 2x–3x</span><span class="option-pts">3 pts</span><span class="option-check"></span></div>
-        <div class="option" onclick="selectOption(10,5,'LTV:CAC above 3x')"><span class="option-text">LTV:CAC above 3x</span><span class="option-pts">5 pts</span><span class="option-check"></span></div>
-      </div>
-    </div>
-
-    <!-- PILLAR 3 -->
-    <div class="pillar-header">
-      <div class="pillar-meta">
-        <span class="pillar-num">03</span>
-        <span class="pillar-weight">Weight: 20%</span>
-      </div>
-      <div class="pillar-title">Team &amp; Governance</div>
-      <div class="pillar-desc">Reviews founding team completeness, domain expertise, cap table health, advisory board quality, and founder commitment level.</div>
-    </div>
-
-    <div class="question-card" id="qcard-11">
-      <div class="question-label">Q11 · Max 4 pts</div>
-      <div class="question-text">Founding team completeness</div>
-      <div class="options">
-        <div class="option" onclick="selectOption(11,0,'Solo founder, no co-founder')"><span class="option-text">Solo founder, no co-founder</span><span class="option-pts">0 pts</span><span class="option-check"></span></div>
-        <div class="option" onclick="selectOption(11,1,'Co-founders but major skill gap')"><span class="option-text">Co-founders but major skill gap</span><span class="option-pts">1 pt</span><span class="option-check"></span></div>
-        <div class="option" onclick="selectOption(11,2,'Business + tech covered')"><span class="option-text">Business + tech covered</span><span class="option-pts">2 pts</span><span class="option-check"></span></div>
-        <div class="option" onclick="selectOption(11,3,'Business + tech + domain expert')"><span class="option-text">Business + tech + domain expert</span><span class="option-pts">3 pts</span><span class="option-check"></span></div>
-        <div class="option" onclick="selectOption(11,4,'Full team: biz, tech, ops, finance')"><span class="option-text">Full team: biz, tech, ops, finance</span><span class="option-pts">4 pts</span><span class="option-check"></span></div>
-      </div>
-    </div>
-
-    <div class="question-card" id="qcard-12">
-      <div class="question-label">Q12 · Max 4 pts</div>
-      <div class="question-text">Founder domain experience</div>
-      <div class="options">
-        <div class="option" onclick="selectOption(12,0,'No relevant experience')"><span class="option-text">No relevant experience</span><span class="option-pts">0 pts</span><span class="option-check"></span></div>
-        <div class="option" onclick="selectOption(12,1,'1–2 years adjacent experience')"><span class="option-text">1–2 years adjacent experience</span><span class="option-pts">1 pt</span><span class="option-check"></span></div>
-        <div class="option" onclick="selectOption(12,2,'3–5 years relevant experience')"><span class="option-text">3–5 years relevant experience</span><span class="option-pts">2 pts</span><span class="option-check"></span></div>
-        <div class="option" onclick="selectOption(12,3,'5–10 years, prior exits or senior roles')"><span class="option-text">5–10 years, prior exits or senior roles</span><span class="option-pts">3 pts</span><span class="option-check"></span></div>
-        <div class="option" onclick="selectOption(12,4,'Serial entrepreneur or ex-CEO/C-suite')"><span class="option-text">Serial entrepreneur or ex-CEO/C-suite</span><span class="option-pts">4 pts</span><span class="option-check"></span></div>
-      </div>
-    </div>
-
-    <div class="question-card" id="qcard-13">
-      <div class="question-label">Q13 · Max 4 pts</div>
-      <div class="question-text">Cap table structure</div>
-      <div class="question-sub">Messy cap tables are a top deal-killer.</div>
-      <div class="options">
-        <div class="option" onclick="selectOption(13,0,'No formal cap table')"><span class="option-text">No formal cap table</span><span class="option-pts">0 pts</span><span class="option-check"></span></div>
-        <div class="option" onclick="selectOption(13,0,'Informally agreed, not documented')"><span class="option-text">Informally agreed, not documented</span><span class="option-pts">0 pts</span><span class="option-check"></span></div>
-        <div class="option" onclick="selectOption(13,1,'Documented but complex/messy')"><span class="option-text">Documented but complex/messy</span><span class="option-pts">1 pt</span><span class="option-check"></span></div>
-        <div class="option" onclick="selectOption(13,3,'Clean, standard structure')"><span class="option-text">Clean, standard structure</span><span class="option-pts">3 pts</span><span class="option-check"></span></div>
-        <div class="option" onclick="selectOption(13,4,'Clean + ESOP pool set up')"><span class="option-text">Clean + ESOP pool set up</span><span class="option-pts">4 pts</span><span class="option-check"></span></div>
-      </div>
-    </div>
-
-    <div class="question-card" id="qcard-14">
-      <div class="question-label">Q14 · Max 4 pts</div>
-      <div class="question-text">Advisors and board</div>
-      <div class="options">
-        <div class="option" onclick="selectOption(14,0,'No advisors')"><span class="option-text">No advisors</span><span class="option-pts">0 pts</span><span class="option-check"></span></div>
-        <div class="option" onclick="selectOption(14,1,'Informal mentors only')"><span class="option-text">Informal mentors only</span><span class="option-pts">1 pt</span><span class="option-check"></span></div>
-        <div class="option" onclick="selectOption(14,2,'1–2 domain advisors')"><span class="option-text">1–2 domain advisors</span><span class="option-pts">2 pts</span><span class="option-check"></span></div>
-        <div class="option" onclick="selectOption(14,3,'Strong advisory board with skin in game')"><span class="option-text">Strong advisory board with skin in game</span><span class="option-pts">3 pts</span><span class="option-check"></span></div>
-        <div class="option" onclick="selectOption(14,4,'Formal board with institutional representation')"><span class="option-text">Formal board with institutional representation</span><span class="option-pts">4 pts</span><span class="option-check"></span></div>
-      </div>
-    </div>
-
-    <div class="question-card" id="qcard-15">
-      <div class="question-label">Q15 · Max 4 pts</div>
-      <div class="question-text">Founder commitment</div>
-      <div class="options">
-        <div class="option" onclick="selectOption(15,0,'Part-time, still employed elsewhere')"><span class="option-text">Part-time, still employed elsewhere</span><span class="option-pts">0 pts</span><span class="option-check"></span></div>
-        <div class="option" onclick="selectOption(15,1,'Transitioning to full-time')"><span class="option-text">Transitioning to full-time</span><span class="option-pts">1 pt</span><span class="option-check"></span></div>
-        <div class="option" onclick="selectOption(15,2,'Full-time, less than 6 months')"><span class="option-text">Full-time, less than 6 months</span><span class="option-pts">2 pts</span><span class="option-check"></span></div>
-        <div class="option" onclick="selectOption(15,3,'Full-time, 6–18 months')"><span class="option-text">Full-time, 6–18 months</span><span class="option-pts">3 pts</span><span class="option-check"></span></div>
-        <div class="option" onclick="selectOption(15,4,'Full-time, 18+ months, skin in game')"><span class="option-text">Full-time, 18+ months, skin in game</span><span class="option-pts">4 pts</span><span class="option-check"></span></div>
-      </div>
-    </div>
-
-    <!-- PILLAR 4 -->
-    <div class="pillar-header">
-      <div class="pillar-meta">
-        <span class="pillar-num">04</span>
-        <span class="pillar-weight">Weight: 20%</span>
-      </div>
-      <div class="pillar-title">Market Traction</div>
-      <div class="pillar-desc">Measures customer validation through paying customer count, revenue growth rate, retention/churn metrics, strategic partnerships, and public recognition.</div>
-    </div>
-
-    <div class="question-card" id="qcard-16">
-      <div class="question-label">Q16 · Max 5 pts</div>
-      <div class="question-text">Paying customer count</div>
-      <div class="options">
-        <div class="option" onclick="selectOption(16,0,'Zero paying customers')"><span class="option-text">Zero paying customers</span><span class="option-pts">0 pts</span><span class="option-check"></span></div>
-        <div class="option" onclick="selectOption(16,1,'1–5 paying customers')"><span class="option-text">1–5 paying customers</span><span class="option-pts">1 pt</span><span class="option-check"></span></div>
-        <div class="option" onclick="selectOption(16,2,'6–20 paying customers')"><span class="option-text">6–20 paying customers</span><span class="option-pts">2 pts</span><span class="option-check"></span></div>
-        <div class="option" onclick="selectOption(16,3,'21–100 paying customers')"><span class="option-text">21–100 paying customers</span><span class="option-pts">3 pts</span><span class="option-check"></span></div>
-        <div class="option" onclick="selectOption(16,4,'100–500 customers')"><span class="option-text">100–500 customers</span><span class="option-pts">4 pts</span><span class="option-check"></span></div>
-        <div class="option" onclick="selectOption(16,5,'500+ customers')"><span class="option-text">500+ customers</span><span class="option-pts">5 pts</span><span class="option-check"></span></div>
-      </div>
-    </div>
-
-    <div class="question-card" id="qcard-17">
-      <div class="question-label">Q17 · Max 5 pts</div>
-      <div class="question-text">Month-on-month revenue growth</div>
-      <div class="options">
-        <div class="option" onclick="selectOption(17,0,'No revenue yet')"><span class="option-text">No revenue yet</span><span class="option-pts">0 pts</span><span class="option-check"></span></div>
-        <div class="option" onclick="selectOption(17,0,'Flat or declining')"><span class="option-text">Flat or declining</span><span class="option-pts">0 pts</span><span class="option-check"></span></div>
-        <div class="option" onclick="selectOption(17,1,'Under 5% MoM')"><span class="option-text">Under 5% MoM</span><span class="option-pts">1 pt</span><span class="option-check"></span></div>
-        <div class="option" onclick="selectOption(17,2,'5–10% MoM')"><span class="option-text">5–10% MoM</span><span class="option-pts">2 pts</span><span class="option-check"></span></div>
-        <div class="option" onclick="selectOption(17,3,'10–20% MoM')"><span class="option-text">10–20% MoM</span><span class="option-pts">3 pts</span><span class="option-check"></span></div>
-        <div class="option" onclick="selectOption(17,5,'Over 20% MoM')"><span class="option-text">Over 20% MoM</span><span class="option-pts">5 pts</span><span class="option-check"></span></div>
-      </div>
-    </div>
-
-    <div class="question-card" id="qcard-18">
-      <div class="question-label">Q18 · Max 4 pts</div>
-      <div class="question-text">Customer retention / churn</div>
-      <div class="options">
-        <div class="option" onclick="selectOption(18,0,'Not tracked')"><span class="option-text">Not tracked</span><span class="option-pts">0 pts</span><span class="option-check"></span></div>
-        <div class="option" onclick="selectOption(18,0,'High churn, over 10%/month')"><span class="option-text">High churn, over 10%/month</span><span class="option-pts">0 pts</span><span class="option-check"></span></div>
-        <div class="option" onclick="selectOption(18,1,'Moderate churn, 5–10%/month')"><span class="option-text">Moderate churn, 5–10%/month</span><span class="option-pts">1 pt</span><span class="option-check"></span></div>
-        <div class="option" onclick="selectOption(18,2,'Low churn, 2–5%/month')"><span class="option-text">Low churn, 2–5%/month</span><span class="option-pts">2 pts</span><span class="option-check"></span></div>
-        <div class="option" onclick="selectOption(18,3,'Very low churn, under 2%/month')"><span class="option-text">Very low churn, under 2%/month</span><span class="option-pts">3 pts</span><span class="option-check"></span></div>
-        <div class="option" onclick="selectOption(18,4,'Net revenue expansion (negative churn)')"><span class="option-text">Net revenue expansion (negative churn)</span><span class="option-pts">4 pts</span><span class="option-check"></span></div>
-      </div>
-    </div>
-
-    <div class="question-card" id="qcard-19">
-      <div class="question-label">Q19 · Max 4 pts</div>
-      <div class="question-text">Strategic partnerships or LOIs</div>
-      <div class="options">
-        <div class="option" onclick="selectOption(19,0,'None')"><span class="option-text">None</span><span class="option-pts">0 pts</span><span class="option-check"></span></div>
-        <div class="option" onclick="selectOption(19,1,'Informal conversations only')"><span class="option-text">Informal conversations only</span><span class="option-pts">1 pt</span><span class="option-check"></span></div>
-        <div class="option" onclick="selectOption(19,2,'1–2 signed LOIs or MOUs')"><span class="option-text">1–2 signed LOIs or MOUs</span><span class="option-pts">2 pts</span><span class="option-check"></span></div>
-        <div class="option" onclick="selectOption(19,3,'Active partnerships generating revenue')"><span class="option-text">Active partnerships generating revenue</span><span class="option-pts">3 pts</span><span class="option-check"></span></div>
-        <div class="option" onclick="selectOption(19,4,'Key enterprise or institutional partnerships')"><span class="option-text">Key enterprise or institutional partnerships</span><span class="option-pts">4 pts</span><span class="option-check"></span></div>
-      </div>
-    </div>
-
-    <div class="question-card" id="qcard-20">
-      <div class="question-label">Q20 · Max 4 pts</div>
-      <div class="question-text">Awards, grants, or press coverage</div>
-      <div class="options">
-        <div class="option" onclick="selectOption(20,0,'None')"><span class="option-text">None</span><span class="option-pts">0 pts</span><span class="option-check"></span></div>
-        <div class="option" onclick="selectOption(20,1,'Minor mentions')"><span class="option-text">Minor mentions</span><span class="option-pts">1 pt</span><span class="option-check"></span></div>
-        <div class="option" onclick="selectOption(20,2,'Recognised by credible industry body')"><span class="option-text">Recognised by credible industry body</span><span class="option-pts">2 pts</span><span class="option-check"></span></div>
-        <div class="option" onclick="selectOption(20,3,'Government grant or accelerator selected')"><span class="option-text">Government grant or accelerator selected</span><span class="option-pts">3 pts</span><span class="option-check"></span></div>
-        <div class="option" onclick="selectOption(20,4,'Significant national press or govt recognition')"><span class="option-text">Significant national press or govt recognition</span><span class="option-pts">4 pts</span><span class="option-check"></span></div>
-      </div>
-    </div>
-
-    <!-- PILLAR 5 -->
-    <div class="pillar-header">
-      <div class="pillar-meta">
-        <span class="pillar-num">05</span>
-        <span class="pillar-weight">Weight: 15%</span>
-      </div>
-      <div class="pillar-title">Capital Structure Readiness</div>
-      <div class="pillar-desc">Examines fundraising history, quality of legal documentation, clarity of use-of-funds plan, appropriateness of capital type sought, and investor targeting quality.</div>
-    </div>
-
-    <div class="question-card" id="qcard-21">
-      <div class="question-label">Q21 · Max 5 pts</div>
-      <div class="question-text">Prior fundraising history</div>
-      <div class="options">
-        <div class="option" onclick="selectOption(21,0,'No prior raises')"><span class="option-text">No prior raises</span><span class="option-pts">0 pts</span><span class="option-check"></span></div>
-        <div class="option" onclick="selectOption(21,1,'FFF round only (friends, family)')"><span class="option-text">FFF round only (friends, family)</span><span class="option-pts">1 pt</span><span class="option-check"></span></div>
-        <div class="option" onclick="selectOption(21,2,'Angel round completed')"><span class="option-text">Angel round completed</span><span class="option-pts">2 pts</span><span class="option-check"></span></div>
-        <div class="option" onclick="selectOption(21,3,'Institutional seed round completed')"><span class="option-text">Institutional seed round completed</span><span class="option-pts">3 pts</span><span class="option-check"></span></div>
-        <div class="option" onclick="selectOption(21,5,'Series A or beyond')"><span class="option-text">Series A or beyond</span><span class="option-pts">5 pts</span><span class="option-check"></span></div>
-      </div>
-    </div>
-
-    <div class="question-card" id="qcard-22">
-      <div class="question-label">Q22 · Max 4 pts</div>
-      <div class="question-text">Shareholders agreement and legal docs</div>
-      <div class="options">
-        <div class="option" onclick="selectOption(22,0,'No documentation')"><span class="option-text">No documentation</span><span class="option-pts">0 pts</span><span class="option-check"></span></div>
-        <div class="option" onclick="selectOption(22,1,'Basic incorporation docs only')"><span class="option-text">Basic incorporation docs only</span><span class="option-pts">1 pt</span><span class="option-check"></span></div>
-        <div class="option" onclick="selectOption(22,1,'SHA drafted but not executed')"><span class="option-text">SHA drafted but not executed</span><span class="option-pts">1 pt</span><span class="option-check"></span></div>
-        <div class="option" onclick="selectOption(22,2,'SHA executed, basic IP assignment')"><span class="option-text">SHA executed, basic IP assignment</span><span class="option-pts">2 pts</span><span class="option-check"></span></div>
-        <div class="option" onclick="selectOption(22,4,'Full legal suite: SHA, IP, ESOP, NDA')"><span class="option-text">Full legal suite: SHA, IP, ESOP, NDA</span><span class="option-pts">4 pts</span><span class="option-check"></span></div>
-      </div>
-    </div>
-
-    <div class="question-card" id="qcard-23">
-      <div class="question-label">Q23 · Max 4 pts</div>
-      <div class="question-text">Use of funds clarity</div>
-      <div class="options">
-        <div class="option" onclick="selectOption(23,0,'No plan defined')"><span class="option-text">No plan defined</span><span class="option-pts">0 pts</span><span class="option-check"></span></div>
-        <div class="option" onclick="selectOption(23,1,'Rough idea only')"><span class="option-text">Rough idea only</span><span class="option-pts">1 pt</span><span class="option-check"></span></div>
-        <div class="option" onclick="selectOption(23,2,'Defined plan, not modeled')"><span class="option-text">Defined plan, not modeled</span><span class="option-pts">2 pts</span><span class="option-check"></span></div>
-        <div class="option" onclick="selectOption(23,3,'Defined plan with financial model')"><span class="option-text">Defined plan with financial model</span><span class="option-pts">3 pts</span><span class="option-check"></span></div>
-        <div class="option" onclick="selectOption(23,4,'Detailed model with milestones and KPIs')"><span class="option-text">Detailed model with milestones and KPIs</span><span class="option-pts">4 pts</span><span class="option-check"></span></div>
-      </div>
-    </div>
-
-    <div class="question-card" id="qcard-24">
-      <div class="question-label">Q24 · Max 4 pts</div>
-      <div class="question-text">Type of capital being sought</div>
-      <div class="options">
-        <div class="option" onclick="selectOption(24,0,'Unsure')"><span class="option-text">Unsure</span><span class="option-pts">0 pts</span><span class="option-check"></span></div>
-        <div class="option" onclick="selectOption(24,1,'Equity only considered')"><span class="option-text">Equity only considered</span><span class="option-pts">1 pt</span><span class="option-check"></span></div>
-        <div class="option" onclick="selectOption(24,1,'Debt only considered')"><span class="option-text">Debt only considered</span><span class="option-pts">1 pt</span><span class="option-check"></span></div>
-        <div class="option" onclick="selectOption(24,2,'Equity with some clarity on stage')"><span class="option-text">Equity with some clarity on stage</span><span class="option-pts">2 pts</span><span class="option-check"></span></div>
-        <div class="option" onclick="selectOption(24,3,'Equity + debt mix defined')"><span class="option-text">Equity + debt mix defined</span><span class="option-pts">3 pts</span><span class="option-check"></span></div>
-        <div class="option" onclick="selectOption(24,4,'Optimal structure fully mapped')"><span class="option-text">Optimal structure fully mapped</span><span class="option-pts">4 pts</span><span class="option-check"></span></div>
-      </div>
-    </div>
-
-    <div class="question-card" id="qcard-25">
-      <div class="question-label">Q25 · Max 4 pts</div>
-      <div class="question-text">Investor targeting</div>
-      <div class="options">
-        <div class="option" onclick="selectOption(25,0,'No research done')"><span class="option-text">No research done</span><span class="option-pts">0 pts</span><span class="option-check"></span></div>
-        <div class="option" onclick="selectOption(25,1,'Generic list of VCs')"><span class="option-text">Generic list of VCs</span><span class="option-pts">1 pt</span><span class="option-check"></span></div>
-        <div class="option" onclick="selectOption(25,2,'Sector-relevant investor list')"><span class="option-text">Sector-relevant investor list</span><span class="option-pts">2 pts</span><span class="option-check"></span></div>
-        <div class="option" onclick="selectOption(25,3,'Prioritised list with thesis match')"><span class="option-text">Prioritised list with thesis match</span><span class="option-pts">3 pts</span><span class="option-check"></span></div>
-        <div class="option" onclick="selectOption(25,4,'Warm introductions to target investors')"><span class="option-text">Warm introductions to target investors</span><span class="option-pts">4 pts</span><span class="option-check"></span></div>
-      </div>
-    </div>
-
-    <!-- SUBMIT -->
-    <div class="submit-section">
-      <p class="submit-note">Answer all 25 questions to calculate your score.</p>
-      <button class="submit-btn" id="submitBtn" onclick="calculateScore()" disabled>Calculate My Score →</button>
-      <p class="unanswered-note" id="unansweredNote">25 questions remaining</p>
-    </div>
-
-    <!-- RESULTS -->
-    <div id="results-panel">
-      <div class="results-top">
-        <div class="results-kicker">Your Terapush Fundraise Readiness Score</div>
-        <div class="results-score" id="resultsScore">—</div>
-        <div class="results-verdict" id="resultsVerdict">—</div>
-        <div class="results-meaning" id="resultsMeaning">—</div>
-      </div>
-      <div class="results-breakdown">
-        <div class="breakdown-title">Pillar Breakdown</div>
-        <div class="pillar-row">
-          <div class="pillar-row-name">Business Fundamentals</div>
-          <div class="pillar-row-bar-wrap"><div class="pillar-row-bar" id="bar-1"></div></div>
-          <div class="pillar-row-score" id="score-1">—</div>
-        </div>
-        <div class="pillar-row">
-          <div class="pillar-row-name">Financial Health</div>
-          <div class="pillar-row-bar-wrap"><div class="pillar-row-bar" id="bar-2"></div></div>
-          <div class="pillar-row-score" id="score-2">—</div>
-        </div>
-        <div class="pillar-row">
-          <div class="pillar-row-name">Team &amp; Governance</div>
-          <div class="pillar-row-bar-wrap"><div class="pillar-row-bar" id="bar-3"></div></div>
-          <div class="pillar-row-score" id="score-3">—</div>
-        </div>
-        <div class="pillar-row">
-          <div class="pillar-row-name">Market Traction</div>
-          <div class="pillar-row-bar-wrap"><div class="pillar-row-bar" id="bar-4"></div></div>
-          <div class="pillar-row-score" id="score-4">—</div>
-        </div>
-        <div class="pillar-row">
-          <div class="pillar-row-name">Capital Structure</div>
-          <div class="pillar-row-bar-wrap"><div class="pillar-row-bar" id="bar-5"></div></div>
-          <div class="pillar-row-score" id="score-5">—</div>
-        </div>
-      </div>
-      <div class="results-next">
-        <div class="next-title">Recommended Next Steps</div>
-        <div class="next-body" id="nextBody">—</div>
-        <div class="next-actions" id="nextActions"></div>
-      </div>
-      <div class="reset-row">
-        <button class="reset-link" onclick="resetAssessment()">↺ Retake Assessment</button>
-      </div>
-    </div>
-
-  </div>
-
-  <!-- DISCLAIMER -->
-  <div class="readiness-disclaimer">
-    <div class="disclaimer-box">
-      <strong>Disclaimer:</strong> The Terapush Fundraise Readiness Score is a proprietary self-assessment tool developed by Terapush India Private Limited. It is intended as a directional guide only and does not constitute financial, legal, or investment advice. Results are based solely on self-reported inputs and do not guarantee investor interest or fundraising outcomes. Version 1.0 — Confidential.
-    </div>
-  </div>
-
-  <!-- FOOTER -->
-  <footer class="site-footer">
-    <div class="footer-main">
-      <div class="footer-brand">
-        <a href="index.html" class="footer-logo">Terapush</a>
-        <p>The OS for India's startup ecosystem. Connecting founders, investors, and creators on one platform built for Bharat's builders.</p>
-        <div class="footer-social" style="margin-top:20px;">
-          <a href="https://www.linkedin.com/company/terapush" target="_blank" rel="noopener">
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>LinkedIn
-          </a>
-          <a href="https://www.instagram.com/terapush" target="_blank" rel="noopener">
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>Instagram
-          </a>
-        </div>
-      </div>
-      <div class="footer-col">
-        <h4>Pages</h4>
-        <a href="index.html">Home</a>
-        <a href="about.html">About</a>
-        <a href="services.html">Services</a>
-        <a href="readiness.html">Readiness</a>
-        <a href="pitch.html">Pitch Us</a>
-        <a href="careers.html">Careers</a>
-        <a href="blog.html">Blog</a>
-      </div>
-      <div class="footer-col">
-        <h4>Legal</h4>
-        <a href="privacy.html">Privacy Policy</a>
-        <a href="terms.html">Terms of Use</a>
-        <a href="sitemap.html">Sitemap</a>
-      </div>
-      <div class="footer-col">
-        <h4>Contact</h4>
-        <a href="#" onclick="this.href='mailto:'+('contact'+'@terapush.in');return true;" style="text-decoration:none;color:inherit;">contact&#64;terapush.in</a>
-        <a href="#" onclick="this.href='mailto:'+('careers'+'@terapush.in');return true;" style="text-decoration:none;color:inherit;">careers&#64;terapush.in</a>
-        <div class="footer-address">Terapush India Private Limited<br/>1st Floor, SPD Plaza,<br/>KHB Colony, Koramangala 4-B Block,<br/>5th Block, Koramangala,<br/>Bengaluru, Karnataka 560095</div>
-        <div class="footer-map" style="margin-top:14px;">
-          <iframe src="https://maps.google.com/maps?q=Koramangala+5th+Block+Bengaluru&output=embed" allowfullscreen loading="lazy" style="width:100%;height:110px;border:none;filter:grayscale(1);border-radius:6px;"></iframe>
-        </div>
-      </div>
-    </div>
-    <div class="footer-bottom">
-      <div class="footer-bottom-inner">
-        <div>
-          <div class="footer-copy">© 2026 Terapush India Private Limited. All rights reserved.</div>
-          <div class="footer-legal-links" style="margin-top:8px;display:flex;gap:20px;">
-            <a href="privacy.html">Privacy Policy</a>
-            <a href="terms.html">Terms of Use</a>
+        <div class="r-header">
+          <div class="r-eyebrow">Your Terapush Fundraise Readiness Score</div>
+          <div class="r-ring-wrap">
+            <svg width="176" height="176" viewBox="0 0 176 176">
+              <circle class="ring-bg"  cx="88" cy="88" r="80"/>
+              <circle class="ring-arc" id="ringArc" cx="88" cy="88" r="80"/>
+            </svg>
+            <div class="r-ring-inner">
+              <span class="r-score-num" id="rScoreNum">0</span>
+              <span class="r-score-denom">/ 100</span>
+            </div>
           </div>
+          <div class="r-verdict"  id="rVerdict">—</div>
+          <div class="r-meaning"  id="rMeaning">—</div>
         </div>
-      </div>
-      <div class="footer-disclaimer">
-        <strong style="font-weight:500;">Disclaimer:</strong> Investments in startups involve risk. Terapush is a platform to connect stakeholders and does not guarantee returns. Users should conduct independent due diligence before making investment decisions.
+
+        <div class="r-section-label">Pillar Breakdown</div>
+        <div class="r-breakdown">
+          <div class="r-brow"><span class="r-brow-num">01</span><span class="r-brow-name">Business Fundamentals</span><div class="r-brow-track"><div class="r-brow-bar" id="rb1"></div></div><span class="r-brow-wt">20%</span></div>
+          <div class="r-brow"><span class="r-brow-num">02</span><span class="r-brow-name">Financial Health</span><div class="r-brow-track"><div class="r-brow-bar" id="rb2"></div></div><span class="r-brow-wt">25%</span></div>
+          <div class="r-brow"><span class="r-brow-num">03</span><span class="r-brow-name">Team &amp; Governance</span><div class="r-brow-track"><div class="r-brow-bar" id="rb3"></div></div><span class="r-brow-wt">20%</span></div>
+          <div class="r-brow"><span class="r-brow-num">04</span><span class="r-brow-name">Market Traction</span><div class="r-brow-track"><div class="r-brow-bar" id="rb4"></div></div><span class="r-brow-wt">20%</span></div>
+          <div class="r-brow"><span class="r-brow-num">05</span><span class="r-brow-name">Capital Structure</span><div class="r-brow-track"><div class="r-brow-bar" id="rb5"></div></div><span class="r-brow-wt">15%</span></div>
+        </div>
+
+        <div class="r-next-box">
+          <div class="r-next-title" id="rNextTitle">—</div>
+          <div class="r-next-body"  id="rNextBody">—</div>
+          <div class="r-actions"    id="rActions"></div>
+        </div>
+
+        <div class="r-retake">
+          <button class="retake-link" onclick="resetQuiz()">↺ Retake Assessment</button>
+        </div>
+
+        <p class="r-disclaimer">
+          The Terapush Fundraise Readiness Score is a proprietary self-assessment tool developed by Terapush India Private Limited. It is a directional guide only and does not constitute financial or investment advice. Results are based on self-reported inputs. Version 1.0 — Confidential.
+        </p>
+
       </div>
     </div>
-  </footer>
+
+  </div><!-- /calc-shell -->
 
   <script data-cfasync="false" src="shared.js"></script>
   <script>
-    // ─── STATE ───
-    const answers = {}; // { qNum: points }
-    const PILLAR_MAP = {
-      1: [1,2,3,4,5],
-      2: [6,7,8,9,10],
-      3: [11,12,13,14,15],
-      4: [16,17,18,19,20],
-      5: [21,22,23,24,25]
-    };
-    const PILLAR_MAX = { 1:20, 2:25, 3:20, 4:22, 5:21 };
-    const PILLAR_WEIGHT = { 1:20, 2:25, 3:20, 4:20, 5:15 };
+  // ════════════════════════════════════════════════════════
+  // QUESTION DATA  (no points shown to user)
+  // ════════════════════════════════════════════════════════
+  const QS = [
+    // ── Pillar 1: Business Fundamentals (max 20) ──
+    { p:1, pn:'Business Fundamentals',
+      q:'How clearly defined is your revenue model?',
+      opts:[
+        {l:'Not defined yet',                         v:0},
+        {l:'Concept stage only',                      v:1},
+        {l:'Defined but unvalidated',                 v:2},
+        {l:'Validated with paying customers',         v:4},
+        {l:'Proven with repeatable unit economics',   v:5},
+      ]},
+    { p:1, pn:'Business Fundamentals',
+      q:'What is your Total Addressable Market (TAM)?',
+      opts:[
+        {l:'Under ₹100Cr',        v:0},
+        {l:'₹100–500Cr',          v:1},
+        {l:'₹500Cr–₹2,000Cr',     v:2},
+        {l:'₹2,000–₹10,000Cr',    v:3},
+        {l:'Over ₹10,000Cr',      v:4},
+      ]},
+    { p:1, pn:'Business Fundamentals',
+      q:'How well differentiated is your startup from existing alternatives?',
+      opts:[
+        {l:'No clear differentiation',          v:0},
+        {l:'Minor product differences',         v:1},
+        {l:'Moderate moat (brand, tech)',        v:2},
+        {l:'Strong moat (IP, network effects)',  v:3},
+        {l:'Defensible category leader',        v:4},
+      ]},
+    { p:1, pn:'Business Fundamentals',
+      q:'Where does your startup stand on regulatory and compliance?',
+      opts:[
+        {l:'No compliance review done',                  v:0},
+        {l:'Basic compliance only',                      v:1},
+        {l:'Sector-specific compliance in progress',     v:2},
+        {l:'Fully compliant, all licenses obtained',     v:3},
+      ]},
+    { p:1, pn:'Business Fundamentals',
+      q:'What stage is your startup at right now?',
+      opts:[
+        {l:'Idea only',                      v:0},
+        {l:'MVP built',                      v:1},
+        {l:'Product launched, early users',  v:2},
+        {l:'Revenue generating',             v:3},
+        {l:'Scaling revenue',                v:4},
+      ]},
+    // ── Pillar 2: Financial Health (max 25) ──
+    { p:2, pn:'Financial Health',
+      q:'What is your current Monthly Recurring Revenue (MRR)?',
+      opts:[
+        {l:'Zero revenue',        v:0},
+        {l:'Under ₹1L/month',     v:1},
+        {l:'₹1–5L/month',         v:2},
+        {l:'₹5–25L/month',        v:3},
+        {l:'₹25–100L/month',      v:4},
+        {l:'Over ₹100L/month',    v:5},
+      ]},
+    { p:2, pn:'Financial Health',
+      q:'What is your current gross margin?',
+      opts:[
+        {l:'Negative gross margin',  v:0},
+        {l:'0–20%',                  v:1},
+        {l:'20–40%',                 v:2},
+        {l:'40–60%',                 v:3},
+        {l:'60–80%',                 v:4},
+        {l:'Over 80%',               v:5},
+      ]},
+    { p:2, pn:'Financial Health',
+      q:'How much runway does your startup currently have?',
+      opts:[
+        {l:'Less than 3 months',    v:0},
+        {l:'3–6 months',            v:1},
+        {l:'6–12 months',           v:2},
+        {l:'12–18 months',          v:3},
+        {l:'Over 18 months',        v:4},
+        {l:'Profitable — no burn',  v:5},
+      ]},
+    { p:2, pn:'Financial Health',
+      q:'How would you describe the quality of your financial records?',
+      opts:[
+        {l:'No formal records',                    v:0},
+        {l:'Basic spreadsheets only',              v:1},
+        {l:'Tally or basic accounting software',   v:2},
+        {l:'Audited financials available',         v:3},
+        {l:'Audited + MIS reports + projections',  v:5},
+      ]},
+    { p:2, pn:'Financial Health',
+      q:'What is your LTV to CAC ratio?',
+      opts:[
+        {l:'Not calculated',            v:0},
+        {l:'LTV is less than CAC',      v:1},
+        {l:'LTV:CAC between 1x–2x',     v:2},
+        {l:'LTV:CAC between 2x–3x',     v:3},
+        {l:'LTV:CAC above 3x',          v:5},
+      ]},
+    // ── Pillar 3: Team & Governance (max 20) ──
+    { p:3, pn:'Team & Governance',
+      q:'How complete is your founding team?',
+      opts:[
+        {l:'Solo founder, no co-founder',           v:0},
+        {l:'Co-founders but major skill gap',       v:1},
+        {l:'Business + tech covered',               v:2},
+        {l:'Business + tech + domain expert',       v:3},
+        {l:'Full team: biz, tech, ops, finance',    v:4},
+      ]},
+    { p:3, pn:'Team & Governance',
+      q:'How much domain experience do the founders have?',
+      opts:[
+        {l:'No relevant experience',                    v:0},
+        {l:'1–2 years adjacent experience',             v:1},
+        {l:'3–5 years relevant experience',             v:2},
+        {l:'5–10 years, prior exits or senior roles',   v:3},
+        {l:'Serial entrepreneur or ex-CEO/C-suite',     v:4},
+      ]},
+    { p:3, pn:'Team & Governance',
+      q:'How clean is your cap table?',
+      sub:'Messy cap tables are a top deal-killer with investors.',
+      opts:[
+        {l:'No formal cap table',               v:0},
+        {l:'Informally agreed, not documented', v:0},
+        {l:'Documented but complex or messy',   v:1},
+        {l:'Clean, standard structure',         v:3},
+        {l:'Clean + ESOP pool set up',          v:4},
+      ]},
+    { p:3, pn:'Team & Governance',
+      q:'What is the quality of your advisory board?',
+      opts:[
+        {l:'No advisors',                                      v:0},
+        {l:'Informal mentors only',                            v:1},
+        {l:'1–2 domain advisors',                              v:2},
+        {l:'Strong advisory board with skin in game',          v:3},
+        {l:'Formal board with institutional representation',   v:4},
+      ]},
+    { p:3, pn:'Team & Governance',
+      q:'How committed are the founders full-time to this venture?',
+      opts:[
+        {l:'Part-time, still employed elsewhere',   v:0},
+        {l:'Transitioning to full-time',            v:1},
+        {l:'Full-time, less than 6 months',         v:2},
+        {l:'Full-time, 6–18 months',                v:3},
+        {l:'Full-time, 18+ months, skin in game',   v:4},
+      ]},
+    // ── Pillar 4: Market Traction (max 22) ──
+    { p:4, pn:'Market Traction',
+      q:'How many paying customers do you have?',
+      opts:[
+        {l:'Zero paying customers',   v:0},
+        {l:'1–5 customers',           v:1},
+        {l:'6–20 customers',          v:2},
+        {l:'21–100 customers',        v:3},
+        {l:'100–500 customers',       v:4},
+        {l:'500+ customers',          v:5},
+      ]},
+    { p:4, pn:'Market Traction',
+      q:'What is your month-on-month revenue growth?',
+      opts:[
+        {l:'No revenue yet',     v:0},
+        {l:'Flat or declining',  v:0},
+        {l:'Under 5% MoM',       v:1},
+        {l:'5–10% MoM',          v:2},
+        {l:'10–20% MoM',         v:3},
+        {l:'Over 20% MoM',       v:5},
+      ]},
+    { p:4, pn:'Market Traction',
+      q:'How would you describe your customer retention and churn?',
+      opts:[
+        {l:'Not tracked',                             v:0},
+        {l:'High churn, over 10%/month',              v:0},
+        {l:'Moderate churn, 5–10%/month',             v:1},
+        {l:'Low churn, 2–5%/month',                   v:2},
+        {l:'Very low churn, under 2%/month',          v:3},
+        {l:'Net revenue expansion (negative churn)',  v:4},
+      ]},
+    { p:4, pn:'Market Traction',
+      q:'Do you have any strategic partnerships or signed LOIs?',
+      opts:[
+        {l:'None',                                          v:0},
+        {l:'Informal conversations only',                   v:1},
+        {l:'1–2 signed LOIs or MOUs',                       v:2},
+        {l:'Active partnerships generating revenue',        v:3},
+        {l:'Key enterprise or institutional partnerships',  v:4},
+      ]},
+    { p:4, pn:'Market Traction',
+      q:'Have you received any external validation — awards, grants, or press?',
+      opts:[
+        {l:'None',                                        v:0},
+        {l:'Minor mentions',                              v:1},
+        {l:'Recognised by a credible industry body',      v:2},
+        {l:'Government grant or accelerator selected',    v:3},
+        {l:'Significant national press or recognition',   v:4},
+      ]},
+    // ── Pillar 5: Capital Structure Readiness (max 21) ──
+    { p:5, pn:'Capital Structure',
+      q:'What is your prior fundraising history?',
+      opts:[
+        {l:'No prior raises',                      v:0},
+        {l:'FFF round only (friends and family)',   v:1},
+        {l:'Angel round completed',                v:2},
+        {l:'Institutional seed round completed',   v:3},
+        {l:'Series A or beyond',                   v:5},
+      ]},
+    { p:5, pn:'Capital Structure',
+      q:'How complete is your shareholders agreement and legal documentation?',
+      opts:[
+        {l:'No documentation',                      v:0},
+        {l:'Basic incorporation docs only',         v:1},
+        {l:'SHA drafted but not executed',          v:1},
+        {l:'SHA executed, basic IP assignment',     v:2},
+        {l:'Full legal suite: SHA, IP, ESOP, NDA',  v:4},
+      ]},
+    { p:5, pn:'Capital Structure',
+      q:'How clearly have you defined your use of funds?',
+      opts:[
+        {l:'No plan defined',                         v:0},
+        {l:'Rough idea only',                         v:1},
+        {l:'Defined plan, not modeled',               v:2},
+        {l:'Defined plan with financial model',       v:3},
+        {l:'Detailed model with milestones and KPIs', v:4},
+      ]},
+    { p:5, pn:'Capital Structure',
+      q:'How well-defined is the type and structure of capital you are seeking?',
+      opts:[
+        {l:'Unsure',                              v:0},
+        {l:'Equity only considered',              v:1},
+        {l:'Debt only considered',                v:1},
+        {l:'Equity with some clarity on stage',   v:2},
+        {l:'Equity and debt mix defined',         v:3},
+        {l:'Optimal capital structure fully mapped', v:4},
+      ]},
+    { p:5, pn:'Capital Structure',
+      q:'How targeted is your investor outreach?',
+      opts:[
+        {l:'No research done',                        v:0},
+        {l:'Generic list of VCs',                     v:1},
+        {l:'Sector-relevant investor list',           v:2},
+        {l:'Prioritised list with thesis match',      v:3},
+        {l:'Warm introductions to target investors',  v:4},
+      ]},
+  ];
 
-    function selectOption(qNum, pts, label) {
-      answers[qNum] = pts;
-      // Update UI for this card
-      const card = document.getElementById('qcard-' + qNum);
-      card.classList.add('answered');
-      card.querySelectorAll('.option').forEach(opt => {
-        opt.classList.toggle('selected', opt.querySelector('.option-text').textContent.trim() === label.trim());
-      });
-      updateProgress();
+  const P_MAX = {1:20, 2:25, 3:20, 4:22, 5:21};
+  const P_WT  = {1:20, 2:25, 3:20, 4:20, 5:15};
+
+  // ════════════════════════════════════════════════════════
+  // STATE
+  // ════════════════════════════════════════════════════════
+  let cur       = 0;
+  let answers   = new Array(25).fill(null); // { oidx, pts }
+  let busy      = false;
+
+  // ════════════════════════════════════════════════════════
+  // START
+  // ════════════════════════════════════════════════════════
+  function startQuiz() {
+    document.getElementById('screen-intro').style.display = 'none';
+    document.getElementById('screen-quiz').style.display  = 'flex';
+    cur     = 0;
+    answers = new Array(25).fill(null);
+    render(cur, null);
+  }
+
+  // ════════════════════════════════════════════════════════
+  // RENDER QUESTION
+  // ════════════════════════════════════════════════════════
+  function render(idx, dir) {
+    const q    = QS[idx];
+    const frame = document.getElementById('qFrame');
+
+    // topbar update
+    document.getElementById('topbarPillar').textContent  = 'Pillar ' + q.p + ' · ' + q.pn;
+    document.getElementById('topbarCounter').textContent = (idx + 1) + ' / 25';
+    document.getElementById('topbarFill').style.width    = ((idx / 25) * 100) + '%';
+
+    // build option HTML (no points shown)
+    const saved = answers[idx]; // {oidx, pts} or null
+    const optsHtml = q.opts.map((o, oi) => `
+      <div class="q-opt${saved && saved.oidx === oi ? ' sel' : ''}"
+           onclick="pick(${idx}, ${oi}, ${o.v})">
+        <span class="q-opt-radio"></span>
+        <span class="q-opt-label">${o.l}</span>
+      </div>`).join('');
+
+    const subHtml = q.sub ? `<div class="q-sub">${q.sub}</div>` : '';
+    const isLast  = idx === 24;
+    const btnLabel = isLast ? 'See My Score →' : 'Next →';
+    const hasAns   = saved !== null;
+
+    frame.innerHTML = `
+      <div class="q-chip"><span class="q-chip-dot"></span>Pillar ${q.p} &nbsp;·&nbsp; ${q.pn}</div>
+      <div class="q-text${q.sub ? '' : ' q-text-only'}">${q.q}</div>
+      ${subHtml}
+      <div class="q-opts">${optsHtml}</div>
+      <div class="q-nav">
+        <button class="q-back" onclick="goBack()" ${idx === 0 ? 'disabled' : ''}>← Back</button>
+        <button class="q-next" id="qNext" onclick="goNext()" ${hasAns ? '' : 'disabled'}>${btnLabel}</button>
+      </div>`;
+
+    // animate
+    if (dir) {
+      const cl = dir === 'fwd' ? 'anim-in-right' : 'anim-in-left';
+      frame.classList.remove('anim-in-right','anim-in-left','anim-out-left','anim-out-right');
+      void frame.offsetWidth;
+      frame.classList.add(cl);
+    }
+  }
+
+  // ════════════════════════════════════════════════════════
+  // PICK ANSWER
+  // ════════════════════════════════════════════════════════
+  function pick(qidx, oidx, pts) {
+    answers[qidx] = { oidx, pts };
+    // update UI
+    document.querySelectorAll('.q-opt').forEach((el, i) => {
+      el.classList.toggle('sel', i === oidx);
+    });
+    const nb = document.getElementById('qNext');
+    if (nb) nb.disabled = false;
+  }
+
+  // ════════════════════════════════════════════════════════
+  // NAVIGATION
+  // ════════════════════════════════════════════════════════
+  function goNext() {
+    if (busy || answers[cur] === null) return;
+    if (cur === 24) { showResults(); return; }
+    busy = true;
+    const frame = document.getElementById('qFrame');
+    frame.classList.add('anim-out-left');
+    setTimeout(() => {
+      cur++;
+      frame.classList.remove('anim-out-left');
+      busy = false;
+      render(cur, 'fwd');
+    }, 260);
+  }
+
+  function goBack() {
+    if (busy || cur === 0) return;
+    busy = true;
+    const frame = document.getElementById('qFrame');
+    frame.classList.add('anim-out-right');
+    setTimeout(() => {
+      cur--;
+      frame.classList.remove('anim-out-right');
+      busy = false;
+      render(cur, 'back');
+    }, 260);
+  }
+
+  // ════════════════════════════════════════════════════════
+  // SCORE + RESULTS
+  // ════════════════════════════════════════════════════════
+  function showResults() {
+    document.getElementById('screen-quiz').style.display    = 'none';
+    document.getElementById('screen-results').style.display = 'flex';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+
+    // Per-pillar raw scores
+    const raw = {};
+    for (let p = 1; p <= 5; p++) {
+      raw[p] = QS.reduce((sum, q, i) => q.p === p ? sum + (answers[i]?.pts || 0) : sum, 0);
     }
 
-    function updateProgress() {
-      const answered = Object.keys(answers).length;
-      const pct = (answered / 25) * 100;
-      document.getElementById('progressFill').style.width = pct + '%';
-      document.getElementById('progressCount').textContent = answered + ' / 25 answered';
-      const remaining = 25 - answered;
-      document.getElementById('unansweredNote').textContent =
-        remaining === 0 ? 'All questions answered — ready to score!' : remaining + ' question' + (remaining > 1 ? 's' : '') + ' remaining';
-      const btn = document.getElementById('submitBtn');
-      btn.disabled = answered < 25;
+    // Weighted total
+    let total = 0;
+    for (let p = 1; p <= 5; p++) {
+      total += (raw[p] / P_MAX[p]) * P_WT[p];
+    }
+    total = Math.round(total);
+
+    // Ring animation (r=80, circumference≈502.65)
+    const C = 502;
+    setTimeout(() => {
+      document.getElementById('ringArc').style.strokeDashoffset = C - (total / 100) * C;
+    }, 150);
+
+    // Count-up
+    let n = 0;
+    const el = document.getElementById('rScoreNum');
+    const step = Math.max(1, Math.ceil(total / 40));
+    const t = setInterval(() => {
+      n = Math.min(n + step, total);
+      el.textContent = n;
+      if (n >= total) clearInterval(t);
+    }, 28);
+
+    // Verdict
+    let verdict, meaning, nextTitle, nextBody, actions;
+    if (total >= 80) {
+      verdict   = 'Investor Ready';
+      meaning   = 'Your startup shows strong fundamentals across most pillars. You qualify for Terapush\'s curated investor matching service.';
+      nextTitle = 'You\'re ready. Let\'s make introductions.';
+      nextBody  = 'Submit your pitch directly to the Terapush team for fast-track investor matching. We\'ll review your profile and connect you with investors aligned to your stage and sector.';
+      actions   = `<a href="pitch.html" class="btn-p">Submit Your Pitch →</a><a href="index.html" class="btn-s">Request Early Access</a>`;
+    } else if (total >= 65) {
+      verdict   = 'Strong — Minor Gaps';
+      meaning   = 'You\'re close to investor-ready. Review the weaker pillars in your breakdown and make targeted improvements before outreach.';
+      nextTitle = 'A few tweaks and you\'re there.';
+      nextBody  = 'Most gaps at this score are addressable within 4–8 weeks. You can also pitch us now — our team will flag exactly what to fix first.';
+      actions   = `<a href="pitch.html" class="btn-p">Pitch Us Anyway →</a><a href="services.html" class="btn-s">View Our Services</a>`;
+    } else if (total >= 50) {
+      verdict   = 'Developing';
+      meaning   = 'You\'re building the right things, but significant gaps remain before a credible investor conversation.';
+      nextTitle = 'Request the Terapush Improvement Plan.';
+      nextBody  = 'Your score suggests 2–4 pillars need meaningful work. Our team will give you a prioritised roadmap so you\'re investor-ready within 60–90 days.';
+      actions   = `<a href="#" onclick="this.href='mailto:'+('contact'+'@terapush.in?subject=Fundraise+Improvement+Plan');return true;" class="btn-p">Request Improvement Plan →</a><a href="services.html" class="btn-s">Explore Services</a>`;
+    } else if (total >= 30) {
+      verdict   = 'Early Stage';
+      meaning   = 'Your fundamentals need more time to develop. Investor outreach at this stage is premature and can hurt your long-term credibility.';
+      nextTitle = 'Focus on the fundamentals first.';
+      nextBody  = 'The highest ROI at this stage is product, customers, and team — not fundraising. Revisit this assessment in 60–90 days.';
+      actions   = `<a href="services.html" class="btn-p">Explore Our Services →</a><a href="index.html" class="btn-s">Join the Waitlist</a>`;
+    } else {
+      verdict   = 'Pre-Readiness';
+      meaning   = 'You\'re at the very beginning of the journey. Every great startup started exactly here.';
+      nextTitle = 'Start with the improvement plan.';
+      nextBody  = 'Validate your business model and get to first revenue before thinking about external fundraising. Re-take this assessment in 60 days.';
+      actions   = `<a href="services.html" class="btn-p">Explore Our Services →</a><a href="index.html" class="btn-s">Join the Waitlist</a>`;
     }
 
-    function calculateScore() {
-      // Weighted scoring: (rawScore / maxRaw) * pillarWeight
-      let total = 0;
-      const pillarScores = {};
-      for (let p = 1; p <= 5; p++) {
-        let raw = 0;
-        PILLAR_MAP[p].forEach(q => { raw += (answers[q] || 0); });
-        const weighted = (raw / PILLAR_MAP[p].reduce((a, q) => {
-          // get max per question from PILLAR_MAX proportionally
-          return a;
-        }, 0));
-        // weighted % = (raw / PILLAR_MAX[p]) * PILLAR_WEIGHT[p]
-        const w = (raw / PILLAR_MAP[p].length); // per-q avg
-        const pillarPct = (raw / PILLAR_MAX[p]) * PILLAR_WEIGHT[p];
-        pillarScores[p] = { raw, max: PILLAR_MAX[p], pct: pillarPct };
-        total += pillarPct;
-      }
-      total = Math.round(total);
+    document.getElementById('rVerdict').textContent   = verdict;
+    document.getElementById('rMeaning').textContent   = meaning;
+    document.getElementById('rNextTitle').textContent = nextTitle;
+    document.getElementById('rNextBody').textContent  = nextBody;
+    document.getElementById('rActions').innerHTML     = actions;
 
-      // Verdict
-      let verdict, meaning, nextBody, actions;
-      if (total >= 80) {
-        verdict = 'Investor Ready';
-        meaning = 'You qualify for Terapush\'s curated investor matching service. Your startup shows strong fundamentals across most pillars.';
-        nextBody = 'Submit your assessment to Terapush for fast-track investor matching. Our team will review your profile and connect you with investors aligned to your stage and sector.';
-        actions = `<a href="pitch.html" class="next-btn-primary">Submit Your Pitch →</a><a href="index.html" class="next-btn-secondary">Request Early Access</a>`;
-      } else if (total >= 65) {
-        verdict = 'Strong — Minor Gaps';
-        meaning = 'You\'re ready to approach investors. Review the lower-scoring pillars, make targeted improvements, then submit for standard matching.';
-        nextBody = 'Address the flagged areas in your pillar breakdown above, then submit your startup pitch. Most gaps at this score are addressable within 4–8 weeks.';
-        actions = `<a href="pitch.html" class="next-btn-primary">Pitch Us Anyway →</a><a href="services.html" class="next-btn-secondary">View Our Services</a>`;
-      } else if (total >= 50) {
-        verdict = 'Developing';
-        meaning = 'Significant work is needed before investor outreach. Request the Terapush Fundraise Improvement Plan to address your gaps systematically.';
-        nextBody = 'Your score suggests 2–4 pillars need meaningful improvement. Request the Terapush Improvement Plan — our team will give you a prioritised roadmap before you approach investors.';
-        actions = `<a href="#" onclick="this.href='mailto:'+('contact'+'@terapush.in?subject=Fundraise+Improvement+Plan');return true;" class="next-btn-primary">Request Improvement Plan →</a><a href="services.html" class="next-btn-secondary">Our Services</a>`;
-      } else if (total >= 30) {
-        verdict = 'Early Stage';
-        meaning = 'Focus on building your fundamentals before fundraising. Investor outreach at this stage is premature and can hurt your credibility.';
-        nextBody = 'At this stage, the best ROI is in product, customers, and team — not fundraising. Retake this assessment in 60–90 days after making targeted improvements.';
-        actions = `<a href="services.html" class="next-btn-primary">Explore Our Services →</a><a href="index.html" class="next-btn-secondary">Join the Waitlist</a>`;
-      } else {
-        verdict = 'Pre-Readiness';
-        meaning = 'You\'re at the beginning of the journey. Use the improvement plan and re-assess in 60 days.';
-        nextBody = 'Focus on validating your business model and getting to first revenue before thinking about external fundraising. Re-take this assessment in 60 days.';
-        actions = `<a href="services.html" class="next-btn-primary">Explore Our Services →</a><a href="index.html" class="next-btn-secondary">Join the Waitlist</a>`;
-      }
-
-      // Render results
-      document.getElementById('resultsScore').textContent = total;
-      document.getElementById('resultsVerdict').textContent = verdict;
-      document.getElementById('resultsMeaning').textContent = meaning;
-      document.getElementById('nextBody').textContent = nextBody;
-      document.getElementById('nextActions').innerHTML = actions;
-
-      // Pillar bars
-      for (let p = 1; p <= 5; p++) {
-        const { raw, max, pct } = pillarScores[p];
-        const barPct = (raw / max) * 100;
-        document.getElementById('score-' + p).textContent = raw + ' / ' + max + ' pts';
-        setTimeout(() => {
-          document.getElementById('bar-' + p).style.width = barPct + '%';
-        }, 200 + (p * 150));
-      }
-
-      // Highlight active band
-      document.querySelectorAll('.band-item').forEach((el, i) => {
-        const bands = [[0,29],[30,49],[50,64],[65,79],[80,100]];
-        el.classList.toggle('active-band', total >= bands[i][0] && total <= bands[i][1]);
-      });
-
-      // Show results
-      const panel = document.getElementById('results-panel');
-      panel.style.display = 'block';
+    // Pillar bars with stagger
+    for (let p = 1; p <= 5; p++) {
+      const pct = (raw[p] / P_MAX[p]) * 100;
       setTimeout(() => {
-        panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }, 100);
+        document.getElementById('rb' + p).style.width = pct + '%';
+      }, 350 + p * 130);
     }
+  }
 
-    function resetAssessment() {
-      // Clear answers
-      for (let q in answers) delete answers[q];
-      // Reset all cards
-      document.querySelectorAll('.question-card').forEach(c => c.classList.remove('answered'));
-      document.querySelectorAll('.option').forEach(o => o.classList.remove('selected'));
-      // Reset progress
-      updateProgress();
-      document.getElementById('progressFill').style.width = '0%';
-      // Hide results
-      document.getElementById('results-panel').style.display = 'none';
-      // Reset bars
-      for (let p = 1; p <= 5; p++) {
-        document.getElementById('bar-' + p).style.width = '0%';
-        document.getElementById('score-' + p).textContent = '—';
-      }
-      // Reset band
-      document.querySelectorAll('.band-item').forEach(el => el.classList.remove('active-band'));
-      // Scroll to top
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
+  // ════════════════════════════════════════════════════════
+  // RESET
+  // ════════════════════════════════════════════════════════
+  function resetQuiz() {
+    cur     = 0;
+    answers = new Array(25).fill(null);
+
+    document.getElementById('ringArc').style.strokeDashoffset = 502;
+    document.getElementById('rScoreNum').textContent = '0';
+    for (let p = 1; p <= 5; p++) document.getElementById('rb' + p).style.width = '0%';
+
+    document.getElementById('screen-results').style.display = 'none';
+    document.getElementById('screen-quiz').style.display    = 'flex';
+    render(0, null);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
   </script>
 </body>
 </html>
