@@ -346,11 +346,12 @@
         `${deck || 'Not provided'}`,
       ].join('\n');
 
-      const mailto = `mailto:contact@terapush.in`
-        + `?subject=${encodeURIComponent(subject)}`
+      const gmailUrl = `https://mail.google.com/mail/?view=cm`
+        + `&to=${encodeURIComponent('contact@terapush.in')}`
+        + `&su=${encodeURIComponent(subject)}`
         + `&body=${encodeURIComponent(body)}`;
 
-      window.location.href = mailto;
+      window.open(gmailUrl, '_blank');
 
       // Show success state after a short delay (email app opens in background)
       setTimeout(() => {
