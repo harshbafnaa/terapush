@@ -234,14 +234,14 @@
             <div class="pitch-field"><label for="p-deck">Deck Link <span style="text-transform:none;letter-spacing:0;">(optional)</span></label>
               <input type="url" id="p-deck" placeholder="https://drive.google.com/..."/></div>
             <button class="pitch-cta" onclick="handlePitch()">Submit Pitch →</button>
-            <p class="pitch-note">Your pitch will be sent to <strong></strong> and reviewed by our team.</p>
+            <p class="pitch-note">Your pitch will be sent to <strong>contact@terapush.in</strong> and reviewed by our team.</p>
           </div>
         </div>
 
         <div class="pitch-success" id="pitch-success">
           <div class="icon">✦</div>
           <h3>Pitch received.</h3>
-          <p>We've sent your pitch to .<br/>Our team will review and respond within 5 business days.</p>
+          <p>We've sent your pitch to contact@terapush.in.<br/>Our team will review and respond within 5 business days.</p>
         </div>
       </div>
     </div>
@@ -305,5 +305,59 @@
   </footer>
 
   <script data-cfasync="false" src="shared.js"></script>
+  <script>
+    function handlePitch() {
+      const name    = document.getElementById('p-name').value.trim();
+      const role    = document.getElementById('p-role').value.trim();
+      const company = document.getElementById('p-company').value.trim();
+      const email   = document.getElementById('p-email').value.trim();
+      const stage   = document.getElementById('p-stage').value;
+      const sector  = document.getElementById('p-sector').value;
+      const ask     = document.getElementById('p-ask').value;
+      const pitch   = document.getElementById('p-pitch').value.trim();
+      const deck    = document.getElementById('p-deck').value.trim();
+
+      // Validation
+      if (!name || !company || !email || !stage || !sector || !ask || !pitch) {
+        alert('Please fill in all required fields before submitting.');
+        return;
+      }
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(email)) {
+        alert('Please enter a valid email address.');
+        return;
+      }
+
+      const subject = `New Pitch: ${company} — ${stage} / ${sector}`;
+
+      const body = [
+        `Name:          ${name}`,
+        `Role:          ${role || 'Not provided'}`,
+        `Company:       ${company}`,
+        `Email:         ${email}`,
+        `Stage:         ${stage}`,
+        `Sector:        ${sector}`,
+        `Looking For:   ${ask}`,
+        ``,
+        `── Pitch ──────────────────────────`,
+        `${pitch}`,
+        ``,
+        `── Deck Link ──────────────────────`,
+        `${deck || 'Not provided'}`,
+      ].join('\n');
+
+      const mailto = `mailto:contact@terapush.in`
+        + `?subject=${encodeURIComponent(subject)}`
+        + `&body=${encodeURIComponent(body)}`;
+
+      window.location.href = mailto;
+
+      // Show success state after a short delay (email app opens in background)
+      setTimeout(() => {
+        document.getElementById('pitch-form-inner').style.display = 'none';
+        document.getElementById('pitch-success').style.display = 'block';
+      }, 500);
+    }
+  </script>
 </body>
 </html>
