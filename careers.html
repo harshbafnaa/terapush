@@ -544,5 +544,134 @@
   </footer>
 
   <script data-cfasync="false" src="shared.js"></script>
+  <script>
+  /* ─── CAREERS: AIRTABLE DATA LAYER ─── */
+  (function() {
+    const AT_BASE = 'appTw8tOpvI7BJ6kT';
+    const AT_JOBS = 'tblEy2iZrPk40syvj';
+    const AT_KEY  = 'patRFec5Of1vjA5k1.4750ff4719623f66b48aa843c95174dd54bdff769d4ebc87c5c07b72778ee8b4';
+    const AT_URL  = `https://api.airtable.com/v0/${AT_BASE}/${AT_JOBS}`;
+    const HEADERS = { 'Authorization': `Bearer ${AT_KEY}` };
+
+    let allJobs     = [];
+    let activeFilter = 'all';
+
+    /* ── FETCH ALL ACTIVE JOBS ── */
+    async function fetchJobs() {
+      const fieldNames = ['Title','Team','Type','Location','Remote','LinkedIn URL','Featured','Active'];
+      const qParts = ['filterByFormula={Active}=TRUE()', 'sort[0][field]=Title', 'sort[0][direction]=asc'];
+      fieldNames.forEach((f, i) => qParts.push(`fields[${i}]=${encodeURIComponent(f)}`));
+      let records = [];
+      let offset  = '';
+      do {
+        const url = `${AT_URL}?${qParts.join('&')}` + (offset ? `&offset=${offset}` : '');
+        const res = await fetch(url, { headers: HEADERS });
+        if (!res.ok) throw new Error(`Airtable error ${res.status}`);
+        const data = await res.json();
+        records = records.concat(data.records || []);
+        offset = data.offset || '';
+      } while (offset);
+      return records.map(r => ({
+        id:          r.id,
+        title:       r.fields['Title']        || 'Open Role',
+        team:        (r.fields['Team']        || 'tech').toLowerCase(),
+        type:        r.fields['Type']         || 'Full-time',
+        location:    r.fields['Location']     || 'Bengaluru',
+        remote:      r.fields['Remote']       || 'Hybrid',
+        linkedinUrl: r.fields['LinkedIn URL'] || 'https://www.linkedin.com/company/terapush/jobs/',
+        featured:    !!r.fields['Featured'],
+        active:      !!r.fields['Active'],
+      }));
+    }
+
+    /* ── RENDER JOB LIST ── */
+    function renderJobs() {
+      const list  = document.getElementById('jobList');
+      const empty = document.getElementById('careersEmpty');
+      const count = document.getElementById('openRolesCount');
+
+      // Update stat count
+      if (count) count.textContent = allJobs.length || '—';
+
+      const visible = allJobs.filter(j =>
+        activeFilter === 'all' || j.team === activeFilter
+      );
+
+      if (visible.length === 0) {
+        list.style.display = 'none';
+        empty.classList.add('visible');
+        return;
+      }
+      empty.classList.remove('visible');
+      list.style.display = 'flex';
+
+      list.innerHTML = visible.map((job, i) => `
+        <a class="job-card" href="${job.linkedinUrl}" target="_blank" rel="noopener"
+           style="animation-delay:${0.04 + i * 0.06}s">
+          <div class="job-card-left">
+            <div class="job-card-title">${job.title}</div>
+            <div class="job-card-meta">
+              <span class="job-meta-item">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
+                ${job.team.charAt(0).toUpperCase() + job.team.slice(1)}
+              </span>
+              <span class="job-meta-item">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                ${job.location}
+              </span>
+              <span class="job-meta-item">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v16"/></svg>
+                ${job.type}
+              </span>
+              <span class="job-tag ${job.featured ? 'featured' : ''}">${job.remote}</span>
+              ${job.featured ? '<span class="job-tag featured">Featured</span>' : ''}
+            </div>
+          </div>
+          <div class="job-card-right">
+            <span class="job-apply-btn">Apply on LinkedIn</span>
+            <svg class="job-card-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
+          </div>
+        </a>
+      `).join('');
+    }
+
+    /* ── FILTER BUTTONS ── */
+    document.querySelectorAll('.careers-filter-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.careers-filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        activeFilter = btn.dataset.filter;
+        renderJobs();
+      });
+    });
+
+    /* ── INIT ── */
+    async function init() {
+      const loading = document.getElementById('careersLoading');
+      const list    = document.getElementById('jobList');
+      const count   = document.getElementById('openRolesCount');
+
+      loading.style.display = 'flex';
+      list.style.display    = 'none';
+
+      try {
+        allJobs = await fetchJobs();
+        loading.style.display = 'none';
+        if (count) count.textContent = allJobs.length || '0';
+        renderJobs();
+      } catch(err) {
+        console.error('Jobs fetch error:', err);
+        loading.style.display = 'none';
+        const empty = document.getElementById('careersEmpty');
+        empty.querySelector('h3').textContent = 'Could not load roles';
+        empty.querySelector('p').textContent  = 'There was an error fetching open roles. Please refresh or check LinkedIn.';
+        empty.classList.add('visible');
+        if (count) count.textContent = '—';
+      }
+    }
+
+    init();
+  })();
+  </script>
 </body>
 </html>

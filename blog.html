@@ -566,5 +566,354 @@
   </footer>
 
   <script data-cfasync="false" src="shared.js"></script>
+  <script>
+  /* ─── BLOG: AIRTABLE DATA LAYER ─── */
+  (function() {
+    const AT_BASE  = 'appTw8tOpvI7BJ6kT';
+    const AT_POSTS = 'tblXkvUWNSrbvMwuV';
+    const AT_KEY   = 'patRFec5Of1vjA5k1.4750ff4719623f66b48aa843c95174dd54bdff769d4ebc87c5c07b72778ee8b4';
+    const AT_URL   = `https://api.airtable.com/v0/${AT_BASE}/${AT_POSTS}`;
+    const HEADERS  = { 'Authorization': `Bearer ${AT_KEY}` };
+
+    let allPosts       = [];
+    let activeFilter   = 'all';
+    let activeSearch   = '';
+    let openPostId     = null;
+
+    /* ── FETCH ALL PUBLISHED POSTS ── */
+    async function fetchPosts() {
+      const params = new URLSearchParams({
+        filterByFormula: '{Published}=TRUE()',
+        sort: JSON.stringify([{ field: 'Updated At', direction: 'desc' }]),
+        fields: ['Title','Excerpt','Category','Author','Read Time','Featured','Updated At'],
+      });
+      // Airtable needs array params as fields[]=...
+      const fieldsArr = ['Title','Excerpt','Category','Author','Read Time','Featured','Updated At'];
+      const qParts = ['filterByFormula=AND({Published}=TRUE())'];
+      qParts.push('sort[0][field]=Updated+At', 'sort[0][direction]=desc');
+      fieldsArr.forEach((f, i) => qParts.push(`fields[${i}]=${encodeURIComponent(f)}`));
+      let records = [];
+      let offset  = '';
+      do {
+        const url = `${AT_URL}?${qParts.join('&')}` + (offset ? `&offset=${offset}` : '');
+        const res = await fetch(url, { headers: HEADERS });
+        if (!res.ok) throw new Error(`Airtable error ${res.status}`);
+        const data = await res.json();
+        records = records.concat(data.records || []);
+        offset = data.offset || '';
+      } while (offset);
+      return records.map(r => ({
+        id:        r.id,
+        title:     r.fields['Title']    || 'Untitled',
+        excerpt:   r.fields['Excerpt']  || '',
+        category:  (r.fields['Category'] || 'ecosystem').toLowerCase(),
+        author:    r.fields['Author']   || 'Terapush',
+        readTime:  r.fields['Read Time'] || 5,
+        featured:  !!r.fields['Featured'],
+        updatedAt: r.fields['Updated At'] ? new Date(r.fields['Updated At']) : new Date(),
+      }));
+    }
+
+    /* ── FETCH SINGLE POST CONTENT ── */
+    async function fetchPostContent(id) {
+      const res = await fetch(`${AT_URL}/${id}?fields[]=Content&fields[]=Title&fields[]=Excerpt&fields[]=Category&fields[]=Author&fields[]=Read+Time&fields[]=Updated+At`, { headers: HEADERS });
+      if (!res.ok) throw new Error(`Airtable error ${res.status}`);
+      const r = await res.json();
+      return r.fields;
+    }
+
+    /* ── FORMAT DATE ── */
+    function fmtDate(d) {
+      return d.toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' });
+    }
+
+    /* ── RENDER FEATURED ── */
+    function renderFeatured(post) {
+      const wrap = document.getElementById('featuredWrap');
+      if (!post) { wrap.style.display = 'none'; return; }
+      wrap.style.display = '';
+      document.getElementById('featuredCat').textContent   = post.category.charAt(0).toUpperCase() + post.category.slice(1);
+      document.getElementById('featuredTitle').textContent  = post.title;
+      document.getElementById('featuredExcerpt').textContent = post.excerpt;
+      document.getElementById('featuredAuthor').textContent  = post.author;
+      document.getElementById('featuredDate').textContent    = fmtDate(post.updatedAt);
+      document.getElementById('featuredRead').textContent    = `${post.readTime} min read`;
+      document.getElementById('featuredPost').onclick = () => openPost(post.id);
+      document.getElementById('featuredPost').style.cursor = 'pointer';
+
+      // Decorative visual with first letter of category
+      document.getElementById('featuredVisual').innerHTML =
+        `<span style="font-size:5rem;opacity:0.08;user-select:none;">${post.category.charAt(0).toUpperCase()}</span>
+         <span style="position:absolute;bottom:20px;right:24px;font-family:'DM Mono',monospace;font-size:0.65rem;letter-spacing:0.15em;color:var(--text3);text-transform:uppercase;">${post.category}</span>`;
+      document.getElementById('featuredVisual').style.position = 'relative';
+    }
+
+    /* ── RENDER GRID ── */
+    function renderGrid() {
+      const grid  = document.getElementById('blogGrid');
+      const empty = document.getElementById('blogEmpty');
+      const countEl = document.getElementById('blogSearchCount');
+
+      let visible = allPosts.filter(p => {
+        const matchFilter = activeFilter === 'all' || p.category === activeFilter;
+        const q = activeSearch.toLowerCase();
+        const matchSearch = !q ||
+          p.title.toLowerCase().includes(q) ||
+          p.excerpt.toLowerCase().includes(q) ||
+          p.author.toLowerCase().includes(q) ||
+          p.category.toLowerCase().includes(q);
+        return matchFilter && matchSearch;
+      });
+
+      // Don't show featured post in grid
+      const featuredPost = allPosts.find(p => p.featured);
+      if (featuredPost && activeFilter === 'all' && !activeSearch) {
+        visible = visible.filter(p => p.id !== featuredPost.id);
+      }
+
+      if (activeSearch) {
+        countEl.textContent = `${visible.length} result${visible.length !== 1 ? 's' : ''} for "${activeSearch}"`;
+        countEl.classList.add('visible');
+      } else {
+        countEl.classList.remove('visible');
+      }
+
+      if (visible.length === 0) {
+        grid.innerHTML = '';
+        empty.classList.add('visible');
+        return;
+      }
+      empty.classList.remove('visible');
+
+      grid.innerHTML = visible.map((p, i) => `
+        <a class="blog-card" style="animation-delay:${0.04 + i * 0.06}s" data-id="${p.id}" href="javascript:void(0)">
+          <div class="blog-card-category">${p.category}</div>
+          <div class="blog-card-title">${p.title}</div>
+          ${p.excerpt ? `<div class="blog-card-excerpt">${p.excerpt}</div>` : ''}
+          <div class="blog-card-footer">
+            <div class="blog-card-meta">
+              <span class="blog-card-meta-item">${p.author}</span>
+              <span class="blog-card-meta-item">${fmtDate(p.updatedAt)}</span>
+              <span class="blog-card-meta-item">${p.readTime} min</span>
+            </div>
+            <svg class="blog-card-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
+          </div>
+        </a>
+      `).join('');
+
+      grid.querySelectorAll('.blog-card').forEach(card => {
+        card.addEventListener('click', () => openPost(card.dataset.id));
+      });
+    }
+
+    /* ── POST OVERLAY ── */
+    function buildOverlay() {
+      if (document.getElementById('postOverlay')) return;
+      document.body.insertAdjacentHTML('beforeend', `
+        <div id="readingProgress" style="position:fixed;top:0;left:0;right:0;z-index:9999;height:2px;background:transparent;pointer-events:none;">
+          <div id="readingProgressBar" style="height:100%;width:0%;background:var(--text);transition:width 0.1s linear;"></div>
+        </div>
+        <div class="post-overlay" id="postOverlay">
+          <div class="post-overlay-topbar">
+            <button class="post-back-btn" id="postBackBtn">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+              Back to Blog
+            </button>
+            <div class="post-overlay-meta">
+              <button class="post-share-btn" id="postShareBtn">Share</button>
+            </div>
+          </div>
+          <div class="post-overlay-body" id="postOverlayBody">
+            <div class="post-content-wrap">
+              <div id="postInner">
+                <div style="display:flex;align-items:center;gap:10px;padding:80px 0;color:var(--text3);font-size:0.78rem;letter-spacing:0.12em;text-transform:uppercase;">
+                  <div style="width:6px;height:6px;border-radius:50%;background:currentColor;animation:loadPulse 1.2s ease-in-out infinite;"></div>
+                  <div style="width:6px;height:6px;border-radius:50%;background:currentColor;animation:loadPulse 1.2s ease-in-out infinite;animation-delay:0.2s;"></div>
+                  <div style="width:6px;height:6px;border-radius:50%;background:currentColor;animation:loadPulse 1.2s ease-in-out infinite;animation-delay:0.4s;"></div>
+                  Loading
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      `);
+
+      document.getElementById('postBackBtn').addEventListener('click', closePost);
+      document.addEventListener('keydown', e => { if (e.key === 'Escape' && openPostId) closePost(); });
+
+      // Reading progress
+      document.getElementById('postOverlayBody').addEventListener('scroll', function() {
+        const el  = this;
+        const bar = document.getElementById('readingProgressBar');
+        if (!bar) return;
+        const pct = (el.scrollTop / (el.scrollHeight - el.clientHeight)) * 100;
+        bar.style.width = Math.min(pct, 100) + '%';
+      });
+    }
+
+    async function openPost(id) {
+      buildOverlay();
+      openPostId = id;
+      const overlay = document.getElementById('postOverlay');
+      overlay.classList.add('visible');
+      document.body.style.overflow = 'hidden';
+      document.getElementById('readingProgressBar').style.width = '0%';
+
+      try {
+        const fields = await fetchPostContent(id);
+        const post   = allPosts.find(p => p.id === id) || {};
+        const cat    = (fields['Category'] || post.category || 'ecosystem');
+        const date   = fields['Updated At'] ? new Date(fields['Updated At']) : (post.updatedAt || new Date());
+        const initials = (fields['Author'] || post.author || 'T').split(' ').map(w => w[0]).join('').slice(0,2).toUpperCase();
+
+        // Related posts (same category, not current)
+        const related = allPosts.filter(p => p.id !== id && p.category === cat.toLowerCase()).slice(0, 2);
+
+        document.getElementById('postInner').innerHTML = `
+          <div class="post-header">
+            <div class="post-header-kicker">
+              <span>${cat.charAt(0).toUpperCase() + cat.slice(1)}</span>
+              <span style="font-size:0.6rem;letter-spacing:0.12em;text-transform:uppercase;padding:3px 10px;border:1px solid var(--border2);border-radius:100px;color:var(--text2);">${(fields['Read Time'] || post.readTime || 5)} min read</span>
+            </div>
+            <h1 class="post-header-title">${fields['Title'] || post.title || ''}</h1>
+            ${fields['Excerpt'] ? `<p class="post-header-excerpt">${fields['Excerpt']}</p>` : ''}
+            <div class="post-header-meta">
+              <div class="post-author-block">
+                <div class="post-author-avatar">${initials}</div>
+                <div>
+                  <div class="post-author-name">${fields['Author'] || post.author || 'Terapush'}</div>
+                  <div class="post-author-role">Terapush</div>
+                </div>
+              </div>
+              <span class="blog-meta-item">${fmtDate(date)}</span>
+            </div>
+          </div>
+          <div class="post-body">${fields['Content'] || '<p>Content coming soon.</p>'}</div>
+          <div class="post-share-row">
+            <span class="post-share-label">Share</span>
+            <a class="post-share-link" href="https://twitter.com/intent/tweet?text=${encodeURIComponent(fields['Title'] || '')}&url=${encodeURIComponent(window.location.href)}" target="_blank" rel="noopener">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.741l7.73-8.835L1.254 2.25H8.08l4.213 5.567 5.95-5.567Zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+              Twitter / X
+            </a>
+            <a class="post-share-link" href="https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(window.location.href)}" target="_blank" rel="noopener">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>
+              LinkedIn
+            </a>
+            <button class="post-share-link" id="copyLinkBtn">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/></svg>
+              Copy link
+            </button>
+          </div>
+          ${related.length ? `
+          <div class="related-posts">
+            <div class="related-posts-label">More from ${cat.charAt(0).toUpperCase() + cat.slice(1)}</div>
+            <div class="related-posts-grid">
+              ${related.map(rp => `
+                <div class="related-card" data-id="${rp.id}">
+                  <div class="related-card-cat">${rp.category}</div>
+                  <div class="related-card-title">${rp.title}</div>
+                  <div class="related-card-meta">${rp.author} · ${fmtDate(rp.updatedAt)}</div>
+                </div>
+              `).join('')}
+            </div>
+          </div>` : ''}
+        `;
+
+        // Copy link
+        document.getElementById('copyLinkBtn')?.addEventListener('click', () => {
+          navigator.clipboard.writeText(window.location.href).then(() => {
+            const btn = document.getElementById('copyLinkBtn');
+            if (btn) { btn.textContent = 'Copied!'; setTimeout(() => btn.innerHTML = `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/></svg> Copy link`, 2000); }
+          });
+        });
+
+        // Related post clicks
+        document.querySelectorAll('.related-card[data-id]').forEach(card => {
+          card.addEventListener('click', () => {
+            document.getElementById('postOverlayBody').scrollTop = 0;
+            openPost(card.dataset.id);
+          });
+        });
+
+        // Share btn in topbar
+        document.getElementById('postShareBtn')?.addEventListener('click', () => {
+          if (navigator.share) {
+            navigator.share({ title: fields['Title'], url: window.location.href });
+          } else {
+            navigator.clipboard.writeText(window.location.href);
+          }
+        });
+
+      } catch(err) {
+        document.getElementById('postInner').innerHTML = `<p style="color:var(--text2);padding:40px 0;">Failed to load post. Please try again.</p>`;
+        console.error('Post load error:', err);
+      }
+    }
+
+    function closePost() {
+      const overlay = document.getElementById('postOverlay');
+      if (overlay) overlay.classList.remove('visible');
+      document.body.style.overflow = '';
+      openPostId = null;
+      document.getElementById('readingProgressBar').style.width = '0%';
+    }
+
+    /* ── FILTER BUTTONS ── */
+    document.querySelectorAll('.blog-filter-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.blog-filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        activeFilter = btn.dataset.filter;
+        renderGrid();
+      });
+    });
+
+    /* ── SEARCH ── */
+    const searchInput = document.getElementById('blogSearch');
+    if (searchInput) {
+      let searchTimer;
+      searchInput.addEventListener('input', () => {
+        clearTimeout(searchTimer);
+        searchTimer = setTimeout(() => {
+          activeSearch = searchInput.value.trim();
+          renderGrid();
+        }, 250);
+      });
+    }
+
+    /* ── INIT ── */
+    async function init() {
+      // Show skeleton loading state
+      const grid = document.getElementById('blogGrid');
+      grid.innerHTML = Array(6).fill(0).map(() => `
+        <div class="blog-card" style="pointer-events:none;">
+          <div style="width:60px;height:10px;background:var(--bg3);border-radius:4px;"></div>
+          <div style="width:90%;height:18px;background:var(--bg3);border-radius:4px;margin-top:4px;"></div>
+          <div style="width:75%;height:18px;background:var(--bg3);border-radius:4px;"></div>
+          <div style="width:100%;height:40px;background:var(--bg3);border-radius:4px;"></div>
+          <div class="blog-card-footer" style="border-top:1px solid var(--border);padding-top:16px;margin-top:auto;">
+            <div style="width:120px;height:10px;background:var(--bg3);border-radius:4px;"></div>
+          </div>
+        </div>
+      `).join('');
+
+      try {
+        allPosts = await fetchPosts();
+        const featured = allPosts.find(p => p.featured);
+        renderFeatured(featured || null);
+        renderGrid();
+      } catch(err) {
+        console.error('Blog fetch error:', err);
+        grid.innerHTML = '';
+        const empty = document.getElementById('blogEmpty');
+        empty.querySelector('h3').textContent = 'Could not load posts';
+        empty.querySelector('p').textContent  = 'There was an error fetching the latest posts. Please refresh the page.';
+        empty.classList.add('visible');
+      }
+    }
+
+    init();
+  })();
+  </script>
 </body>
 </html>
