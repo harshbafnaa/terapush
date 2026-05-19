@@ -582,35 +582,35 @@
 
     /* ── FETCH ALL PUBLISHED POSTS ── */
     async function fetchPosts() {
-      const params = new URLSearchParams({
-        filterByFormula: '{Published}=TRUE()',
-        sort: JSON.stringify([{ field: 'Updated At', direction: 'desc' }]),
-        fields: ['Title','Excerpt','Category','Author','Read Time','Featured','Updated At'],
-      });
-      // Airtable needs array params as fields[]=...
-      const fieldsArr = ['Title','Excerpt','Category','Author','Read Time','Featured','Updated At'];
-      const qParts = ['filterByFormula=AND({Published}=TRUE())'];
-      qParts.push('sort[0][field]=Updated+At', 'sort[0][direction]=desc');
+      const fieldsArr = ['Title','Excerpt','Category','Author','Read Time','Featured'];
+      const qParts = [
+        'filterByFormula={Published}',
+        'sort[0][field]=Created',
+        'sort[0][direction]=desc',
+      ];
       fieldsArr.forEach((f, i) => qParts.push(`fields[${i}]=${encodeURIComponent(f)}`));
       let records = [];
       let offset  = '';
       do {
         const url = `${AT_URL}?${qParts.join('&')}` + (offset ? `&offset=${offset}` : '');
         const res = await fetch(url, { headers: HEADERS });
-        if (!res.ok) throw new Error(`Airtable error ${res.status}`);
+        if (!res.ok) {
+          const errBody = await res.json().catch(() => ({}));
+          throw new Error(`Airtable ${res.status}: ${(errBody.error||{}).message || res.statusText}`);
+        }
         const data = await res.json();
         records = records.concat(data.records || []);
         offset = data.offset || '';
       } while (offset);
       return records.map(r => ({
         id:        r.id,
-        title:     r.fields['Title']    || 'Untitled',
-        excerpt:   r.fields['Excerpt']  || '',
+        title:     r.fields['Title']     || 'Untitled',
+        excerpt:   r.fields['Excerpt']   || '',
         category:  (r.fields['Category'] || 'ecosystem').toLowerCase(),
-        author:    r.fields['Author']   || 'Terapush',
+        author:    r.fields['Author']    || 'Terapush',
         readTime:  r.fields['Read Time'] || 5,
         featured:  !!r.fields['Featured'],
-        updatedAt: r.fields['Updated At'] ? new Date(r.fields['Updated At']) : new Date(),
+        createdAt: new Date(r.createdTime || Date.now()),
       }));
     }
 
@@ -636,7 +636,7 @@
       document.getElementById('featuredTitle').textContent  = post.title;
       document.getElementById('featuredExcerpt').textContent = post.excerpt;
       document.getElementById('featuredAuthor').textContent  = post.author;
-      document.getElementById('featuredDate').textContent    = fmtDate(post.updatedAt);
+      document.getElementById('featuredDate').textContent    = fmtDate(post.createdAt);
       document.getElementById('featuredRead').textContent    = `${post.readTime} min read`;
       document.getElementById('featuredPost').onclick = () => openPost(post.id);
       document.getElementById('featuredPost').style.cursor = 'pointer';
@@ -693,7 +693,7 @@
           <div class="blog-card-footer">
             <div class="blog-card-meta">
               <span class="blog-card-meta-item">${p.author}</span>
-              <span class="blog-card-meta-item">${fmtDate(p.updatedAt)}</span>
+              <span class="blog-card-meta-item">${fmtDate(p.createdAt)}</span>
               <span class="blog-card-meta-item">${p.readTime} min</span>
             </div>
             <svg class="blog-card-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
@@ -763,7 +763,7 @@
         const fields = await fetchPostContent(id);
         const post   = allPosts.find(p => p.id === id) || {};
         const cat    = (fields['Category'] || post.category || 'ecosystem');
-        const date   = fields['Updated At'] ? new Date(fields['Updated At']) : (post.updatedAt || new Date());
+        const date   = fields['Updated At'] ? new Date(fields['Updated At']) : (post.createdAt || new Date());
         const initials = (fields['Author'] || post.author || 'T').split(' ').map(w => w[0]).join('').slice(0,2).toUpperCase();
 
         // Related posts (same category, not current)
@@ -812,7 +812,7 @@
                 <div class="related-card" data-id="${rp.id}">
                   <div class="related-card-cat">${rp.category}</div>
                   <div class="related-card-title">${rp.title}</div>
-                  <div class="related-card-meta">${rp.author} · ${fmtDate(rp.updatedAt)}</div>
+                  <div class="related-card-meta">${rp.author} · ${fmtDate(rp.createdAt)}</div>
                 </div>
               `).join('')}
             </div>
