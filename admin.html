@@ -157,28 +157,48 @@
 
     /* Cover image upload field */
     .cover-image-wrap { margin-top:4px; }
-    .cover-image-url-row { display:flex; gap:8px; align-items:center; }
-    .cover-image-url-row .form-input { flex:1; }
-    .cover-image-preview {
-      margin-top:10px; width:100%; aspect-ratio:1200/630;
+    .cover-upload-area {
       border:1px dashed var(--border2); border-radius:6px;
-      background:var(--bg3); overflow:hidden; display:none;
-      position:relative;
+      padding:24px 16px; text-align:center; cursor:pointer;
+      display:flex; flex-direction:column; align-items:center; gap:8px;
+      color:var(--text3); transition:border-color 0.2s, background 0.2s;
     }
-    .cover-image-preview.has-image { display:block; border-style:solid; }
+    .cover-upload-area:hover, .cover-upload-area.drag-over {
+      border-color:var(--text2); background:var(--bg3); color:var(--text2);
+    }
+    .cover-upload-area span:first-of-type { font-size:0.82rem; }
+    .cover-image-preview {
+      margin-bottom:8px; width:100%; aspect-ratio:1200/630;
+      border:1px solid var(--border2); border-radius:6px;
+      overflow:hidden; display:none; position:relative;
+    }
+    .cover-image-preview.has-image { display:block; }
     .cover-image-preview img { width:100%; height:100%; object-fit:cover; display:block; }
     .cover-image-clear {
       position:absolute; top:8px; right:8px;
-      width:24px; height:24px; border-radius:50%;
-      background:rgba(0,0,0,0.6); border:none; cursor:pointer;
+      width:26px; height:26px; border-radius:50%;
+      background:rgba(0,0,0,0.65); border:none; cursor:pointer;
       display:flex; align-items:center; justify-content:center;
       color:#fff; font-size:14px; line-height:1;
       transition:background 0.2s;
     }
-    .cover-image-clear:hover { background:rgba(0,0,0,0.85); }
+    .cover-image-clear:hover { background:rgba(0,0,0,0.9); }
     .cover-image-hint {
-      font-size:0.68rem; color:var(--text3); margin-top:6px;
+      font-size:0.66rem; color:var(--text3);
       letter-spacing:0.04em; line-height:1.5;
+    }
+    .cover-progress-bar {
+      width:100%; height:3px; background:var(--bg3);
+      border-radius:2px; overflow:hidden; margin-bottom:6px;
+    }
+    .cover-progress-fill {
+      height:100%; width:0%; background:var(--text2);
+      transition:width 0.3s; border-radius:2px;
+    }
+    #coverUploadProgress {
+      font-size:0.72rem; color:var(--text3);
+      letter-spacing:0.08em; text-transform:uppercase;
+      padding:8px 0;
     }
     .editor-content a { color:var(--text); text-decoration:underline; text-decoration-color:var(--border2); }
     .editor-content hr { border:none; border-top:1px solid var(--border); margin:36px 0; }
@@ -311,14 +331,21 @@
         <div class="form-group">
           <label>Cover Image</label>
           <div class="cover-image-wrap">
-            <div class="cover-image-url-row">
-              <input type="url" class="form-input" id="pMetaCoverUrl" placeholder="https://… paste image URL"/>
-            </div>
+            <input type="hidden" id="pMetaCoverUrl"/>
             <div class="cover-image-preview" id="coverPreview">
               <img id="coverPreviewImg" src="" alt="Cover preview"/>
               <button class="cover-image-clear" id="coverClearBtn" title="Remove image">&#x2715;</button>
             </div>
-            <div class="cover-image-hint">Recommended: <strong>1200 × 630 px</strong> (2:1 ratio) &middot; JPEG or PNG &middot; max 5 MB</div>
+            <div id="coverUploadArea" class="cover-upload-area">
+              <input type="file" id="coverFileInput" accept="image/jpeg,image/png,image/webp" style="display:none;"/>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+              <span id="coverUploadLabel">Click to upload or drag &amp; drop</span>
+              <span class="cover-image-hint">1200 × 630 px &middot; JPEG / PNG / WEBP &middot; max 5 MB</span>
+            </div>
+            <div id="coverUploadProgress" style="display:none;">
+              <div class="cover-progress-bar"><div class="cover-progress-fill" id="coverProgressFill"></div></div>
+              <span id="coverProgressLabel">Uploading…</span>
+            </div>
           </div>
         </div>
         <div class="form-actions">
@@ -663,37 +690,129 @@ document.getElementById('btnSaveJob').addEventListener('click', async () => {
 let posts = [];  // in-memory cache
 let selPostId = null, editPostId = null;
 
-/* Cover image preview helper */
+/* ── COVER IMAGE UPLOAD ── */
 function setCoverPreview(url) {
   const preview = document.getElementById('coverPreview');
   const img     = document.getElementById('coverPreviewImg');
+  const area    = document.getElementById('coverUploadArea');
   if (!preview || !img) return;
   if (url) {
     img.src = url;
     preview.classList.add('has-image');
+    if (area) area.style.display = 'none';
   } else {
     img.src = '';
     preview.classList.remove('has-image');
+    if (area) area.style.display = '';
   }
 }
+
+async function uploadCoverImageFile(file) {
+  if (!editPostId) { showError(new Error('Select a post first before uploading a cover image.')); return; }
+  if (file.size > 5 * 1024 * 1024) { showError(new Error('Image must be under 5 MB.')); return; }
+
+  const progress     = document.getElementById('coverUploadProgress');
+  const progressFill = document.getElementById('coverProgressFill');
+  const progressLabel = document.getElementById('coverProgressLabel');
+  const area         = document.getElementById('coverUploadArea');
+
+  area.style.display    = 'none';
+  progress.style.display = 'block';
+  progressFill.style.width = '20%';
+  progressLabel.textContent = 'Uploading…';
+
+  try {
+    const formData = new FormData();
+    formData.append('file', file, file.name);
+    formData.append('filename', file.name);
+    formData.append('fieldName', 'Cover Image');
+
+    progressFill.style.width = '50%';
+
+    const res = await fetch(
+      `https://content.airtable.com/v0/${AT_BASE}/${AT_POSTS}/${editPostId}/uploadAttachment`,
+      { method: 'POST', headers: { 'Authorization': `Bearer ${AT_KEY}` }, body: formData }
+    );
+
+    progressFill.style.width = '80%';
+
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({}));
+      throw new Error(`Upload failed ${res.status}: ${(err.error||{}).message || res.statusText}`);
+    }
+
+    const data = await res.json();
+    // Airtable returns the updated record — get the first attachment URL
+    const attachments = data.fields?.['Cover Image'] || [];
+    const url = attachments[0]?.url || attachments[0]?.thumbnails?.large?.url || '';
+
+    progressFill.style.width = '100%';
+    progressLabel.textContent = 'Uploaded ✓';
+
+    document.getElementById('pMetaCoverUrl').value = url;
+    // Update local cache
+    const p = posts.find(p => p.id === editPostId);
+    if (p) p.coverImage = url;
+
+    setTimeout(() => {
+      progress.style.display = 'none';
+      progressFill.style.width = '0%';
+      setCoverPreview(url);
+    }, 800);
+
+    showSaved();
+    await fetchPosts();
+  } catch(e) {
+    progress.style.display = 'none';
+    progressFill.style.width = '0%';
+    area.style.display = '';
+    showError(e);
+  }
+}
+
 window.addEventListener('DOMContentLoaded', () => {
-  // Live preview as URL is typed/pasted
-  const urlInput = document.getElementById('pMetaCoverUrl');
-  if (urlInput) {
-    let previewTimer;
-    urlInput.addEventListener('input', () => {
-      clearTimeout(previewTimer);
-      previewTimer = setTimeout(() => setCoverPreview(urlInput.value.trim()), 600);
+  const fileInput = document.getElementById('coverFileInput');
+  const uploadArea = document.getElementById('coverUploadArea');
+
+  // Click to open file picker
+  if (uploadArea) {
+    uploadArea.addEventListener('click', () => fileInput?.click());
+  }
+
+  // File selected via picker
+  if (fileInput) {
+    fileInput.addEventListener('change', () => {
+      if (fileInput.files[0]) uploadCoverImageFile(fileInput.files[0]);
+      fileInput.value = '';
     });
   }
+
+  // Drag and drop
+  if (uploadArea) {
+    uploadArea.addEventListener('dragover', e => { e.preventDefault(); uploadArea.classList.add('drag-over'); });
+    uploadArea.addEventListener('dragleave', () => uploadArea.classList.remove('drag-over'));
+    uploadArea.addEventListener('drop', e => {
+      e.preventDefault();
+      uploadArea.classList.remove('drag-over');
+      const file = e.dataTransfer.files[0];
+      if (file && file.type.startsWith('image/')) uploadCoverImageFile(file);
+    });
+  }
+
   // Clear button
   const clearBtn = document.getElementById('coverClearBtn');
   if (clearBtn) {
-    clearBtn.addEventListener('click', () => {
+    clearBtn.addEventListener('click', async () => {
       document.getElementById('pMetaCoverUrl').value = '';
       setCoverPreview('');
-      // Persist the removal immediately if a post is selected
-      if (editPostId) savePostMeta();
+      if (editPostId) {
+        try {
+          await atUpdate(AT_POSTS, editPostId, { 'Cover Image': [] });
+          const p = posts.find(p => p.id === editPostId);
+          if (p) p.coverImage = '';
+          showSaved();
+        } catch(e) { showError(e); }
+      }
     });
   }
 });
