@@ -272,6 +272,12 @@
     .post-body a { color:var(--text); text-decoration:underline; text-decoration-color:var(--border2); }
     .post-body hr { border:none; border-top:1px solid var(--border); margin:40px 0; }
     .post-body code { font-family:'DM Mono',monospace; font-size:0.85em; background:var(--bg3); padding:2px 6px; border-radius:4px; color:var(--text2); }
+    /* Force editor-injected inline styles to yield to theme vars */
+    .post-body * { color: inherit !important; background-color: transparent !important; font-family: inherit !important; }
+    .post-body a { color: var(--text) !important; }
+    .post-body code { background: var(--bg3) !important; color: var(--text2) !important; font-family: 'DM Mono', monospace !important; }
+    .post-body strong, .post-body b { color: var(--text) !important; }
+    .post-body em, .post-body i { color: var(--text2) !important; }
 
 
     /* ─── SEARCH ─── */
@@ -630,6 +636,24 @@
       return d.toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' });
     }
 
+    /* ── SANITIZE EDITOR HTML ── */
+    // Strip inline color/background/font styles baked in by contenteditable editor
+    // so dark mode CSS variables take over properly
+    function sanitizeContent(html) {
+      const tmp = document.createElement('div');
+      tmp.innerHTML = html;
+      tmp.querySelectorAll('*').forEach(el => {
+        const s = el.style;
+        s.removeProperty('color');
+        s.removeProperty('background');
+        s.removeProperty('background-color');
+        s.removeProperty('font-family');
+        // If style attr is now empty, remove it entirely
+        if (!el.getAttribute('style')?.trim()) el.removeAttribute('style');
+      });
+      return tmp.innerHTML;
+    }
+
     /* ── RENDER FEATURED ── */
     function renderFeatured(post) {
       const wrap = document.getElementById('featuredWrap');
@@ -795,7 +819,7 @@
               <span class="blog-meta-item">${fmtDate(date)}</span>
             </div>
           </div>
-          <div class="post-body">${fields['Content'] || '<p>Content coming soon.</p>'}</div>
+          <div class="post-body">${sanitizeContent(fields['Content'] || '<p>Content coming soon.</p>')}</div>
           <div class="post-share-row">
             <span class="post-share-label">Share</span>
             <a class="post-share-link" href="https://twitter.com/intent/tweet?text=${encodeURIComponent(fields['Title'] || '')}&url=${encodeURIComponent(window.location.href)}" target="_blank" rel="noopener">
