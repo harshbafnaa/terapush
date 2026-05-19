@@ -154,6 +154,32 @@
     .editor-content blockquote { border-left:2px solid var(--border2); margin:24px 0; padding:4px 0 4px 24px; color:var(--text2); font-style:italic; }
     .editor-content ul, .editor-content ol { padding-left:28px; margin:0 0 16px; }
     .editor-content li { margin-bottom:6px; }
+
+    /* Cover image upload field */
+    .cover-image-wrap { margin-top:4px; }
+    .cover-image-url-row { display:flex; gap:8px; align-items:center; }
+    .cover-image-url-row .form-input { flex:1; }
+    .cover-image-preview {
+      margin-top:10px; width:100%; aspect-ratio:1200/630;
+      border:1px dashed var(--border2); border-radius:6px;
+      background:var(--bg3); overflow:hidden; display:none;
+      position:relative;
+    }
+    .cover-image-preview.has-image { display:block; border-style:solid; }
+    .cover-image-preview img { width:100%; height:100%; object-fit:cover; display:block; }
+    .cover-image-clear {
+      position:absolute; top:8px; right:8px;
+      width:24px; height:24px; border-radius:50%;
+      background:rgba(0,0,0,0.6); border:none; cursor:pointer;
+      display:flex; align-items:center; justify-content:center;
+      color:#fff; font-size:14px; line-height:1;
+      transition:background 0.2s;
+    }
+    .cover-image-clear:hover { background:rgba(0,0,0,0.85); }
+    .cover-image-hint {
+      font-size:0.68rem; color:var(--text3); margin-top:6px;
+      letter-spacing:0.04em; line-height:1.5;
+    }
     .editor-content a { color:var(--text); text-decoration:underline; text-decoration-color:var(--border2); }
     .editor-content hr { border:none; border-top:1px solid var(--border); margin:36px 0; }
     .editor-content code { font-family:'DM Mono',monospace; font-size:0.85em; background:var(--bg3); padding:2px 6px; border-radius:4px; color:var(--text2); }
@@ -282,6 +308,19 @@
         </div>
         <div class="form-toggle-row"><div class="form-toggle-label">Published<span class="form-toggle-sublabel">Visible on blog page</span></div><label class="toggle-switch"><input type="checkbox" id="pMetaPublished" checked/><span class="toggle-slider"></span></label></div>
         <div class="form-toggle-row"><div class="form-toggle-label">Featured<span class="form-toggle-sublabel">Pinned at top of blog</span></div><label class="toggle-switch"><input type="checkbox" id="pMetaFeatured"/><span class="toggle-slider"></span></label></div>
+        <div class="form-group">
+          <label>Cover Image</label>
+          <div class="cover-image-wrap">
+            <div class="cover-image-url-row">
+              <input type="url" class="form-input" id="pMetaCoverUrl" placeholder="https://… paste image URL"/>
+            </div>
+            <div class="cover-image-preview" id="coverPreview">
+              <img id="coverPreviewImg" src="" alt="Cover preview"/>
+              <button class="cover-image-clear" id="coverClearBtn" title="Remove image">&#x2715;</button>
+            </div>
+            <div class="cover-image-hint">Recommended: <strong>1200 × 630 px</strong> (2:1 ratio) &middot; JPEG or PNG &middot; max 5 MB</div>
+          </div>
+        </div>
         <div class="form-actions">
           <button class="btn-secondary" id="btnCancelPost">Cancel</button>
           <button class="btn-primary" id="btnOpenEditor">Open editor</button>
@@ -624,6 +663,41 @@ document.getElementById('btnSaveJob').addEventListener('click', async () => {
 let posts = [];  // in-memory cache
 let selPostId = null, editPostId = null;
 
+/* Cover image preview helper */
+function setCoverPreview(url) {
+  const preview = document.getElementById('coverPreview');
+  const img     = document.getElementById('coverPreviewImg');
+  if (!preview || !img) return;
+  if (url) {
+    img.src = url;
+    preview.classList.add('has-image');
+  } else {
+    img.src = '';
+    preview.classList.remove('has-image');
+  }
+}
+window.addEventListener('DOMContentLoaded', () => {
+  // Live preview as URL is typed/pasted
+  const urlInput = document.getElementById('pMetaCoverUrl');
+  if (urlInput) {
+    let previewTimer;
+    urlInput.addEventListener('input', () => {
+      clearTimeout(previewTimer);
+      previewTimer = setTimeout(() => setCoverPreview(urlInput.value.trim()), 600);
+    });
+  }
+  // Clear button
+  const clearBtn = document.getElementById('coverClearBtn');
+  if (clearBtn) {
+    clearBtn.addEventListener('click', () => {
+      document.getElementById('pMetaCoverUrl').value = '';
+      setCoverPreview('');
+      // Persist the removal immediately if a post is selected
+      if (editPostId) savePostMeta();
+    });
+  }
+});
+
 async function fetchPosts() {
   try {
     const data = await atGet(AT_POSTS, 'sort%5B0%5D%5Bfield%5D=Title&sort%5B0%5D%5Bdirection%5D=desc');
@@ -636,8 +710,9 @@ async function fetchPosts() {
       author:    r.fields['Author']    || '',
       readTime:  r.fields['Read Time'] || 5,
       published: !!r.fields['Published'],
-      featured:  !!r.fields['Featured'],
-      updatedAt: r.fields['Updated At'] ? new Date(r.fields['Updated At']).getTime() : Date.now(),
+      featured:   !!r.fields['Featured'],
+      coverImage: r.fields['Cover Image']?.[0]?.url || '',
+      updatedAt:  r.fields['Updated At'] ? new Date(r.fields['Updated At']).getTime() : Date.now(),
     }));
     renderPostList();
     updateTabCounts();
@@ -685,6 +760,8 @@ function clearPostMeta() {
   document.getElementById('pMetaReadTime').value   = 5;
   document.getElementById('pMetaPublished').checked = true;
   document.getElementById('pMetaFeatured').checked  = false;
+  document.getElementById('pMetaCoverUrl').value    = '';
+  setCoverPreview('');
   editPostId = null; selPostId = null;
 }
 function openPostMeta(id) {
@@ -696,6 +773,9 @@ function openPostMeta(id) {
   document.getElementById('pMetaReadTime').value    = post.readTime;
   document.getElementById('pMetaPublished').checked = post.published;
   document.getElementById('pMetaFeatured').checked  = post.featured;
+  const coverUrl = post.coverImage || '';
+  document.getElementById('pMetaCoverUrl').value = coverUrl;
+  setCoverPreview(coverUrl);
   renderPostList();
 }
 async function savePostMeta() {
@@ -708,6 +788,13 @@ async function savePostMeta() {
     'Published': document.getElementById('pMetaPublished').checked,
     'Featured':  document.getElementById('pMetaFeatured').checked,
   };
+  // Attach cover image if URL is set
+  const coverVal = document.getElementById('pMetaCoverUrl').value.trim();
+  if (coverVal) {
+    fields['Cover Image'] = [{ url: coverVal }];
+  } else {
+    fields['Cover Image'] = [];
+  }
   try { await atUpdate(AT_POSTS, editPostId, fields); await fetchPosts(); showSaved(); }
   catch(e) { showError(e); }
 }
