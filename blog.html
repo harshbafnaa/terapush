@@ -582,12 +582,8 @@
 
     /* ── FETCH ALL PUBLISHED POSTS ── */
     async function fetchPosts() {
-      const fieldsArr = ['Title','Excerpt','Category','Author','Read Time','Featured'];
-      const qParts = [
-        'filterByFormula={Published}',
-        'sort[0][field]=Created',
-        'sort[0][direction]=desc',
-      ];
+      const fieldsArr = ['Title','Excerpt','Category','Author','Read Time','Featured','Publish Date','Cover Image'];
+      const qParts = ['filterByFormula={Published}'];
       fieldsArr.forEach((f, i) => qParts.push(`fields[${i}]=${encodeURIComponent(f)}`));
       let records = [];
       let offset  = '';
@@ -602,21 +598,28 @@
         records = records.concat(data.records || []);
         offset = data.offset || '';
       } while (offset);
-      return records.map(r => ({
-        id:        r.id,
-        title:     r.fields['Title']     || 'Untitled',
-        excerpt:   r.fields['Excerpt']   || '',
-        category:  (r.fields['Category'] || 'ecosystem').toLowerCase(),
-        author:    r.fields['Author']    || 'Terapush',
-        readTime:  r.fields['Read Time'] || 5,
-        featured:  !!r.fields['Featured'],
-        createdAt: new Date(r.createdTime || Date.now()),
-      }));
+      return records
+        .sort((a, b) => {
+          const da = a.fields['Publish Date'] ? new Date(a.fields['Publish Date']) : new Date(a.createdTime);
+          const db = b.fields['Publish Date'] ? new Date(b.fields['Publish Date']) : new Date(b.createdTime);
+          return db - da;
+        })
+        .map(r => ({
+          id:          r.id,
+          title:       r.fields['Title']        || 'Untitled',
+          excerpt:     r.fields['Excerpt']      || '',
+          category:    (r.fields['Category']    || 'ecosystem').toLowerCase(),
+          author:      r.fields['Author']       || 'Terapush',
+          readTime:    r.fields['Read Time']    || 5,
+          featured:    !!r.fields['Featured'],
+          coverImage:  r.fields['Cover Image']?.[0]?.url || null,
+          publishDate: r.fields['Publish Date'] ? new Date(r.fields['Publish Date']) : new Date(r.createdTime),
+        }));
     }
 
     /* ── FETCH SINGLE POST CONTENT ── */
     async function fetchPostContent(id) {
-      const res = await fetch(`${AT_URL}/${id}?fields[]=Content&fields[]=Title&fields[]=Excerpt&fields[]=Category&fields[]=Author&fields[]=Read+Time&fields[]=Updated+At`, { headers: HEADERS });
+      const res = await fetch(`${AT_URL}/${id}?fields[]=Content&fields[]=Title&fields[]=Excerpt&fields[]=Category&fields[]=Author&fields[]=Read+Time&fields[]=Publish+Date&fields[]=Cover+Image`, { headers: HEADERS });
       if (!res.ok) throw new Error(`Airtable error ${res.status}`);
       const r = await res.json();
       return r.fields;
@@ -636,16 +639,20 @@
       document.getElementById('featuredTitle').textContent  = post.title;
       document.getElementById('featuredExcerpt').textContent = post.excerpt;
       document.getElementById('featuredAuthor').textContent  = post.author;
-      document.getElementById('featuredDate').textContent    = fmtDate(post.createdAt);
+      document.getElementById('featuredDate').textContent    = fmtDate(post.publishDate);
       document.getElementById('featuredRead').textContent    = `${post.readTime} min read`;
       document.getElementById('featuredPost').onclick = () => openPost(post.id);
       document.getElementById('featuredPost').style.cursor = 'pointer';
 
-      // Decorative visual with first letter of category
-      document.getElementById('featuredVisual').innerHTML =
-        `<span style="font-size:5rem;opacity:0.08;user-select:none;">${post.category.charAt(0).toUpperCase()}</span>
-         <span style="position:absolute;bottom:20px;right:24px;font-family:'DM Mono',monospace;font-size:0.65rem;letter-spacing:0.15em;color:var(--text3);text-transform:uppercase;">${post.category}</span>`;
-      document.getElementById('featuredVisual').style.position = 'relative';
+      // Featured visual: use Cover Image if available, else decorative fallback
+      const fv = document.getElementById('featuredVisual');
+      if (post.coverImage) {
+        fv.innerHTML = `<img src="${post.coverImage}" alt="${post.title}" style="width:100%;height:100%;object-fit:cover;border-radius:3px;"/>`;
+      } else {
+        fv.style.position = 'relative';
+        fv.innerHTML = `<span style="font-size:5rem;opacity:0.08;user-select:none;">${post.category.charAt(0).toUpperCase()}</span>
+          <span style="position:absolute;bottom:20px;right:24px;font-family:'DM Mono',monospace;font-size:0.65rem;letter-spacing:0.15em;color:var(--text3);text-transform:uppercase;">${post.category}</span>`;
+      }
     }
 
     /* ── RENDER GRID ── */
@@ -693,7 +700,7 @@
           <div class="blog-card-footer">
             <div class="blog-card-meta">
               <span class="blog-card-meta-item">${p.author}</span>
-              <span class="blog-card-meta-item">${fmtDate(p.createdAt)}</span>
+              <span class="blog-card-meta-item">${fmtDate(p.publishDate)}</span>
               <span class="blog-card-meta-item">${p.readTime} min</span>
             </div>
             <svg class="blog-card-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
@@ -763,7 +770,7 @@
         const fields = await fetchPostContent(id);
         const post   = allPosts.find(p => p.id === id) || {};
         const cat    = (fields['Category'] || post.category || 'ecosystem');
-        const date   = fields['Updated At'] ? new Date(fields['Updated At']) : (post.createdAt || new Date());
+        const date   = fields['Publish Date'] ? new Date(fields['Publish Date']) : (post.publishDate || new Date());
         const initials = (fields['Author'] || post.author || 'T').split(' ').map(w => w[0]).join('').slice(0,2).toUpperCase();
 
         // Related posts (same category, not current)
@@ -812,7 +819,7 @@
                 <div class="related-card" data-id="${rp.id}">
                   <div class="related-card-cat">${rp.category}</div>
                   <div class="related-card-title">${rp.title}</div>
-                  <div class="related-card-meta">${rp.author} · ${fmtDate(rp.createdAt)}</div>
+                  <div class="related-card-meta">${rp.author} · ${fmtDate(rp.publishDate)}</div>
                 </div>
               `).join('')}
             </div>
