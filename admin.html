@@ -457,6 +457,7 @@ const AT_BASE    = 'appTw8tOpvI7BJ6kT';
 const AT_JOBS    = 'tblEy2iZrPk40syvj';
 const AT_POSTS   = 'tblXkvUWNSrbvMwuV';
 const AT_KEY     = 'patRFec5Of1vjA5k1.4750ff4719623f66b48aa843c95174dd54bdff769d4ebc87c5c07b72778ee8b4';
+const IMGBB_KEY  = 'b204f1c8a07bbfbce503df3426d9fc26'; // Get free key at imgbb.com/api
 const AT_URL     = `https://api.airtable.com/v0/${AT_BASE}`;
 const AT_HEADERS = { 'Authorization': `Bearer ${AT_KEY}`, 'Content-Type': 'application/json' };
 
@@ -708,60 +709,76 @@ function setCoverPreview(url) {
 }
 
 async function uploadCoverImageFile(file) {
-  if (!editPostId) { showError(new Error('Select a post first before uploading a cover image.')); return; }
-  if (file.size > 5 * 1024 * 1024) { showError(new Error('Image must be under 5 MB.')); return; }
+  if (!editPostId) {
+    showError(new Error('Select a post from the list first, then upload a cover image.'));
+    return;
+  }
+  if (file.size > 5 * 1024 * 1024) {
+    showError(new Error('Image must be under 5 MB.'));
+    return;
+  }
+  if (!IMGBB_KEY || IMGBB_KEY === 'YOUR_IMGBB_KEY_HERE') {
+    showError(new Error('Add your ImgBB API key: open admin.html, find IMGBB_KEY at the top of the script, replace YOUR_IMGBB_KEY_HERE. Get a free key at imgbb.com/api'));
+    return;
+  }
 
-  const progress     = document.getElementById('coverUploadProgress');
-  const progressFill = document.getElementById('coverProgressFill');
+  const progress      = document.getElementById('coverUploadProgress');
+  const progressFill  = document.getElementById('coverProgressFill');
   const progressLabel = document.getElementById('coverProgressLabel');
-  const area         = document.getElementById('coverUploadArea');
+  const area          = document.getElementById('coverUploadArea');
 
-  area.style.display    = 'none';
+  area.style.display     = 'none';
   progress.style.display = 'block';
-  progressFill.style.width = '20%';
-  progressLabel.textContent = 'Uploading…';
+  progressFill.style.width = '15%';
+  progressLabel.textContent = 'Reading file…';
 
   try {
-    const formData = new FormData();
-    formData.append('file', file, file.name);
-    formData.append('filename', file.name);
-    formData.append('fieldName', 'Cover Image');
+    // Step 1: Convert file to base64
+    const base64 = await new Promise((res, rej) => {
+      const reader = new FileReader();
+      reader.onload  = () => res(reader.result.split(',')[1]);
+      reader.onerror = () => rej(new Error('Failed to read file'));
+      reader.readAsDataURL(file);
+    });
 
-    progressFill.style.width = '50%';
+    progressFill.style.width = '35%';
+    progressLabel.textContent = 'Uploading to image host…';
 
-    const res = await fetch(
-      `https://content.airtable.com/v0/${AT_BASE}/${AT_POSTS}/${editPostId}/uploadAttachment`,
-      { method: 'POST', headers: { 'Authorization': `Bearer ${AT_KEY}` }, body: formData }
-    );
+    // Step 2: Upload to ImgBB
+    const imgForm = new FormData();
+    imgForm.append('image', base64);
+    imgForm.append('name', file.name.replace(/\.[^.]+$/, ''));
 
-    progressFill.style.width = '80%';
+    const imgRes = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_KEY}`, {
+      method: 'POST',
+      body: imgForm,
+    });
+    const imgData = await imgRes.json();
+    if (!imgData.success) throw new Error(`ImgBB: ${imgData.error?.message || 'Upload failed'}`);
 
-    if (!res.ok) {
-      const err = await res.json().catch(() => ({}));
-      throw new Error(`Upload failed ${res.status}: ${(err.error||{}).message || res.statusText}`);
-    }
+    const imageUrl = imgData.data.display_url || imgData.data.url;
+    progressFill.style.width = '70%';
+    progressLabel.textContent = 'Saving to Airtable…';
 
-    const data = await res.json();
-    // Airtable returns the updated record — get the first attachment URL
-    const attachments = data.fields?.['Cover Image'] || [];
-    const url = attachments[0]?.url || attachments[0]?.thumbnails?.large?.url || '';
+    // Step 3: Save URL to Airtable as attachment
+    await atUpdate(AT_POSTS, editPostId, { 'Cover Image': [{ url: imageUrl, filename: file.name }] });
 
     progressFill.style.width = '100%';
-    progressLabel.textContent = 'Uploaded ✓';
+    progressLabel.textContent = 'Done ✓';
 
-    document.getElementById('pMetaCoverUrl').value = url;
     // Update local cache
+    document.getElementById('pMetaCoverUrl').value = imageUrl;
     const p = posts.find(p => p.id === editPostId);
-    if (p) p.coverImage = url;
+    if (p) p.coverImage = imageUrl;
 
     setTimeout(() => {
       progress.style.display = 'none';
       progressFill.style.width = '0%';
-      setCoverPreview(url);
-    }, 800);
+      setCoverPreview(imageUrl);
+    }, 700);
 
     showSaved();
-    await fetchPosts();
+
   } catch(e) {
     progress.style.display = 'none';
     progressFill.style.width = '0%';
