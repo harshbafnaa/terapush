@@ -217,9 +217,48 @@
     .btn-danger { flex:1; padding:11px; background:rgba(255,80,80,0.1); color:rgba(255,80,80,0.9); border:1px solid rgba(255,80,80,0.3); border-radius:8px; font-family:'League Spartan',sans-serif; font-size:0.78rem; font-weight:600; letter-spacing:0.1em; text-transform:uppercase; cursor:pointer; transition:background 0.2s; }
     .btn-danger:hover { background:rgba(255,80,80,0.2); }
 
+
+    /* ─── SUBMISSIONS ─── */
+    .submissions-layout { max-width:1080px; margin:0 auto; padding:40px 48px 120px; display:grid; grid-template-columns:1fr 400px; gap:40px; align-items:start; }
+    .sub-row { border:1px solid var(--border); padding:20px 24px; display:grid; grid-template-columns:1fr auto; gap:16px; align-items:center; transition:background 0.2s, border-color 0.2s; cursor:pointer; }
+    .sub-row.selected { border-color:var(--border2); background:var(--bg2); }
+    .sub-row:hover { background:var(--bg2); }
+    .sub-row.status-approved { opacity:0.55; }
+    .sub-row.status-rejected { opacity:0.4; }
+    .sub-row-title { font-family:'Instrument Serif',serif; font-size:1rem; color:var(--text); margin-bottom:4px; }
+    .sub-row-author { font-size:0.75rem; color:var(--text3); margin-bottom:6px; }
+    .admin-tag.pending-tag  { border-color:rgba(255,200,60,0.35); color:rgba(255,200,60,0.85); }
+    .admin-tag.approved-tag { border-color:rgba(100,200,120,0.3); color:rgba(100,200,120,0.8); }
+    .admin-tag.rejected-tag { border-color:rgba(255,80,80,0.25); color:rgba(255,80,80,0.6); }
+
+    /* Detail panel */
+    .sub-detail-panel { border:1px solid var(--border); border-radius:12px; padding:28px; position:sticky; top:140px; background:var(--card-bg); display:flex; flex-direction:column; gap:0; }
+    .sub-detail-empty { display:flex; align-items:center; justify-content:center; min-height:200px; }
+    .sub-detail-empty p { font-size:0.82rem; color:var(--text3); text-align:center; }
+    .sub-detail-section { padding:16px 0; border-bottom:1px solid var(--border); }
+    .sub-detail-section:last-of-type { border-bottom:none; }
+    .sub-detail-label { font-size:0.62rem; letter-spacing:0.16em; text-transform:uppercase; color:var(--text3); font-weight:500; margin-bottom:6px; }
+    .sub-detail-value { font-size:0.85rem; color:var(--text2); line-height:1.6; word-break:break-word; }
+    .sub-detail-value a { color:var(--text2); text-decoration:underline; text-decoration-color:var(--border2); }
+    .sub-detail-value.mono { font-family:'DM Mono',monospace; font-size:0.78rem; }
+    .sub-detail-draft { font-size:0.82rem; color:var(--text2); line-height:1.7; max-height:200px; overflow-y:auto; white-space:pre-wrap; padding-right:4px; }
+    .sub-detail-draft::-webkit-scrollbar { width:4px; }
+    .sub-detail-draft::-webkit-scrollbar-thumb { background:var(--border2); border-radius:2px; }
+    .sub-detail-actions { display:flex; gap:8px; padding-top:20px; flex-wrap:wrap; }
+    .btn-approve { flex:1; min-width:120px; padding:10px 16px; background:rgba(100,200,120,0.1); color:rgba(100,200,120,0.9); border:1px solid rgba(100,200,120,0.3); border-radius:8px; font-family:'League Spartan',sans-serif; font-size:0.72rem; font-weight:600; letter-spacing:0.12em; text-transform:uppercase; cursor:pointer; transition:background 0.2s; }
+    .btn-approve:hover { background:rgba(100,200,120,0.2); }
+    .btn-reject  { padding:10px 16px; background:rgba(255,80,80,0.06); color:rgba(255,80,80,0.7); border:1px solid rgba(255,80,80,0.2); border-radius:8px; font-family:'League Spartan',sans-serif; font-size:0.72rem; font-weight:600; letter-spacing:0.12em; text-transform:uppercase; cursor:pointer; transition:background 0.2s; }
+    .btn-reject:hover { background:rgba(255,80,80,0.14); }
+    .sub-filter-bar { display:flex; align-items:center; gap:8px; margin-bottom:16px; flex-wrap:wrap; }
+    .sub-filter-btn { font-family:'League Spartan',sans-serif; font-size:0.68rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--text3); border:1px solid var(--border); padding:5px 12px; border-radius:100px; background:transparent; cursor:pointer; transition:color 0.2s, border-color 0.2s; }
+    .sub-filter-btn:hover { color:var(--text2); border-color:var(--border2); }
+    .sub-filter-btn.active { color:var(--text); border-color:var(--text2); }
+
     @media (max-width:900px) {
       .admin-nav, .admin-tabs { padding:0 16px; }
       .admin-layout { grid-template-columns:1fr; padding:32px 20px 80px; gap:32px; }
+      .submissions-layout { grid-template-columns:1fr; padding:32px 20px 80px; gap:32px; }
+      .sub-detail-panel { position:static; }
       .form-panel { position:static; }
       .form-row { grid-template-columns:1fr; }
       .editor-topbar, .editor-meta-bar, .editor-toolbar, .editor-body, .editor-footer { padding-left:20px; padding-right:20px; }
@@ -268,6 +307,10 @@
     <button class="admin-tab" data-tab="blog">
       <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
       Blog & News <span class="tab-count" id="blogTabCount">0</span>
+    </button>
+    <button class="admin-tab" data-tab="submissions">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+      Submissions <span class="tab-count" id="submissionsTabCount">0</span>
     </button>
   </div>
 
@@ -351,6 +394,63 @@
         <div class="form-actions">
           <button class="btn-secondary" id="btnCancelPost">Cancel</button>
           <button class="btn-primary" id="btnOpenEditor">Open editor</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- SUBMISSIONS TAB -->
+  <div class="admin-section" id="section-submissions">
+    <div class="submissions-layout">
+      <div>
+        <div class="panel-label">
+          Blog Submissions
+          <span class="count-badge" id="subCountBadge">—</span>
+        </div>
+        <div class="sub-filter-bar">
+          <button class="sub-filter-btn active" data-filter="all">All</button>
+          <button class="sub-filter-btn" data-filter="Pending">Pending</button>
+          <button class="sub-filter-btn" data-filter="Approved">Approved</button>
+          <button class="sub-filter-btn" data-filter="Rejected">Rejected</button>
+        </div>
+        <div class="admin-list" id="adminSubList"></div>
+        <div class="admin-empty-list" id="adminEmptySubs"><p>No submissions yet.</p></div>
+      </div>
+      <div class="sub-detail-panel" id="subDetailPanel">
+        <div class="sub-detail-empty" id="subDetailEmpty">
+          <p>Select a submission<br/>to review the details.</p>
+        </div>
+        <div id="subDetailContent" style="display:none;">
+          <div class="sub-detail-section">
+            <div class="sub-detail-label">Author</div>
+            <div class="sub-detail-value" id="sdName"></div>
+            <div class="sub-detail-value mono" id="sdEmail" style="margin-top:2px;"></div>
+            <div class="sub-detail-value" id="sdRole" style="margin-top:2px;font-size:0.75rem;color:var(--text3);"></div>
+            <div class="sub-detail-value" id="sdProfile" style="margin-top:4px;font-size:0.75rem;"></div>
+          </div>
+          <div class="sub-detail-section">
+            <div class="sub-detail-label">Article</div>
+            <div class="sub-detail-value" id="sdTitle" style="font-family:'Instrument Serif',serif;font-size:1.05rem;color:var(--text);"></div>
+            <div style="display:flex;gap:8px;margin-top:6px;flex-wrap:wrap;">
+              <span class="admin-tag" id="sdCategory"></span>
+              <span class="admin-tag" id="sdWordCount"></span>
+              <span class="admin-tag" id="sdDate" style="font-family:'DM Mono',monospace;text-transform:none;letter-spacing:0;"></span>
+            </div>
+          </div>
+          <div class="sub-detail-section">
+            <div class="sub-detail-label">Summary</div>
+            <div class="sub-detail-value" id="sdSummary"></div>
+          </div>
+          <div class="sub-detail-section">
+            <div class="sub-detail-label">Draft / Sample</div>
+            <div class="sub-detail-draft" id="sdDraft"></div>
+          </div>
+          <div class="sub-detail-actions">
+            <button class="btn-approve" id="btnApprove">✓ Approve → Create Draft</button>
+            <button class="btn-reject" id="btnReject">Reject</button>
+            <button class="admin-icon-btn delete" id="btnDeleteSub" title="Delete submission"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4h6v2"/></svg></button>
+          </div>
         </div>
       </div>
     </div>
@@ -456,6 +556,7 @@ const ADMIN_HASH = 'f0b0adf2fe50559fdbaa1478183d528629344efa1cb83453ded95e0d2eee
 const AT_BASE    = 'appTw8tOpvI7BJ6kT';
 const AT_JOBS    = 'tblEy2iZrPk40syvj';
 const AT_POSTS   = 'tblXkvUWNSrbvMwuV';
+const AT_SUBMISSIONS = 'tblyPdpIgi3gG4TDk'; // Create in Airtable: Name, Role, Email, Profile URL, Title, Category, Word Count, Summary, Draft, Status (single select: Pending/Approved/Rejected), Submitted At
 const AT_KEY     = 'patRFec5Of1vjA5k1.4750ff4719623f66b48aa843c95174dd54bdff769d4ebc87c5c07b72778ee8b4';
 const IMGBB_KEY  = 'b204f1c8a07bbfbce503df3426d9fc26'; // Get free key at imgbb.com/api
 const AT_URL     = `https://api.airtable.com/v0/${AT_BASE}`;
@@ -561,13 +662,16 @@ function openConfirm(id, type, label) {
   document.getElementById('confirmTitle').textContent = `Delete "${label}"?`;
   document.getElementById('confirmDesc').textContent  = type === 'job'
     ? 'This removes the role from the careers page. Cannot be undone.'
+    : type === 'submission'
+    ? 'This permanently deletes the submission. Cannot be undone.'
     : 'This permanently deletes the post and all its content. Cannot be undone.';
   document.getElementById('confirmOverlay').classList.add('visible');
 }
 document.getElementById('confirmCancel').addEventListener('click', () => { document.getElementById('confirmOverlay').classList.remove('visible'); });
 document.getElementById('confirmDelete').addEventListener('click', () => {
-  if (pendingDeleteType === 'job') deleteJob(pendingDeleteId);
-  else deletePost(pendingDeleteId);
+  if (pendingDeleteType === 'job')        deleteJob(pendingDeleteId);
+  else if (pendingDeleteType === 'submission') deleteSubmission(pendingDeleteId);
+  else                                    deletePost(pendingDeleteId);
   document.getElementById('confirmOverlay').classList.remove('visible');
 });
 document.getElementById('confirmOverlay').addEventListener('click', function(e) { if (e.target === this) this.classList.remove('visible'); });
@@ -1064,16 +1168,225 @@ function syncToolbar() {
   });
 }
 
+
+/* ══════════════════════════════════════════
+   SUBMISSIONS — Airtable backed
+   Setup: Create a table "Submissions" in your Airtable base with fields:
+   Name (text), Role (text), Email (text), Profile URL (url),
+   Title (text), Category (text), Word Count (text),
+   Summary (long text), Draft (long text),
+   Status (single select: Pending / Approved / Rejected),
+   Submitted At (date/time)
+   Then replace AT_SUBMISSIONS at the top of this script with the table ID.
+══════════════════════════════════════════ */
+let submissions = [];
+let selSubId    = null;
+let subFilter   = 'all';
+
+// Filter buttons
+document.querySelectorAll('.sub-filter-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.sub-filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    subFilter = btn.dataset.filter;
+    renderSubList();
+  });
+});
+
+async function fetchSubmissions() {
+  try {
+    const data = await atGet(AT_SUBMISSIONS, 'sort%5B0%5D%5Bfield%5D=Submitted+At&sort%5B0%5D%5Bdirection%5D=desc');
+    submissions = data.records.map(r => ({
+      id:          r.id,
+      name:        r.fields['Name']         || '',
+      role:        r.fields['Role']         || '',
+      email:       r.fields['Email']        || '',
+      profileUrl:  r.fields['Profile URL']  || '',
+      title:       r.fields['Title']        || '',
+      category:    r.fields['Category']     || '',
+      wordCount:   r.fields['Word Count']   || '',
+      summary:     r.fields['Summary']      || '',
+      draft:       r.fields['Draft']        || '',
+      status:      r.fields['Status']       || 'Pending',
+      submittedAt: r.fields['Submitted At'] || '',
+    }));
+    renderSubList();
+    updateTabCounts();
+  } catch(e) { showError(e); }
+}
+
+function renderSubList() {
+  const list  = document.getElementById('adminSubList');
+  const empty = document.getElementById('adminEmptySubs');
+  const filtered = subFilter === 'all' ? submissions : submissions.filter(s => s.status === subFilter);
+  const pending = submissions.filter(s => s.status === 'Pending').length;
+  document.getElementById('subCountBadge').textContent = `${pending} pending · ${submissions.length} total`;
+  list.innerHTML = '';
+  if (!filtered.length) { empty.classList.add('visible'); return; }
+  empty.classList.remove('visible');
+  filtered.forEach(sub => {
+    const row = document.createElement('div');
+    const statusClass = sub.status === 'Approved' ? 'status-approved' : sub.status === 'Rejected' ? 'status-rejected' : '';
+    row.className = `sub-row ${statusClass}${sub.id === selSubId ? ' selected' : ''}`;
+    const tagClass = sub.status === 'Approved' ? 'approved-tag' : sub.status === 'Rejected' ? 'rejected-tag' : 'pending-tag';
+    const dateStr = sub.submittedAt ? new Date(sub.submittedAt).toLocaleDateString('en-IN',{day:'numeric',month:'short'}) : '';
+    row.innerHTML = `
+      <div class="admin-row-left">
+        <div class="sub-row-title">${sub.title || 'Untitled'}</div>
+        <div class="sub-row-author">${sub.name}${sub.role ? ' · ' + sub.role : ''} · ${sub.email}</div>
+        <div class="admin-row-meta">
+          <span class="admin-tag">${sub.category}</span>
+          <span class="admin-tag">${sub.wordCount}</span>
+          <span class="admin-tag ${tagClass}">${sub.status}</span>
+          ${dateStr ? `<span class="admin-tag" style="font-family:'DM Mono',monospace;text-transform:none;letter-spacing:0;">${dateStr}</span>` : ''}
+        </div>
+      </div>
+      <div class="admin-row-actions">
+        <button class="admin-icon-btn delete" data-action="delete" title="Delete"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4h6v2"/></svg></button>
+      </div>`;
+    row.querySelector('.admin-row-left').addEventListener('click', () => openSubDetail(sub.id));
+    row.querySelector('[data-action="delete"]').addEventListener('click', e => {
+      e.stopPropagation();
+      openConfirm(sub.id, 'submission', sub.title || 'Untitled');
+    });
+    list.appendChild(row);
+  });
+}
+
+function openSubDetail(id) {
+  const sub = submissions.find(s => s.id === id);
+  if (!sub) return;
+  selSubId = id;
+  renderSubList();
+
+  document.getElementById('subDetailEmpty').style.display   = 'none';
+  document.getElementById('subDetailContent').style.display = 'block';
+
+  document.getElementById('sdName').textContent    = sub.name;
+  document.getElementById('sdEmail').textContent   = sub.email;
+  document.getElementById('sdRole').textContent    = sub.role;
+  document.getElementById('sdProfile').innerHTML   = sub.profileUrl
+    ? `<a href="${sub.profileUrl}" target="_blank" rel="noopener">${sub.profileUrl}</a>` : '';
+  document.getElementById('sdTitle').textContent   = sub.title;
+  document.getElementById('sdCategory').textContent  = sub.category;
+  document.getElementById('sdWordCount').textContent = sub.wordCount;
+  document.getElementById('sdDate').textContent      = sub.submittedAt
+    ? new Date(sub.submittedAt).toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'numeric'}) : '';
+  document.getElementById('sdSummary').textContent = sub.summary;
+  document.getElementById('sdDraft').textContent   = sub.draft;
+
+  // Update action buttons
+  const approveBtn = document.getElementById('btnApprove');
+  const rejectBtn  = document.getElementById('btnReject');
+  const deleteBtn  = document.getElementById('btnDeleteSub');
+
+  approveBtn.onclick = () => approveSubmission(id);
+  rejectBtn.onclick  = () => rejectSubmission(id);
+  deleteBtn.onclick  = () => openConfirm(id, 'submission', sub.title || 'Untitled');
+
+  if (sub.status === 'Approved') {
+    approveBtn.disabled = true;
+    approveBtn.style.opacity = '0.4';
+    approveBtn.textContent = '✓ Approved';
+  } else {
+    approveBtn.disabled = false;
+    approveBtn.style.opacity = '';
+    approveBtn.textContent = '✓ Approve → Create Draft';
+  }
+  if (sub.status === 'Rejected') {
+    rejectBtn.disabled = true;
+    rejectBtn.style.opacity = '0.4';
+  } else {
+    rejectBtn.disabled = false;
+    rejectBtn.style.opacity = '';
+  }
+}
+
+async function approveSubmission(id) {
+  const sub = submissions.find(s => s.id === id);
+  if (!sub) return;
+  try {
+    setLoading(true);
+
+    // Map category from submission format to blog post format
+    const catMap = {
+      'Fundraising':         'fundraising',
+      'Venture Capital':     'fundraising',
+      'Founder Stories':     'founders',
+      'Product Building':    'ecosystem',
+      'GTM Strategy':        'ecosystem',
+      'Hiring & Culture':    'ecosystem',
+      'Market Analysis':     'markets',
+      'Deep Tech':           'ecosystem',
+      'Regulation & Policy': 'ecosystem',
+      'Other':               'ecosystem',
+    };
+    const mappedCat = catMap[sub.category] || 'ecosystem';
+
+    // Create blog post draft from submission
+    const newPost = await atCreate(AT_POSTS, {
+      'Title':     sub.title,
+      'Content':   sub.draft,
+      'Excerpt':   sub.summary.slice(0, 160),
+      'Category':  mappedCat,
+      'Author':    sub.name,
+      'Read Time': 5,
+      'Published': false,
+      'Featured':  false,
+    });
+
+    // Mark submission as Approved
+    await atUpdate(AT_SUBMISSIONS, id, { 'Status': 'Approved' });
+
+    // Refresh both lists
+    await Promise.all([fetchSubmissions(), fetchPosts()]);
+
+    // Switch to blog tab and open the new post in the editor
+    document.querySelectorAll('.admin-tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.admin-section').forEach(s => s.classList.remove('active'));
+    document.querySelector('.admin-tab[data-tab="blog"]').classList.add('active');
+    document.getElementById('section-blog').classList.add('active');
+    openEditorFor(newPost.id);
+
+    showSaved();
+  } catch(e) { showError(e); }
+}
+
+async function rejectSubmission(id) {
+  try {
+    setLoading(true);
+    await atUpdate(AT_SUBMISSIONS, id, { 'Status': 'Rejected' });
+    await fetchSubmissions();
+    if (selSubId === id) openSubDetail(id);
+    showSaved();
+  } catch(e) { showError(e); }
+}
+
+async function deleteSubmission(id) {
+  try {
+    setLoading(true);
+    await atDelete(AT_SUBMISSIONS, id);
+    if (selSubId === id) {
+      selSubId = null;
+      document.getElementById('subDetailEmpty').style.display   = 'flex';
+      document.getElementById('subDetailContent').style.display = 'none';
+    }
+    await fetchSubmissions();
+    showSaved();
+  } catch(e) { showError(e); }
+}
+
 /* ══════════════════════════════════════════
    TAB COUNTS + INIT
 ══════════════════════════════════════════ */
 function updateTabCounts() {
-  document.getElementById('careersTabCount').textContent = jobs.filter(j=>j.active).length;
-  document.getElementById('blogTabCount').textContent    = posts.filter(p=>p.published).length;
+  document.getElementById('careersTabCount').textContent       = jobs.filter(j=>j.active).length;
+  document.getElementById('blogTabCount').textContent          = posts.filter(p=>p.published).length;
+  document.getElementById('submissionsTabCount').textContent   = submissions.filter(s=>s.status==='Pending').length;
 }
 async function initAll() {
   document.getElementById('saveStatus').textContent = 'Loading…';
-  await Promise.all([fetchJobs(), fetchPosts()]);
+  await Promise.all([fetchJobs(), fetchPosts(), fetchSubmissions()]);
   document.getElementById('saveStatus').textContent = '—';
 }
 </script>

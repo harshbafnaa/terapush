@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Write for Us — Terapush</title>
   <meta name="description" content="Contribute to the Terapush blog. Submit your article on India's startup ecosystem — fundraising, building, investing, and more."/>
-  <!-- Open Graph -->
   <meta property="og:type"        content="website"/>
   <meta property="og:site_name"   content="Terapush"/>
   <meta property="og:title"       content="Write for Us — Terapush"/>
@@ -15,34 +14,27 @@
   <meta property="og:image:width" content="1200"/>
   <meta property="og:image:height"content="630"/>
   <meta property="og:locale"      content="en_IN"/>
-  <!-- Twitter Card -->
   <meta name="twitter:card"        content="summary_large_image"/>
   <meta name="twitter:site"        content="@terapush"/>
   <meta name="twitter:title"       content="Write for Us — Terapush"/>
   <meta name="twitter:description" content="Contribute to the Terapush blog. Submit your article on India's startup ecosystem."/>
   <meta name="twitter:image"       content="https://terapush.in/images/og-image.png"/>
-  <!-- Canonical -->
   <link rel="canonical" href="https://terapush.in/write-for-us"/>
   <link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@300;400;500;600;700;800;900&family=Instrument+Serif:ital@0;1&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet"/>
   <link rel="sitemap" type="application/xml" title="Sitemap" href="sitemap.xml"/>
   <link rel="stylesheet" href="shared.css"/>
   <link rel="icon" type="image/png" href="favicon.png">
   <style>
-    /* ─── LAYOUT ─── */
     .write-layout {
       max-width: 1080px; margin: 0 auto;
       display: grid; grid-template-columns: 1fr 1.3fr;
       gap: 80px; padding: 80px 48px 100px;
       align-items: start;
     }
-
-    /* ─── INFO SIDE ─── */
     .write-info-label { font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text2); margin-bottom: 20px; font-weight: 500; }
     .write-info-heading { font-family: 'Instrument Serif', serif; font-size: clamp(1.8rem, 3vw, 2.8rem); font-weight: 400; line-height: 1.15; color: var(--text); letter-spacing: -0.02em; margin-bottom: 24px; }
     .write-info-heading em { font-style: italic; color: var(--text2); }
     .write-info-body { font-size: 0.85rem; color: var(--text2); line-height: 1.8; font-weight: 300; margin-bottom: 16px; }
-
-    /* ─── GUIDELINES LIST ─── */
     .write-guidelines { margin-top: 36px; display: flex; flex-direction: column; gap: 0; border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
     .guideline-row { display: flex; align-items: flex-start; gap: 16px; padding: 16px 20px; border-bottom: 1px solid var(--border); transition: background 0.2s; }
     .guideline-row:last-child { border-bottom: none; }
@@ -50,57 +42,31 @@
     .guideline-num { font-family: 'DM Mono', monospace; font-size: 0.72rem; color: var(--text2); flex-shrink: 0; padding-top: 2px; font-weight: 500; }
     .guideline-text { font-size: 0.78rem; color: var(--text2); line-height: 1.6; }
     .guideline-text strong { color: var(--text); font-weight: 500; display: block; margin-bottom: 2px; }
-
-    /* ─── TOPICS ─── */
     .topics-wrap { margin-top: 32px; }
     .topics-label { font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--text2); font-weight: 500; margin-bottom: 14px; }
     .topics-tags { display: flex; flex-wrap: wrap; gap: 8px; }
-    .topic-tag {
-      font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase;
-      font-weight: 500; color: var(--text2);
-      border: 1px solid var(--border); border-radius: 100px;
-      padding: 6px 14px;
-      transition: border-color 0.2s, color 0.2s;
-    }
+    .topic-tag { font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 500; color: var(--text2); border: 1px solid var(--border); border-radius: 100px; padding: 6px 14px; transition: border-color 0.2s, color 0.2s; }
     .topic-tag:hover { border-color: var(--border2); color: var(--text); }
-
-    /* ─── FORM BOX ─── */
-    .write-form-box {
-      border: 1px solid var(--border); border-radius: 16px;
-      padding: 48px 40px; background: var(--card-bg);
-      position: sticky; top: 88px;
-    }
+    .write-form-box { border: 1px solid var(--border); border-radius: 16px; padding: 48px 40px; background: var(--card-bg); position: sticky; top: 88px; }
     .write-form-title { font-family: 'Instrument Serif', serif; font-size: 1.5rem; font-style: italic; color: var(--text); margin-bottom: 6px; }
     .write-form-sub { font-size: 0.85rem; color: var(--text2); margin-bottom: 32px; font-weight: 400; }
-
     .write-fields { display: flex; flex-direction: column; gap: 12px; }
     .write-field { display: flex; flex-direction: column; gap: 5px; }
     .write-field label { font-size: 0.68rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text2); font-weight: 600; }
-    .write-field input,
-    .write-field select,
-    .write-field textarea {
+    .write-field input, .write-field select, .write-field textarea {
       background: var(--input-bg); border: 1px solid var(--border); border-radius: 10px;
       padding: 13px 16px; color: var(--text); font-family: 'League Spartan', sans-serif;
       font-size: 0.92rem; font-weight: 400; outline: none; -webkit-appearance: none; appearance: none;
-      transition: border-color 0.25s, background 0.25s, color var(--transition);
-      resize: none;
+      transition: border-color 0.25s, background 0.25s, color var(--transition); resize: none;
     }
-    .write-field input::placeholder,
-    .write-field textarea::placeholder { color: var(--text2); }
-    .write-field input:focus,
-    .write-field select:focus,
-    .write-field textarea:focus { border-color: var(--border2); }
+    .write-field input::placeholder, .write-field textarea::placeholder { color: var(--text2); }
+    .write-field input:focus, .write-field select:focus, .write-field textarea:focus { border-color: var(--border2); }
     .write-field select option { background: var(--bg2); color: var(--text); }
-
     .write-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-
-    /* char counter */
     .field-meta { display: flex; justify-content: space-between; align-items: center; }
     .field-meta label { font-size: 0.68rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text2); font-weight: 600; }
     .char-count { font-family: 'DM Mono', monospace; font-size: 0.62rem; color: var(--text3); }
-
     .write-divider { height: 1px; background: var(--border); margin: 8px 0; }
-
     .write-cta {
       margin-top: 8px; width: 100%; padding: 14px 24px;
       background: var(--cta-bg); color: var(--cta-text);
@@ -109,17 +75,13 @@
       border: none; border-radius: 10px; cursor: pointer;
       transition: opacity 0.2s, transform 0.2s, background var(--transition), color var(--transition);
     }
-    .write-cta:hover { opacity: 0.88; transform: translateY(-1px); }
-
+    .write-cta:hover:not(:disabled) { opacity: 0.88; transform: translateY(-1px); }
+    .write-cta:disabled { opacity: 0.5; cursor: not-allowed; }
     .write-note { margin-top: 16px; font-size: 0.68rem; color: var(--text3); line-height: 1.6; text-align: center; }
-
-    /* ─── SUCCESS STATE ─── */
     .write-success { display: none; text-align: center; padding: 24px 0; }
     .write-success .icon { width: 44px; height: 44px; border: 1px solid var(--border2); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; font-size: 1rem; }
     .write-success h3 { font-family: 'Instrument Serif', serif; font-size: 1.6rem; font-style: italic; color: var(--text); margin-bottom: 8px; }
     .write-success p { font-size: 0.78rem; color: var(--text3); line-height: 1.65; }
-
-    /* ─── MOBILE ─── */
     @media (max-width: 900px) {
       .write-layout { grid-template-columns: 1fr; gap: 48px; padding: 60px 24px 80px; }
       .write-form-box { position: static; padding: 36px 28px; }
@@ -131,7 +93,6 @@
   <div class="cursor" id="cursor"></div>
   <div class="cursor-ring" id="cursorRing"></div>
 
-  <!-- NAV -->
   <nav id="navbar">
     <a href="index.html" class="logo">Terapush</a>
     <div class="nav-links">
@@ -153,7 +114,6 @@
     <button class="nav-hamburger" id="navHamburger" aria-label="Toggle menu" aria-expanded="false"><div class="bar"><span></span><span></span></div></button>
   </nav>
 
-  <!-- MOBILE DRAWER -->
   <div class="mobile-drawer" id="mobileDrawer" aria-hidden="true">
     <nav class="mobile-drawer-links">
       <a href="index.html">Home <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></a>
@@ -173,19 +133,16 @@
         </span>
         <div class="mobile-theme-pill" id="mobileThemePill">
           <button onclick="setTheme('dark')" id="pillDark" class="active">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 12.79A9 9 0 1111.21 3a7 7 0 109.79 9.79z"/></svg>
-            Dark
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 12.79A9 9 0 1111.21 3a7 7 0 109.79 9.79z"/></svg>Dark
           </button>
           <button onclick="setTheme('light')" id="pillLight">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
-            Light
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>Light
           </button>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- HERO -->
   <div class="page-hero">
     <p class="page-kicker">Write for Us</p>
     <h1 class="page-title">Share your<br/><em>perspective</em></h1>
@@ -193,150 +150,89 @@
   </div>
 
   <div class="write-layout">
-
-    <!-- INFO SIDE -->
     <div>
       <p class="write-info-label">Editorial Guidelines</p>
       <h2 class="write-info-heading">We publish <em>original</em><br/>thinking. Not press releases.</h2>
       <p class="write-info-body">The Terapush blog is read by founders, investors, and operators across India's startup ecosystem. We hold submissions to a high editorial bar — not in length, but in substance.</p>
       <p class="write-info-body">We'll review your submission and come back to you within 5 business days. Accepted articles go through a light editorial pass and are published under your byline.</p>
-
       <div class="write-guidelines">
-        <div class="guideline-row">
-          <span class="guideline-num">01</span>
-          <div class="guideline-text"><strong>Original and unpublished</strong>We only publish work that hasn't appeared elsewhere. No reposts or cross-publishes.</div>
-        </div>
-        <div class="guideline-row">
-          <span class="guideline-num">02</span>
-          <div class="guideline-text"><strong>800–2,500 words</strong>Long enough to say something real, short enough to respect the reader's time.</div>
-        </div>
-        <div class="guideline-row">
-          <span class="guideline-num">03</span>
-          <div class="guideline-text"><strong>A specific point of view</strong>No listicles that could apply to any market. Tell us what you've seen, done, or learned — specifically.</div>
-        </div>
-        <div class="guideline-row">
-          <span class="guideline-num">04</span>
-          <div class="guideline-text"><strong>India-relevant context</strong>Our readers are building and investing in Bharat. Ground your piece in this reality.</div>
-        </div>
-        <div class="guideline-row">
-          <span class="guideline-num">05</span>
-          <div class="guideline-text"><strong>No paid promotion</strong>We don't publish sponsored content or advertorials. Disclosure of any affiliation is mandatory.</div>
-        </div>
+        <div class="guideline-row"><span class="guideline-num">01</span><div class="guideline-text"><strong>Original and unpublished</strong>We only publish work that hasn't appeared elsewhere. No reposts or cross-publishes.</div></div>
+        <div class="guideline-row"><span class="guideline-num">02</span><div class="guideline-text"><strong>800–2,500 words</strong>Long enough to say something real, short enough to respect the reader's time.</div></div>
+        <div class="guideline-row"><span class="guideline-num">03</span><div class="guideline-text"><strong>A specific point of view</strong>No listicles that could apply to any market. Tell us what you've seen, done, or learned — specifically.</div></div>
+        <div class="guideline-row"><span class="guideline-num">04</span><div class="guideline-text"><strong>India-relevant context</strong>Our readers are building and investing in Bharat. Ground your piece in this reality.</div></div>
+        <div class="guideline-row"><span class="guideline-num">05</span><div class="guideline-text"><strong>No paid promotion</strong>We don't publish sponsored content or advertorials. Disclosure of any affiliation is mandatory.</div></div>
       </div>
-
       <div class="topics-wrap">
         <p class="topics-label">Topics We Cover</p>
         <div class="topics-tags">
-          <span class="topic-tag">Fundraising</span>
-          <span class="topic-tag">Venture Capital</span>
-          <span class="topic-tag">Founder Stories</span>
-          <span class="topic-tag">Product Building</span>
-          <span class="topic-tag">GTM Strategy</span>
-          <span class="topic-tag">Hiring & Culture</span>
-          <span class="topic-tag">Market Analysis</span>
-          <span class="topic-tag">Bharat Startups</span>
-          <span class="topic-tag">Angel Investing</span>
-          <span class="topic-tag">Exits & M&A</span>
-          <span class="topic-tag">Regulation & Policy</span>
-          <span class="topic-tag">Deep Tech</span>
+          <span class="topic-tag">Fundraising</span><span class="topic-tag">Venture Capital</span>
+          <span class="topic-tag">Founder Stories</span><span class="topic-tag">Product Building</span>
+          <span class="topic-tag">GTM Strategy</span><span class="topic-tag">Hiring & Culture</span>
+          <span class="topic-tag">Market Analysis</span><span class="topic-tag">Bharat Startups</span>
+          <span class="topic-tag">Angel Investing</span><span class="topic-tag">Exits & M&A</span>
+          <span class="topic-tag">Regulation & Policy</span><span class="topic-tag">Deep Tech</span>
         </div>
       </div>
     </div>
 
-    <!-- FORM SIDE -->
     <div>
       <div class="write-form-box">
         <div id="write-form-inner">
           <div class="write-form-title">Submit your article</div>
-          <div class="write-form-sub">Fill in the details below. We'll review and respond within 5 business days.</div>
-
+          <div class="write-form-sub">Fill in the details below. Our editorial team reviews every submission.</div>
           <div class="write-fields">
-
-            <!-- Author details -->
             <div class="write-row">
-              <div class="write-field">
-                <label for="w-name">Your Name</label>
-                <input type="text" id="w-name" placeholder="Full name"/>
-              </div>
-              <div class="write-field">
-                <label for="w-role">Role / Title</label>
-                <input type="text" id="w-role" placeholder="Founder, Investor..."/>
-              </div>
+              <div class="write-field"><label for="w-name">Your Name</label><input type="text" id="w-name" placeholder="Full name"/></div>
+              <div class="write-field"><label for="w-role">Role / Title</label><input type="text" id="w-role" placeholder="Founder, Investor..."/></div>
             </div>
-            <div class="write-field">
-              <label for="w-email">Email Address</label>
-              <input type="email" id="w-email" placeholder="you@company.com"/>
-            </div>
-            <div class="write-field">
-              <label for="w-profile">LinkedIn / Portfolio URL</label>
-              <input type="url" id="w-profile" placeholder="https://linkedin.com/in/..."/>
-            </div>
-
+            <div class="write-field"><label for="w-email">Email Address</label><input type="email" id="w-email" placeholder="you@company.com"/></div>
+            <div class="write-field"><label for="w-profile">LinkedIn / Portfolio URL</label><input type="url" id="w-profile" placeholder="https://linkedin.com/in/..."/></div>
             <div class="write-divider"></div>
-
-            <!-- Article details -->
-            <div class="write-field">
-              <label for="w-title">Article Title</label>
-              <input type="text" id="w-title" placeholder="Working title is fine"/>
-            </div>
+            <div class="write-field"><label for="w-title">Article Title</label><input type="text" id="w-title" placeholder="Working title is fine"/></div>
             <div class="write-row">
               <div class="write-field">
                 <label for="w-category">Category</label>
                 <select id="w-category">
                   <option value="" disabled selected>Select</option>
-                  <option>Fundraising</option>
-                  <option>Venture Capital</option>
-                  <option>Founder Stories</option>
-                  <option>Product Building</option>
-                  <option>GTM Strategy</option>
-                  <option>Hiring & Culture</option>
-                  <option>Market Analysis</option>
-                  <option>Deep Tech</option>
-                  <option>Regulation & Policy</option>
-                  <option>Other</option>
+                  <option>Fundraising</option><option>Venture Capital</option>
+                  <option>Founder Stories</option><option>Product Building</option>
+                  <option>GTM Strategy</option><option>Hiring & Culture</option>
+                  <option>Market Analysis</option><option>Deep Tech</option>
+                  <option>Regulation & Policy</option><option>Other</option>
                 </select>
               </div>
               <div class="write-field">
-                <label for="w-wordcount">Estimated Word Count</label>
+                <label for="w-wordcount">Est. Word Count</label>
                 <select id="w-wordcount">
                   <option value="" disabled selected>Select</option>
-                  <option>Under 800</option>
-                  <option>800–1,200</option>
-                  <option>1,200–2,000</option>
-                  <option>2,000–2,500</option>
+                  <option>Under 800</option><option>800–1,200</option>
+                  <option>1,200–2,000</option><option>2,000–2,500</option>
                   <option>Over 2,500</option>
                 </select>
               </div>
             </div>
-
             <div class="write-field">
               <div class="field-meta">
                 <label for="w-summary">Article Summary <span style="text-transform:none;letter-spacing:0;font-weight:400;">(2–3 sentences)</span></label>
                 <span class="char-count" id="summary-count">0 / 300</span>
               </div>
-              <textarea id="w-summary" rows="3" maxlength="300" placeholder="What's the core argument or insight? What will the reader walk away with?"></textarea>
+              <textarea id="w-summary" rows="3" maxlength="300" placeholder="What's the core argument? What will the reader walk away with?"></textarea>
             </div>
-
             <div class="write-field">
-              <label for="w-draft">Draft or Sample Writing</label>
-              <textarea id="w-draft" rows="6" placeholder="Paste your draft, an excerpt, or a link to a Google Doc / Notion page. If submitting a link, make sure it's accessible."></textarea>
+              <label for="w-draft">Draft or Sample <span style="text-transform:none;letter-spacing:0;font-weight:400;">(paste content or a doc link)</span></label>
+              <textarea id="w-draft" rows="6" placeholder="Paste your draft, an excerpt, or a link to a Google Doc / Notion page."></textarea>
             </div>
-
-            <button class="write-cta" onclick="handleWrite()">Submit Article →</button>
-            <p class="write-note">Your submission will be sent to <strong>blog@terapush.in</strong> and reviewed by our editorial team.</p>
-
+            <button class="write-cta" id="submitBtn" onclick="handleWrite()">Submit Article →</button>
+            <p class="write-note">Submissions are reviewed by our editorial team within 5 business days.</p>
           </div>
         </div>
-
-        <!-- SUCCESS -->
         <div class="write-success" id="write-success">
           <div class="icon">✦</div>
           <h3>Submission received.</h3>
-          <p>We've sent your article to blog@terapush.in.<br/>Our editorial team will review and respond within 5 business days.</p>
+          <p>Our editorial team will review your article<br/>and get back to you within 5 business days.</p>
         </div>
       </div>
     </div>
-
   </div>
 
   <!-- FOOTER -->
@@ -346,22 +242,15 @@
         <a href="index.html" class="footer-logo">Terapush</a>
         <p>The OS for India's startup ecosystem. Connecting founders, investors, and creators on one platform built for Bharat's builders.</p>
         <div class="footer-social" style="margin-top:20px;">
-          <a href="https://www.linkedin.com/company/terapush" target="_blank" rel="noopener">
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>LinkedIn
-          </a>
-          <a href="https://www.instagram.com/terapush" target="_blank" rel="noopener">
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>Instagram
-          </a>
+          <a href="https://www.linkedin.com/company/terapush" target="_blank" rel="noopener"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>LinkedIn</a>
+          <a href="https://www.instagram.com/terapush" target="_blank" rel="noopener"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>Instagram</a>
         </div>
       </div>
       <div class="footer-col">
         <h4>Pages</h4>
-        <a href="index.html">Home</a>
-        <a href="about.html">About</a>
-        <a href="services.html">Services</a>
-        <a href="readiness.html">Readiness</a>
-        <a href="pitch.html">Pitch Us</a>
-        <a href="careers.html">Careers</a>
+        <a href="index.html">Home</a><a href="about.html">About</a>
+        <a href="services.html">Services</a><a href="readiness.html">Readiness</a>
+        <a href="pitch.html">Pitch Us</a><a href="careers.html">Careers</a>
         <a href="blog.html">Blog</a>
       </div>
       <div class="footer-col">
@@ -372,12 +261,9 @@
       </div>
       <div class="footer-col">
         <h4>Contact</h4>
-        <a href="#" onclick="this.href='mailto:'+('contact'+'@terapush.in');return true;" style="text-decoration:none;color:inherit;">contact&#64;terapush.in</a>
-        <a href="#" onclick="this.href='mailto:'+('blog'+'@terapush.in');return true;" style="text-decoration:none;color:inherit;">blog&#64;terapush.in</a>
-        <div class="footer-address">Terapush India Private Limited<br/>1st Floor, SPD Plaza,<br/>KHB Colony, Koramangala 4-B Block,<br/>5th Block, Koramangala,<br/>Bengaluru, Karnataka 560095</div>
-        <div class="footer-map" style="margin-top:14px;">
-          <iframe src="https://maps.google.com/maps?q=Koramangala+5th+Block+Bengaluru&output=embed" allowfullscreen loading="lazy" style="width:100%;height:110px;border:none;filter:grayscale(1);border-radius:6px;"></iframe>
-        </div>
+        <a href="#" onclick="this.href='mailto:'+('contact'+'@terapush.in');return true;">contact&#64;terapush.in</a>
+        <a href="#" onclick="this.href='mailto:'+('blog'+'@terapush.in');return true;">blog&#64;terapush.in</a>
+        <div class="footer-address">Terapush India Private Limited<br/>1st Floor, SPD Plaza,<br/>KHB Colony, Koramangala 4-B Block,<br/>Bengaluru, Karnataka 560095</div>
       </div>
     </div>
     <div class="footer-bottom">
@@ -390,22 +276,27 @@
           </div>
         </div>
       </div>
-      <div class="footer-disclaimer">
-        <strong style="font-weight:500;">Disclaimer:</strong> Investments in startups involve risk. Terapush is a platform to connect stakeholders and does not guarantee returns. Users should conduct independent due diligence before making investment decisions.
-      </div>
+      <div class="footer-disclaimer"><strong style="font-weight:500;">Disclaimer:</strong> Investments in startups involve risk. Terapush is a platform to connect stakeholders and does not guarantee returns.</div>
     </div>
   </footer>
 
   <script data-cfasync="false" src="shared.js"></script>
   <script>
-    // Char counter for summary
+    // ── CONFIG ─────────────────────────────────────────────────────
+    // Replace AT_BASE and AT_SUBMISSIONS with your actual Airtable IDs.
+    // AT_KEY should be a scoped token with only data.records:write on Submissions.
+    // See setup instructions in admin.html.
+    const AT_BASE        = 'appTw8tOpvI7BJ6kT';
+    const AT_SUBMISSIONS = 'tblyPdpIgi3gG4TDk'; // e.g. tblABCDEFGH123456
+    const AT_KEY         = 'patRFec5Of1vjA5k1.4750ff4719623f66b48aa843c95174dd54bdff769d4ebc87c5c07b72778ee8b4';
+
+    // ── CHAR COUNTER ───────────────────────────────────────────────
     const summaryEl = document.getElementById('w-summary');
     const countEl   = document.getElementById('summary-count');
-    summaryEl.addEventListener('input', () => {
-      countEl.textContent = summaryEl.value.length + ' / 300';
-    });
+    summaryEl.addEventListener('input', () => { countEl.textContent = summaryEl.value.length + ' / 300'; });
 
-    function handleWrite() {
+    // ── SUBMIT ─────────────────────────────────────────────────────
+    async function handleWrite() {
       const name      = document.getElementById('w-name').value.trim();
       const role      = document.getElementById('w-role').value.trim();
       const email     = document.getElementById('w-email').value.trim();
@@ -420,44 +311,50 @@
         alert('Please fill in all required fields before submitting.');
         return;
       }
-      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      if (!emailRegex.test(email)) {
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
         alert('Please enter a valid email address.');
         return;
       }
 
-      const subject = `Blog Submission: "${title}" — ${name}`;
+      const btn = document.getElementById('submitBtn');
+      btn.disabled = true;
+      btn.textContent = 'Submitting…';
 
-      const body = [
-        `── Author ──────────────────────────`,
-        `Name:          ${name}`,
-        `Role:          ${role || 'Not provided'}`,
-        `Email:         ${email}`,
-        `Profile:       ${profile || 'Not provided'}`,
-        ``,
-        `── Article ─────────────────────────`,
-        `Title:         ${title}`,
-        `Category:      ${category}`,
-        `Word Count:    ${wordcount}`,
-        ``,
-        `── Summary ─────────────────────────`,
-        `${summary}`,
-        ``,
-        `── Draft / Sample ──────────────────`,
-        `${draft}`,
-      ].join('\n');
+      try {
+        const res = await fetch(`https://api.airtable.com/v0/${AT_BASE}/${AT_SUBMISSIONS}`, {
+          method: 'POST',
+          headers: { 'Authorization': `Bearer ${AT_KEY}`, 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            fields: {
+              'Name':        name,
+              'Role':        role || '',
+              'Email':       email,
+              'Profile URL': profile || '',
+              'Title':       title,
+              'Category':    category,
+              'Word Count':  wordcount,
+              'Summary':     summary,
+              'Draft':       draft,
+              'Status':      'Pending',
+              'Submitted At': new Date().toISOString(),
+            }
+          })
+        });
 
-      const gmailUrl = `https://mail.google.com/mail/?view=cm`
-        + `&to=${encodeURIComponent('blog@terapush.in')}`
-        + `&su=${encodeURIComponent(subject)}`
-        + `&body=${encodeURIComponent(body)}`;
+        if (!res.ok) {
+          const err = await res.json();
+          throw new Error(err.error?.message || 'Submission failed');
+        }
 
-      window.open(gmailUrl, '_blank');
-
-      setTimeout(() => {
         document.getElementById('write-form-inner').style.display = 'none';
         document.getElementById('write-success').style.display    = 'block';
-      }, 500);
+
+      } catch (e) {
+        btn.disabled = false;
+        btn.textContent = 'Submit Article →';
+        alert('Something went wrong. Please try again or email us at blog@terapush.in\n\nError: ' + e.message);
+        console.error(e);
+      }
     }
   </script>
 </body>
